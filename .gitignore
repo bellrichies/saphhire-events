@@ -1,0 +1,61 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+/vendor/
+/node_modules/
+/ai-model/
+/testing/
+/docs/
+
+# Runtime and cache
+/storage/*.log
+/storage/logs/
+/storage/cache/
+/storage/sessions/
+/storage/views/
+/storage/translations-cache/
+/bootstrap/cache/
+
+# User uploads and generated media
+/uploads/
+/public/uploads/
+
+# Local databases and dumps
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+*.dump
+
+# Archives and data exports
+*.zip
+*.tar
+*.gz
+*.7z
+*.rar
+*.csv
+*.xlsx
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.pid
+*.seed
+
+# IDE/editor
+/.idea/
+/.vscode/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test and debug artifacts
+phpunit.result.cache

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" role="img" aria-label="United Kingdom flag">
+  <rect width="60" height="40" fill="#012169"/>
+  <path d="M0 0 L24 16 L20 20 L0 6 Z M60 0 L36 16 L40 20 L60 6 Z M0 40 L24 24 L20 20 L0 34 Z M60 40 L36 24 L40 20 L60 34 Z" fill="#FFF"/>
+  <path d="M0 0 L22 14 L19 17 L0 4 Z M60 0 L38 14 L41 17 L60 4 Z M0 40 L22 26 L19 23 L0 36 Z M60 40 L38 26 L41 23 L60 36 Z" fill="#C8102E"/>
+  <rect x="24" width="12" height="40" fill="#FFF"/>
+  <rect y="14" width="60" height="12" fill="#FFF"/>
+  <rect x="26" width="8" height="40" fill="#C8102E"/>
+  <rect y="16" width="60" height="8" fill="#C8102E"/>
+</svg>

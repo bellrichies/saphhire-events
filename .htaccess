@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /sapphireevents/
+
+    # Prevent infinite rewrite loop - don't rewrite requests already to public
+    RewriteCond %{REQUEST_URI} ^/sapphireevents/public/
+    RewriteRule ^(.*)$ - [L]
+
+    # Don't rewrite if it's a real file
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^(.*)$ - [L]
+
+    # Rewrite everything else to public folder
+    RewriteRule ^(.*)$ public/$1 [NC,L]
+</IfModule>
