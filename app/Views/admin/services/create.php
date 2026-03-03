@@ -26,9 +26,12 @@ ob_start();
                 </div>
 
                 <div class="mb-6">
-                    <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Feature Image</label>
+                    <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Image URL</label>
+                    <input type="url" id="image-url-input" name="image_url" placeholder="https://example.com/service-image.jpg or /assets/uploads/media/image.jpg" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600 mb-3">
+
+                    <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Or Upload Image</label>
                     <input type="file" name="image" accept="image/*" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg" id="image-input">
-                    <small class="text-gray-500 block mt-2">Max 20MB. Formats: JPEG, PNG, WebP. Recommended size: 800x600px or larger for landscape display.</small>
+                    <small class="text-gray-500 block mt-2">Use either URL or upload. Max 20MB. Formats: JPEG, PNG, WebP, AVIF.</small>
                     <div id="image-preview" class="mt-4 hidden">
                         <img id="preview-img" src="" alt="Preview" style="max-width: 100%; height: auto; border-radius: 8px; max-height: 250px;">
                     </div>
@@ -48,6 +51,7 @@ ob_start();
 <script>
 // Image preview
 const imageInput = document.getElementById('image-input');
+const imageUrlInput = document.getElementById('image-url-input');
 const imagePreview = document.getElementById('image-preview');
 const previewImg = document.getElementById('preview-img');
 
@@ -55,13 +59,35 @@ if (imageInput) {
     imageInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (imageUrlInput) {
+                imageUrlInput.value = '';
+            }
             const reader = new FileReader();
             reader.onload = (event) => {
                 previewImg.src = event.target.result;
                 imagePreview.classList.remove('hidden');
             };
             reader.readAsDataURL(file);
+        } else {
+            imagePreview.classList.add('hidden');
         }
+    });
+}
+
+if (imageUrlInput) {
+    imageUrlInput.addEventListener('input', () => {
+        const url = imageUrlInput.value.trim();
+        if (!url) {
+            imagePreview.classList.add('hidden');
+            previewImg.src = '';
+            return;
+        }
+
+        if (imageInput) {
+            imageInput.value = '';
+        }
+        previewImg.src = url;
+        imagePreview.classList.remove('hidden');
     });
 }
 

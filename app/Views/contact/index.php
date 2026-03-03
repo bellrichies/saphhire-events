@@ -73,54 +73,134 @@ ob_start();
                     </p>
                 </div>
 
-                <form id="contact-form" method="POST" action="<?php echo route('/contact'); ?>" class="space-y-5 md:space-y-6">
+                <form id="contact-form" method="POST" action="<?php echo route('/contact'); ?>" enctype="multipart/form-data" class="space-y-5 md:space-y-6">
                     <?php echo \App\Core\CSRF::hidden(); ?>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
                         <div>
                             <label class="contact-label" for="contact-name"><?php echo htmlspecialchars(trans('content.contact.form.full_name', 'Full Name')); ?></label>
                             <input id="contact-name" type="text" name="name" required class="contact-input" placeholder="<?php echo htmlspecialchars(trans('content.contact.form.full_name', 'Full Name')); ?>">
                             <small class="contact-error error-name"></small>
                         </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="contact-label" for="contact-email"><?php echo htmlspecialchars(trans('content.contact.form.email', 'Email Address')); ?></label>
                             <input id="contact-email" type="email" name="email" required class="contact-input" placeholder="john@example.com">
                             <small class="contact-error error-email"></small>
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="contact-label" for="contact-phone"><?php echo htmlspecialchars(trans('content.contact.form.phone', 'Phone Number')); ?></label>
                             <input id="contact-phone" type="tel" name="phone" required class="contact-input" placeholder="+372 512 34567">
                             <small class="contact-error error-phone"></small>
                         </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="contact-label" for="contact-service-type"><?php echo htmlspecialchars(trans('content.contact.form.service_type', 'Service Type')); ?></label>
+                            <select id="contact-service-type" name="service_type" required class="contact-input contact-select">
+                                <option value=""><?php echo htmlspecialchars(trans('content.contact.form.service_type_placeholder', 'Select service type')); ?></option>
+                                <option value="Luxury Picnic Package">Luxury Picnic Package</option>
+                                <option value="Proposal/Engagement Services">Proposal/Engagement Services</option>
+                                <option value="Tablescapes">Tablescapes</option>
+                                <option value="Event Decoration">Event Decoration</option>
+                                <option value="Event Planning">Event Planning</option>
+                                <option value="Rental Services">Rental Services</option>
+                                <option value="Floral Design">Floral Design</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <small class="contact-error error-service_type"></small>
+                        </div>
                         <div>
                             <label class="contact-label" for="contact-event-type"><?php echo htmlspecialchars(trans('content.contact.form.event_type', 'Event Type')); ?></label>
                             <select id="contact-event-type" name="event_type" required class="contact-input contact-select">
-                                <option value=""><?php echo htmlspecialchars(trans('content.contact.form.event_type_placeholder', 'Select event type')); ?></option>
-                                <option value="Wedding"><?php echo htmlspecialchars(trans('content.contact.form.event_types.wedding', 'Wedding')); ?></option>
-                                <option value="Birthday Party"><?php echo htmlspecialchars(trans('content.contact.form.event_types.birthday_party', 'Birthday Party')); ?></option>
-                                <option value="Proposal"><?php echo htmlspecialchars(trans('content.contact.form.event_types.proposal', 'Proposal')); ?></option>
-                                <option value="Engagement"><?php echo htmlspecialchars(trans('content.contact.form.event_types.engagement', 'Engagement')); ?></option>
+                                <option value=""><?php echo htmlspecialchars(trans('content.contact.form.event_type_placeholder', 'Select event occasion')); ?></option>
+                                <option value="Wedding Decoration"><?php echo htmlspecialchars(trans('content.contact.form.event_types.wedding_decoration', 'Wedding Decoration')); ?></option>
                                 <option value="Corporate Event"><?php echo htmlspecialchars(trans('content.contact.form.event_types.corporate_event', 'Corporate Event')); ?></option>
-                                <option value="Baby Shower"><?php echo htmlspecialchars(trans('content.contact.form.event_types.baby_shower', 'Baby Shower')); ?></option>
-                                <option value="Bridal Shower"><?php echo htmlspecialchars(trans('content.contact.form.event_types.bridal_shower', 'Bridal Shower')); ?></option>
+                                <option value="Engagement/Proposal"><?php echo htmlspecialchars(trans('content.contact.form.event_types.engagement_proposal', 'Engagement/Proposal')); ?></option>
+                                <option value="Event Decoration"><?php echo htmlspecialchars(trans('content.contact.form.event_types.event_decoration', 'Event Decoration')); ?></option>
+                                <option value="Tablescape"><?php echo htmlspecialchars(trans('content.contact.form.event_types.tablescape', 'Tablescape')); ?></option>
+                                <option value="Backdrop Installation"><?php echo htmlspecialchars(trans('content.contact.form.event_types.backdrop_installation', 'Backdrop Installation')); ?></option>
+                                <option value="Floral Services"><?php echo htmlspecialchars(trans('content.contact.form.event_types.floral_services', 'Floral Services')); ?></option>
+                                <option value="Rental Service"><?php echo htmlspecialchars(trans('content.contact.form.event_types.rental_service', 'Rental Service')); ?></option>
                                 <option value="Other"><?php echo htmlspecialchars(trans('content.contact.form.event_types.other', 'Other')); ?></option>
                             </select>
                             <small class="contact-error error-event_type"></small>
                         </div>
                     </div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="contact-label" for="contact-event-date"><?php echo htmlspecialchars(trans('content.contact.form.event_date', 'Date of the Event')); ?></label>
+                            <input id="contact-event-date" type="text" name="event_date" required class="contact-input" placeholder="YYYY-MM-DD" autocomplete="off">
+                            <small class="contact-error error-event_date"></small>
+                        </div>
+                        <div>
+                            <label class="contact-label" for="contact-event-time"><?php echo htmlspecialchars(trans('content.contact.form.event_time', 'Event Time')); ?></label>
+                            <input id="contact-event-time" type="text" name="event_time" required class="contact-input" placeholder="HH:MM" autocomplete="off">
+                            <small class="contact-error error-event_time"></small>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="contact-label" for="contact-budget"><?php echo htmlspecialchars(trans('content.contact.form.budget', 'What Is Your Budget for the Event?')); ?></label>
+                            <input id="contact-budget" type="text" name="budget" required class="contact-input" placeholder="$2,500">
+                            <small class="contact-error error-budget"></small>
+                        </div>
+                        <div>
+                            <label class="contact-label" for="contact-guest-count"><?php echo htmlspecialchars(trans('content.contact.form.guest_count', 'How Many Guests Will Attend?')); ?></label>
+                            <input id="contact-guest-count" type="text" name="guest_count" required class="contact-input" placeholder="50">
+                            <small class="contact-error error-guest_count"></small>
+                        </div>
+                    </div>
+
                     <div>
-                        <label class="contact-label" for="contact-event-date"><?php echo htmlspecialchars(trans('content.contact.form.event_date', 'Preferred Event Date')); ?> <span class="text-gray-400 font-normal">(<?php echo htmlspecialchars(trans('content.contact.form.optional', 'Optional')); ?>)</span></label>
-                        <input id="contact-event-date" type="date" name="event_date" class="contact-input">
-                        <small class="contact-error error-event_date"></small>
+                        <div>
+                            <label class="contact-label" for="contact-event-location"><?php echo htmlspecialchars(trans('content.contact.form.event_address', 'Event Address')); ?></label>
+                            <input id="contact-event-location" type="text" name="event_location" required class="contact-input" placeholder="<?php echo htmlspecialchars(trans('content.contact.form.event_location_placeholder', 'Please share the full event address')); ?>">
+                            <small class="contact-error error-event_location"></small>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="contact-label" for="contact-inspiration-image"><?php echo htmlspecialchars(trans('content.contact.form.inspiration_image', 'Inspiration Image Upload')); ?></label>
+                        <div id="contact-dropzone" class="contact-dropzone" tabindex="0" role="button" aria-label="Upload inspiration image">
+                            <input id="contact-inspiration-image" type="file" name="inspiration_image" accept="image/jpeg,image/png,image/webp,image/avif" class="contact-file-input">
+                            <div class="contact-dropzone-content">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p class="contact-dropzone-title"><?php echo htmlspecialchars(trans('content.contact.form.inspiration_upload_hint', 'Drag and drop an image here, or click to browse')); ?></p>
+                                <p class="contact-dropzone-subtitle"><?php echo htmlspecialchars(trans('content.contact.form.inspiration_upload_types', 'JPG, PNG, WEBP, or AVIF up to 10MB')); ?></p>
+                                <p id="contact-upload-filename" class="contact-dropzone-file hidden"></p>
+                            </div>
+                        </div>
+                        <small class="contact-error error-inspiration_image"></small>
+                    </div>
+
+                    <div>
+                        <div>
+                            <label class="contact-label" for="contact-lead-source"><?php echo htmlspecialchars(trans('content.contact.form.lead_source', 'How Did You Hear About Us?')); ?></label>
+                            <select id="contact-lead-source" name="lead_source" required class="contact-input contact-select">
+                                <option value=""><?php echo htmlspecialchars(trans('content.contact.form.lead_source_placeholder', 'Select an option')); ?></option>
+                                <option value="Instagram"><?php echo htmlspecialchars(trans('content.contact.form.lead_sources.instagram', 'Instagram')); ?></option>
+                                <option value="Facebook"><?php echo htmlspecialchars(trans('content.contact.form.lead_sources.facebook', 'Facebook')); ?></option>
+                                <option value="Google"><?php echo htmlspecialchars(trans('content.contact.form.lead_sources.google', 'Google')); ?></option>
+                                <option value="TikTok"><?php echo htmlspecialchars(trans('content.contact.form.lead_sources.tiktok', 'TikTok')); ?></option>
+                                <option value="Friend/Family"><?php echo htmlspecialchars(trans('content.contact.form.lead_sources.friend_family', 'Friend/Family')); ?></option>
+                                <option value="Returning Client"><?php echo htmlspecialchars(trans('content.contact.form.lead_sources.returning_client', 'Returning Client')); ?></option>
+                                <option value="Vendor Referral"><?php echo htmlspecialchars(trans('content.contact.form.lead_sources.vendor_referral', 'Vendor Referral')); ?></option>
+                                <option value="Client Referral"><?php echo htmlspecialchars(trans('content.contact.form.lead_sources.client_referral', 'Client Referral')); ?></option>
+                                <option value="Other"><?php echo htmlspecialchars(trans('content.contact.form.lead_sources.other', 'Other')); ?></option>
+                            </select>
+                            <small class="contact-error error-lead_source"></small>
+                        </div>
                     </div>
 
                     <div>
                         <label class="contact-label" for="contact-message"><?php echo htmlspecialchars(trans('content.contact.form.message', 'Event Vision and Requirements')); ?></label>
-                        <textarea id="contact-message" name="message" rows="5" required class="contact-input contact-textarea" placeholder="<?php echo htmlspecialchars(trans('content.contact.form.message_placeholder', 'Share your goals, guest count, venue status, and style direction.')); ?>"></textarea>
+                        <textarea id="contact-message" name="message" rows="5" required class="contact-input contact-textarea" placeholder="<?php echo htmlspecialchars(trans('content.contact.form.message_placeholder', 'Share color scheme, event layout, timing, and specific requirements.')); ?>"></textarea>
                         <small class="contact-error error-message"></small>
                     </div>
 
@@ -302,6 +382,8 @@ ob_start();
     </div>
 </section>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('contact-form');
@@ -309,10 +391,96 @@ ob_start();
         const messageDiv = document.getElementById('form-message');
         const faqButtons = document.querySelectorAll('.faq-toggle');
         const eventDateInput = document.getElementById('contact-event-date');
+        const eventTimeInput = document.getElementById('contact-event-time');
+        const dropzone = document.getElementById('contact-dropzone');
+        const inspirationInput = document.getElementById('contact-inspiration-image');
+        const uploadFilename = document.getElementById('contact-upload-filename');
 
-        if (eventDateInput) {
+        if (typeof flatpickr === 'function' && eventDateInput) {
+            flatpickr(eventDateInput, {
+                dateFormat: 'Y-m-d',
+                minDate: 'today',
+                disableMobile: true
+            });
+        } else if (eventDateInput) {
             const today = new Date().toISOString().split('T')[0];
             eventDateInput.setAttribute('min', today);
+        }
+
+        if (typeof flatpickr === 'function' && eventTimeInput) {
+            flatpickr(eventTimeInput, {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: 'H:i',
+                time_24hr: true,
+                minuteIncrement: 5,
+                disableMobile: true
+            });
+        }
+
+        const setUploadFile = function (file) {
+            if (!inspirationInput || !uploadFilename) {
+                return;
+            }
+
+            if (!file) {
+                inspirationInput.value = '';
+                uploadFilename.textContent = '';
+                uploadFilename.classList.add('hidden');
+                if (dropzone) {
+                    dropzone.classList.remove('is-selected');
+                }
+                return;
+            }
+
+            const transfer = new DataTransfer();
+            transfer.items.add(file);
+            inspirationInput.files = transfer.files;
+            uploadFilename.textContent = file.name + ' (' + Math.max(1, Math.round(file.size / 1024)) + ' KB)';
+            uploadFilename.classList.remove('hidden');
+            if (dropzone) {
+                dropzone.classList.add('is-selected');
+            }
+        };
+
+        if (dropzone && inspirationInput) {
+            dropzone.addEventListener('click', function () {
+                inspirationInput.click();
+            });
+
+            dropzone.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    inspirationInput.click();
+                }
+            });
+
+            inspirationInput.addEventListener('change', function () {
+                const selectedFile = inspirationInput.files && inspirationInput.files.length ? inspirationInput.files[0] : null;
+                setUploadFile(selectedFile);
+            });
+
+            ['dragenter', 'dragover'].forEach(function (eventName) {
+                dropzone.addEventListener(eventName, function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    dropzone.classList.add('is-dragover');
+                });
+            });
+
+            ['dragleave', 'drop'].forEach(function (eventName) {
+                dropzone.addEventListener(eventName, function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    dropzone.classList.remove('is-dragover');
+                });
+            });
+
+            dropzone.addEventListener('drop', function (event) {
+                const droppedFiles = event.dataTransfer && event.dataTransfer.files ? event.dataTransfer.files : null;
+                const droppedFile = droppedFiles && droppedFiles.length ? droppedFiles[0] : null;
+                setUploadFile(droppedFile);
+            });
         }
 
         if (form) {
@@ -356,6 +524,7 @@ ob_start();
                         messageDiv.className = 'contact-form-message contact-form-success';
                         messageDiv.innerHTML = '<i class="fas fa-check-circle"></i><span>' + data.message + '</span>';
                         form.reset();
+                        setUploadFile(null);
                         messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else {
                         throw data;
@@ -534,6 +703,63 @@ ob_start();
     .contact-textarea {
         min-height: 130px;
         resize: vertical;
+    }
+
+    .contact-file-input {
+        display: none;
+    }
+
+    .contact-dropzone {
+        position: relative;
+        border-radius: 0.85rem;
+        border: 1px dashed rgba(15, 61, 62, 0.28);
+        background: #FBFBFA;
+        padding: 1.2rem 1rem;
+        cursor: pointer;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .contact-dropzone:focus-visible {
+        outline: none;
+        border-color: #C8A951;
+        box-shadow: 0 0 0 3px rgba(200, 169, 81, 0.18);
+    }
+
+    .contact-dropzone.is-dragover,
+    .contact-dropzone.is-selected {
+        border-color: #C8A951;
+        background: #FFFBF2;
+        box-shadow: 0 0 0 3px rgba(200, 169, 81, 0.14);
+    }
+
+    .contact-dropzone-content {
+        text-align: center;
+    }
+
+    .contact-dropzone-content i {
+        color: #0F3D3E;
+        font-size: 1.5rem;
+        margin-bottom: 0.45rem;
+    }
+
+    .contact-dropzone-title {
+        color: #0F3D3E;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+    }
+
+    .contact-dropzone-subtitle {
+        color: #6B7280;
+        font-size: 0.76rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .contact-dropzone-file {
+        color: #0F3D3E;
+        font-size: 0.78rem;
+        font-weight: 600;
+        margin-top: 0.25rem;
     }
 
     .contact-error {

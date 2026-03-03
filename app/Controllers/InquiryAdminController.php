@@ -38,6 +38,7 @@ class InquiryAdminController extends Controller
 
         $this->view('admin.inquiries.show', [
             'inquiry' => $item,
+            'inspiration_image_url' => $this->extractInspirationImageUrl((string)($item['message'] ?? '')),
         ]);
     }
 
@@ -115,5 +116,40 @@ class InquiryAdminController extends Controller
     private function isAdmin(): bool
     {
         return isset($_SESSION['admin_id']);
+    }
+
+    private function extractInspirationImageUrl(string $message): string
+    {
+        if ($message === '') {
+            return '';
+        }
+
+        $decodedMessage = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+        $lines = preg_split('/\r\n|\r|\n/', $decodedMessage) ?: [];
+
+        foreach ($lines as $line) {
+            $trimmed = trim($line);
+
+            if (str_starts_with($trimmed, 'Inspiration Image Path:')) {
+                $rawPath = trim(substr($trimmed, strlen('Inspiration Image Path:')));
+                if ($rawPath === '' || strcasecmp($rawPath, 'Not provided') === 0) {
+                    return '';
+                }
+
+                if (preg_match('/^https?:\/\//i', $rawPath)) {
+                    return $rawPath;
+                }
+
+                if (str_starts_with($rawPath, 'assets/') || str_starts_with($rawPath, 'uploads/')) {
+                    return route('/' . ltrim($rawPath, '/'));
+                }
+
+                if (str_starts_with($rawPath, '/')) {
+                    return route($rawPath);
+                }
+            }
+        }
+
+        return '';
     }
 }

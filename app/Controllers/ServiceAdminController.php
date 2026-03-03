@@ -84,10 +84,32 @@ class ServiceAdminController extends Controller
             return;
         }
 
-        $imageFile = $_FILES['image'] ?? null;
         $imageName = null;
+        $imageUrl = trim((string)($_POST['image_url'] ?? ''));
+        $imageFile = $_FILES['image'] ?? null;
+        $uploadErrorCode = (int)($imageFile['error'] ?? UPLOAD_ERR_NO_FILE);
+        $hasUploadedFile = $imageFile && $uploadErrorCode === UPLOAD_ERR_OK;
 
-        if ($imageFile && ($imageFile['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
+        if ($imageFile && $uploadErrorCode !== UPLOAD_ERR_NO_FILE && $uploadErrorCode !== UPLOAD_ERR_OK) {
+            http_response_code(422);
+            $this->json(['error' => $this->uploadErrorMessage($uploadErrorCode)]);
+            return;
+        }
+
+        if ($imageUrl !== '' && $hasUploadedFile) {
+            http_response_code(422);
+            $this->json(['error' => 'Provide either an image URL or an uploaded file, not both']);
+            return;
+        }
+
+        if ($imageUrl !== '') {
+            if (!$this->isValidImageUrl($imageUrl)) {
+                http_response_code(422);
+                $this->json(['error' => 'Invalid image URL. Use http://, https://, or a site path starting with /']);
+                return;
+            }
+            $imageName = $imageUrl;
+        } elseif ($hasUploadedFile) {
             $imageName = $this->saveImage($imageFile);
             if (!$imageName) {
                 http_response_code(422);

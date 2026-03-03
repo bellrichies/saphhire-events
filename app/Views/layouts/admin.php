@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Sapphire Events</title>
+    <meta name="admin-csrf-token" content="<?php echo htmlspecialchars(\App\Core\CSRF::getToken()); ?>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,6 +83,7 @@
         '/admin/inquiries' => 'Inquiries',
         '/admin/newsletters' => 'Newsletter Leads',
         '/admin/team' => 'Team',
+        '/admin/media' => 'Media Library',
     ];
     $resolvedPageTitle = $pageTitle ?? $title ?? 'Admin';
     foreach ($pageTitleMap as $prefix => $label) {
@@ -213,6 +215,14 @@
             return { show };
         })();
     </script>
+    <script>
+        window.AdminMediaConfig = {
+            list: '<?php echo route('/admin/media/list'); ?>',
+            upload: '<?php echo route('/admin/media/upload'); ?>',
+            delete: '<?php echo route('/admin/media/delete'); ?>'
+        };
+    </script>
+    <script src="<?php echo asset('js/admin-media-library.js'); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </body>
 </html>

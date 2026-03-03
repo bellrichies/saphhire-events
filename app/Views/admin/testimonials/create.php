@@ -10,7 +10,7 @@ ob_start();
 
     <div>
         <div class="max-w-2xl bg-white rounded-lg luxury-shadow p-8">
-            <form id="testimonial-form" method="POST" action="<?php echo route('/admin/testimonials'); ?>">
+            <form id="testimonial-form" method="POST" action="<?php echo route('/admin/testimonials'); ?>" enctype="multipart/form-data">
                 <?php echo \App\Core\CSRF::hidden(); ?>
 
                 <div class="mb-6">
@@ -25,6 +25,18 @@ ob_start();
                     <small class="text-red-500 error-content"></small>
                 </div>
 
+                <div class="mb-6">
+                    <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Client Image URL (optional)</label>
+                    <input type="url" id="testimonial-image-url" name="image_url" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600 mb-3" placeholder="https://example.com/client.jpg or /assets/uploads/media/image.jpg">
+
+                    <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Or Upload Image (optional)</label>
+                    <input type="file" id="testimonial-image-file" name="image" accept="image/*" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg">
+                    <p class="text-xs text-gray-500 mt-2">Use either URL or upload. Leave both empty to keep initials-only display.</p>
+                    <div id="testimonial-image-preview" class="mt-3 hidden border border-slate-200 rounded-lg overflow-hidden max-w-xs">
+                        <img id="testimonial-image-preview-img" src="" alt="Client image preview" class="w-full h-40 object-cover">
+                    </div>
+                </div>
+
                 <div id="form-message" class="mb-4 p-4 rounded-lg hidden"></div>
 
                 <div class="flex gap-4">
@@ -37,6 +49,55 @@ ob_start();
 </div>
 
 <script>
+const testimonialImageUrl = document.getElementById('testimonial-image-url');
+const testimonialImageFile = document.getElementById('testimonial-image-file');
+const testimonialImagePreview = document.getElementById('testimonial-image-preview');
+const testimonialImagePreviewImg = document.getElementById('testimonial-image-preview-img');
+let testimonialObjectUrl = null;
+
+const clearTestimonialObjectUrl = () => {
+    if (testimonialObjectUrl) {
+        URL.revokeObjectURL(testimonialObjectUrl);
+        testimonialObjectUrl = null;
+    }
+};
+
+const renderTestimonialPreview = (src) => {
+    if (!src) {
+        testimonialImagePreview.classList.add('hidden');
+        testimonialImagePreviewImg.src = '';
+        return;
+    }
+
+    testimonialImagePreviewImg.src = src;
+    testimonialImagePreview.classList.remove('hidden');
+};
+
+testimonialImageFile.addEventListener('change', () => {
+    const file = testimonialImageFile.files && testimonialImageFile.files[0] ? testimonialImageFile.files[0] : null;
+    clearTestimonialObjectUrl();
+    if (!file) {
+        renderTestimonialPreview('');
+        return;
+    }
+
+    testimonialImageUrl.value = '';
+    testimonialObjectUrl = URL.createObjectURL(file);
+    renderTestimonialPreview(testimonialObjectUrl);
+});
+
+testimonialImageUrl.addEventListener('input', () => {
+    const url = testimonialImageUrl.value.trim();
+    if (!url) {
+        renderTestimonialPreview('');
+        return;
+    }
+
+    testimonialImageFile.value = '';
+    clearTestimonialObjectUrl();
+    renderTestimonialPreview(url);
+});
+
 document.getElementById('testimonial-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     

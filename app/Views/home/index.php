@@ -157,48 +157,61 @@ $getGalleryMediaType = static function ($media) {
             </a>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-up" data-aos-delay="100">
-            <?php foreach (array_slice($services ?? [], 0, 6) as $index => $service): ?>
-                <article class="service-scroll-card h-full rounded-2xl overflow-hidden bg-white" data-aos="fade-up" data-aos-delay="<?php echo $index * 80; ?>">
-                    <div class="service-scroll-card-inner">
-                        <div class="service-scroll-image-wrap">
-                            <?php if (!empty($service['image'])): ?>
-                                <img src="<?php echo htmlspecialchars(uploadedImageUrl($service['image'])); ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" class="service-scroll-image">
-                            <?php else: ?>
-                                <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #0F3D3E 0%, #2d5a5b 100%);">
-                                    <i class="fas fa-image text-white text-5xl opacity-30"></i>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+        <div class="relative" data-aos="fade-up" data-aos-delay="100">
+            <button type="button" class="home-service-swiper-btn home-service-swiper-prev" aria-label="Previous service">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button type="button" class="home-service-swiper-btn home-service-swiper-next" aria-label="Next service">
+                <i class="fas fa-chevron-right"></i>
+            </button>
 
-                        <div class="service-scroll-content">
-                            <div>
-                                <h3 class="text-2xl mb-3" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.02em; font-weight: 600;">
-                                    <?php echo htmlspecialchars($service['title']); ?>
-                                </h3>
-                                <p class="service-card-description text-sm text-gray-600 leading-relaxed mb-4 line-clamp-4">
-                                    <?php echo htmlspecialchars($service['description']); ?>
-                                </p>
-                                <div class="space-y-2 mb-5">
-                                    <p class="text-xs text-gray-700 flex items-center gap-2" style="font-family: 'Montserrat', sans-serif;">
-                                        <i class="fas fa-check-circle" style="color: #C8A951;"></i>
-                                        <?php echo htmlspecialchars(trans('content.home.core_services.bullet_1', 'Personalized concept and event styling')); ?>
-                                    </p>
-                                    <p class="text-xs text-gray-700 flex items-center gap-2" style="font-family: 'Montserrat', sans-serif;">
-                                        <i class="fas fa-check-circle" style="color: #C8A951;"></i>
-                                        <?php echo htmlspecialchars(trans('content.home.core_services.bullet_2', 'Timeline, logistics, and vendor support')); ?>
-                                    </p>
-                                </div>
-                            </div>
+            <div class="swiper homeServicesSwiper">
+                <div class="swiper-wrapper">
+                    <?php foreach (array_slice($services ?? [], 0, 6) as $index => $service): ?>
+                        <div class="swiper-slide">
+                            <article class="service-scroll-card h-full rounded-2xl overflow-hidden bg-white" data-aos="fade-up" data-aos-delay="<?php echo $index * 80; ?>">
+                                <div class="service-scroll-card-inner">
+                                    <div class="service-scroll-image-wrap">
+                                        <?php if (!empty($service['image'])): ?>
+                                            <img src="<?php echo htmlspecialchars(uploadedImageUrl($service['image'])); ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" class="service-scroll-image">
+                                        <?php else: ?>
+                                            <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #0F3D3E 0%, #2d5a5b 100%);">
+                                                <i class="fas fa-image text-white text-5xl opacity-30"></i>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
 
-                            <a href="<?php echo route('/services/' . $service['id']); ?>" class="inline-flex items-center text-xs font-semibold transition-all duration-300 hover:opacity-80" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase;">
-                                <?php echo htmlspecialchars(trans('content.home.core_services.explore', 'Explore')); ?>
-                                <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
+                                    <div class="service-scroll-content">
+                                        <div>
+                                            <h3 class="text-2xl mb-3" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.02em; font-weight: 600;">
+                                                <?php echo htmlspecialchars($service['title']); ?>
+                                            </h3>
+                                            <p class="service-card-description text-sm text-gray-600 leading-relaxed mb-4 line-clamp-4">
+                                                <?php echo htmlspecialchars($service['description']); ?>
+                                            </p>
+                                            <div class="space-y-2 mb-5">
+                                                <p class="text-xs text-gray-700 flex items-center gap-2" style="font-family: 'Montserrat', sans-serif;">
+                                                    <i class="fas fa-check-circle" style="color: #C8A951;"></i>
+                                                    <?php echo htmlspecialchars(trans('content.home.core_services.bullet_1', 'Personalized concept and event styling')); ?>
+                                                </p>
+                                                <p class="text-xs text-gray-700 flex items-center gap-2" style="font-family: 'Montserrat', sans-serif;">
+                                                    <i class="fas fa-check-circle" style="color: #C8A951;"></i>
+                                                    <?php echo htmlspecialchars(trans('content.home.core_services.bullet_2', 'Timeline, logistics, and vendor support')); ?>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <a href="<?php echo route('/services/' . $service['id']); ?>" class="inline-flex items-center text-xs font-semibold transition-all duration-300 hover:opacity-80" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase;">
+                                            <?php echo htmlspecialchars(trans('content.home.core_services.explore', 'Explore')); ?>
+                                            <i class="fas fa-arrow-right ml-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                    </div>
-                </article>
-            <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
 
     </div>

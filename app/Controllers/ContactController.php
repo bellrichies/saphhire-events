@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\CSRF;
 use App\Models\Inquiry;
+use RuntimeException;
 use Throwable;
 
 class ContactController extends Controller
@@ -40,7 +41,14 @@ class ContactController extends Controller
             'name' => 'required|min:3|max:150',
             'email' => 'required|email',
             'phone' => 'required|max:50',
+            'service_type' => 'required|max:150',
             'event_type' => 'required',
+            'event_date' => 'required',
+            'event_time' => 'required|max:20',
+            'budget' => 'required|max:150',
+            'guest_count' => 'required|max:50',
+            'event_location' => 'required|max:255',
+            'lead_source' => 'required|max:100',
             'message' => 'required|min:10|max:5000',
         ];
 
@@ -48,8 +56,14 @@ class ContactController extends Controller
             'name' => $_POST['name'] ?? '',
             'email' => $_POST['email'] ?? '',
             'phone' => $_POST['phone'] ?? '',
+            'service_type' => $_POST['service_type'] ?? '',
             'event_type' => $_POST['event_type'] ?? '',
             'event_date' => $_POST['event_date'] ?? '',
+            'event_time' => $_POST['event_time'] ?? '',
+            'budget' => $_POST['budget'] ?? '',
+            'guest_count' => $_POST['guest_count'] ?? '',
+            'event_location' => $_POST['event_location'] ?? '',
+            'lead_source' => $_POST['lead_source'] ?? '',
             'message' => $_POST['message'] ?? '',
         ];
 
@@ -71,6 +85,75 @@ class ContactController extends Controller
             }
         }
 
+        if (!empty($data['event_time'])) {
+            $eventTime = \DateTime::createFromFormat('H:i', $data['event_time']);
+            $isValidTime = $eventTime && $eventTime->format('H:i') === $data['event_time'];
+            if (!$isValidTime) {
+                http_response_code(422);
+                $this->json(['errors' => ['event_time' => 'Event time must be a valid time']]);
+                return;
+            }
+        }
+
+        $uploadMeta = '';
+        $uploadPath = '';
+        if (isset($_FILES['inspiration_image']) && is_array($_FILES['inspiration_image'])) {
+            $upload = $_FILES['inspiration_image'];
+            $uploadError = (int)($upload['error'] ?? UPLOAD_ERR_NO_FILE);
+
+            if ($uploadError !== UPLOAD_ERR_NO_FILE) {
+                if ($uploadError !== UPLOAD_ERR_OK) {
+                    http_response_code(422);
+                    $this->json(['errors' => ['inspiration_image' => 'Image upload failed. Please try another file.']]);
+                    return;
+                }
+
+                $tmpPath = (string)($upload['tmp_name'] ?? '');
+                $originalName = trim((string)($upload['name'] ?? ''));
+                $size = (int)($upload['size'] ?? 0);
+
+                $maxSizeBytes = 10 * 1024 * 1024;
+                if ($size <= 0 || $size > $maxSizeBytes) {
+                    http_response_code(422);
+                    $this->json(['errors' => ['inspiration_image' => 'Image must be greater than 0 bytes and up to 10MB.']]);
+                    return;
+                }
+
+                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+                $mimeType = $tmpPath !== '' ? (string)(mime_content_type($tmpPath) ?: '') : '';
+                if ($mimeType === '' || !in_array($mimeType, $allowedMimeTypes, true)) {
+                    http_response_code(422);
+                    $this->json(['errors' => ['inspiration_image' => 'Only JPG, PNG, WEBP, or AVIF images are allowed.']]);
+                    return;
+                }
+
+                try {
+                    [$uploadMeta, $uploadPath] = $this->storeInspirationImage($upload, $mimeType);
+                } catch (RuntimeException $e) {
+                    http_response_code(422);
+                    $this->json(['errors' => ['inspiration_image' => $e->getMessage()]]);
+                    return;
+                }
+
+            }
+        }
+
+        $data['message'] = implode("\n", [
+            'Service Type: ' . $data['service_type'],
+            'Occasion: ' . $data['event_type'],
+            'Event Date: ' . $data['event_date'],
+            'Event Time: ' . $data['event_time'],
+            'Budget: ' . $data['budget'],
+            'Guest Count: ' . $data['guest_count'],
+            'Event Location: ' . $data['event_location'],
+            'Inspiration Image: ' . ($uploadMeta !== '' ? $uploadMeta : 'Not provided'),
+            'Inspiration Image Path: ' . ($uploadPath !== '' ? $uploadPath : 'Not provided'),
+            'How Did You Hear About Us: ' . $data['lead_source'],
+            '',
+            'Additional Details:',
+            $data['message'],
+        ]);
+
         $sanitizedData = array_map([$this, 'sanitize'], $data);
 
         try {
@@ -87,5 +170,53 @@ class ContactController extends Controller
             http_response_code(500);
         }
         $this->json(['error' => 'Failed to submit inquiry. Please try again.']);
+    }
+
+    /**
+     * @param array<string, mixed> $upload
+     * @return array{0:string,1:string}
+     */
+    private function storeInspirationImage(array $upload, string $mimeType): array
+    {
+        $tmpPath = (string)($upload['tmp_name'] ?? '');
+        $originalName = trim((string)($upload['name'] ?? ''));
+
+        if ($tmpPath === '' || !is_uploaded_file($tmpPath)) {
+            throw new RuntimeException('Invalid uploaded file. Please re-upload the image.');
+        }
+
+        $targetDir = PUBLIC_PATH . '/assets/uploads/inquiries';
+        if (!is_dir($targetDir) && !mkdir($targetDir, 0755, true) && !is_dir($targetDir)) {
+            throw new RuntimeException('Unable to prepare upload folder. Please try again.');
+        }
+
+        $extensionByMime = [
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/webp' => 'webp',
+            'image/avif' => 'avif',
+        ];
+        $extension = $extensionByMime[$mimeType] ?? strtolower((string)pathinfo($originalName, PATHINFO_EXTENSION));
+        if ($extension === '') {
+            $extension = 'jpg';
+        }
+
+        try {
+            $randomSuffix = bin2hex(random_bytes(8));
+        } catch (Throwable $e) {
+            $randomSuffix = (string)mt_rand(100000, 999999);
+        }
+
+        $filename = 'inquiry_' . date('Ymd_His') . '_' . $randomSuffix . '.' . $extension;
+        $relativePath = 'assets/uploads/inquiries/' . $filename;
+        $targetPath = $targetDir . '/' . $filename;
+
+        if (!move_uploaded_file($tmpPath, $targetPath)) {
+            throw new RuntimeException('Failed to save uploaded image. Please try again.');
+        }
+
+        $displayName = $originalName !== '' ? $originalName : $filename;
+
+        return [$displayName, $relativePath];
     }
 }

@@ -34,8 +34,16 @@ class Router
         $this->currentMethod = $_SERVER['REQUEST_METHOD'];
         $this->currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         
-        // Strip BASE_PATH from the beginning
-        $this->currentPath = str_replace(BASE_PATH, '', $this->currentPath) ?: '/';
+        // Strip configured APP_URL base path from the beginning.
+        $normalizedBasePath = '/' . trim(\determineBasePath(), '/');
+        if ($normalizedBasePath !== '/') {
+            if ($this->currentPath === $normalizedBasePath) {
+                $this->currentPath = '/';
+            } elseif (strpos($this->currentPath, $normalizedBasePath . '/') === 0) {
+                $this->currentPath = '/' . ltrim(substr($this->currentPath, strlen($normalizedBasePath)), '/');
+            }
+        }
+        $this->currentPath = $this->currentPath ?: '/';
         
         // Also strip 'public/' if it's at the beginning (from .htaccess rewrite)
         if (strpos($this->currentPath, 'public/') === 0) {

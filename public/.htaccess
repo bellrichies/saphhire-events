@@ -1,6 +1,5 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /sapphireevents/public/
 
     # Deny access to hidden files
     RewriteRule (^\.|/\.) - [F]

@@ -164,7 +164,7 @@ Models in `app/Models/` handle all database operations using prepared statements
 **404 Errors:**
 - Check `.htaccess` is in `/public`
 - Ensure mod_rewrite is enabled
-- Verify `BASE_PATH` matches your installation path
+- Verify `APP_URL` in `.env` matches your installation URL/path
 
 **Database Connection:**
 - Check `.env` credentials

@@ -100,5 +100,11 @@ $router->post('/admin/team', 'TeamAdminController@store');
 $router->post('/admin/team/update', 'TeamAdminController@update');
 $router->post('/admin/team/delete', 'TeamAdminController@delete');
 
+// Admin Media Library Routes
+$router->get('/admin/media', 'MediaAdminController@index');
+$router->get('/admin/media/list', 'MediaAdminController@list');
+$router->post('/admin/media/upload', 'MediaAdminController@upload');
+$router->post('/admin/media/delete', 'MediaAdminController@delete');
+
 // SEO Routes
 $router->get('/sitemap.xml', 'SitemapController@generate');

@@ -4,6 +4,24 @@
  * Global Helper Functions for URL and Asset Management
  */
 
+if (!function_exists('configuredAppUrl')) {
+    /**
+     * Get APP_URL from environment with request-based fallback.
+     *
+     * @return string
+     */
+    function configuredAppUrl(): string {
+        $configured = trim((string)($_ENV['APP_URL'] ?? ''));
+        if ($configured !== '') {
+            return rtrim($configured, '/');
+        }
+
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        return $scheme . '://' . $host;
+    }
+}
+
 if (!function_exists('baseUrl')) {
     /**
      * Get the base URL of the application
@@ -12,19 +30,7 @@ if (!function_exists('baseUrl')) {
      * @return string The base URL
      */
     function baseUrl($path = '') {
-        $baseUrl = rtrim($_ENV['APP_URL'] ?? 'http://localhost/sapphireevents', '/');
-        $basePath = determineBasePath();
-        
-        if ($basePath !== '/') {
-            $normalizedBasePath = '/' . trim($basePath, '/');
-            $configuredPath = parse_url($baseUrl, PHP_URL_PATH) ?: '';
-            $normalizedConfiguredPath = $configuredPath === '' ? '/' : '/' . trim($configuredPath, '/');
-
-            if ($normalizedConfiguredPath !== $normalizedBasePath) {
-                $baseUrl = rtrim($baseUrl, '/') . $normalizedBasePath;
-            }
-        }
-        
+        $baseUrl = configuredAppUrl();
         if ($path) {
             $baseUrl = rtrim($baseUrl, '/') . '/' . ltrim($path, '/');
         }
@@ -81,15 +87,25 @@ if (!function_exists('currentUrl')) {
      */
     function currentUrl() {
         $baseUrl = baseUrl();
-        $uri = $_SERVER['REQUEST_URI'] ?? '/';
-        $basePath = determineBasePath();
-        
-        // Remove base path from URI to get relative URL
-        if (strpos($uri, $basePath) === 0) {
-            $uri = substr($uri, strlen($basePath));
+        $uri = (string)($_SERVER['REQUEST_URI'] ?? '/');
+        $uriPath = parse_url($uri, PHP_URL_PATH) ?: '/';
+        $query = (string)(parse_url($uri, PHP_URL_QUERY) ?? '');
+        $normalizedBasePath = '/' . trim(determineBasePath(), '/');
+
+        if ($normalizedBasePath !== '/') {
+            if ($uriPath === $normalizedBasePath) {
+                $uriPath = '/';
+            } elseif (strpos($uriPath, $normalizedBasePath . '/') === 0) {
+                $uriPath = '/' . ltrim(substr($uriPath, strlen($normalizedBasePath)), '/');
+            }
         }
-        
-        return $baseUrl . '/' . ltrim($uri, '/');
+
+        $url = $baseUrl . '/' . ltrim($uriPath, '/');
+        if ($query !== '') {
+            $url .= '?' . $query;
+        }
+
+        return $url;
     }
 }
 
@@ -102,15 +118,18 @@ if (!function_exists('isRoute')) {
      */
     function isRoute($path) {
         $path = ltrim($path, '/');
-        $uri = $_SERVER['REQUEST_URI'] ?? '/';
-        $basePath = determineBasePath();
-        
-        // Remove base path and query string
-        if (strpos($uri, $basePath) === 0) {
-            $uri = substr($uri, strlen($basePath));
+        $uri = (string)($_SERVER['REQUEST_URI'] ?? '/');
+        $uriPath = parse_url($uri, PHP_URL_PATH) ?: '/';
+        $normalizedBasePath = '/' . trim(determineBasePath(), '/');
+
+        if ($normalizedBasePath !== '/') {
+            if ($uriPath === $normalizedBasePath) {
+                $uriPath = '/';
+            } elseif (strpos($uriPath, $normalizedBasePath . '/') === 0) {
+                $uriPath = '/' . ltrim(substr($uriPath, strlen($normalizedBasePath)), '/');
+            }
         }
-        $uri = strtok($uri, '?');
-        $uri = rtrim($uri, '/');
+        $uri = rtrim($uriPath, '/');
         
         return $uri === ltrim($path, '/') || $uri === ('/' . ltrim($path, '/'));
     }
@@ -118,18 +137,22 @@ if (!function_exists('isRoute')) {
 
 if (!function_exists('determineBasePath')) {
     /**
-     * Determine the base path of the application
-     * This handles both /public directly and /sapphireevents/public redirects
+     * Determine the app base path from APP_URL.
      * 
      * @return string The base path with leading slash
      */
     function determineBasePath() {
-        $basePath = '/sapphireevents/';
-        
-        // If we're accessing through .htaccess redirect, the path is already correct
-        // The rewrite rule converts /sapphireevents/something to /sapphireevents/public/index.php?/something
-        // So we just need to return our base path
-        
+        static $basePath = null;
+
+        if ($basePath !== null) {
+            return $basePath;
+        }
+
+        $configuredUrl = configuredAppUrl();
+        $path = (string)(parse_url($configuredUrl, PHP_URL_PATH) ?? '');
+        $trimmed = trim($path, '/');
+        $basePath = $trimmed === '' ? '/' : '/' . $trimmed . '/';
+
         return $basePath;
     }
 }
@@ -338,8 +361,7 @@ if (!function_exists('canonicalUrl')) {
     function canonicalUrl(): string {
         $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
         $path = parse_url($requestUri, PHP_URL_PATH) ?: '/';
-        $basePath = determineBasePath();
-        $normalizedBasePath = '/' . trim($basePath, '/');
+        $normalizedBasePath = '/' . trim(determineBasePath(), '/');
 
         if ($path === $normalizedBasePath || $path === $normalizedBasePath . '/') {
             $path = '/';

@@ -100,6 +100,23 @@ class Database
             INDEX `idx_created` (`created_at`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
+        $mediaTable = "CREATE TABLE IF NOT EXISTS `media_library` (
+            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `file_name` VARCHAR(255) NOT NULL,
+            `original_name` VARCHAR(255) NOT NULL,
+            `disk_path` VARCHAR(255) NOT NULL,
+            `public_url` VARCHAR(255) NOT NULL,
+            `mime_type` VARCHAR(100) NOT NULL,
+            `media_type` ENUM('image','video','file') NOT NULL,
+            `extension` VARCHAR(20) NOT NULL,
+            `size_bytes` BIGINT UNSIGNED NOT NULL,
+            `uploaded_by` INT NULL,
+            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX `idx_media_type` (`media_type`),
+            INDEX `idx_created_at` (`created_at`),
+            INDEX `idx_uploaded_by` (`uploaded_by`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+
         try {
             $db->exec($adminsTable);
             $db->exec($categoriesTable);
@@ -109,6 +126,7 @@ class Database
             $db->exec($packagesTable);
             $db->exec($testimonialsTable);
             $db->exec($inquiriesTable);
+            $db->exec($mediaTable);
 
             echo "✓ Database tables created successfully\n";
         } catch (\Exception $e) {

@@ -59,6 +59,10 @@ $iconClass = static function (string $path) use ($isActive): string {
                     <i class="fas fa-images <?php echo $iconClass('/admin/gallery'); ?>"></i>
                     <span>Gallery</span>
                 </a>
+                <a href="<?php echo route('/admin/media'); ?>" class="<?php echo $itemClass('/admin/media'); ?>">
+                    <i class="fas fa-photo-video <?php echo $iconClass('/admin/media'); ?>"></i>
+                    <span>Media Library</span>
+                </a>
                 <a href="<?php echo route('/admin/categories'); ?>" class="<?php echo $itemClass('/admin/categories'); ?>">
                     <i class="fas fa-folder <?php echo $iconClass('/admin/categories'); ?>"></i>
                     <span>Categories</span>
