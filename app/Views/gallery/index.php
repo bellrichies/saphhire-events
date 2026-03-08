@@ -51,7 +51,7 @@ $lightboxItems = array_map(static function (array $item) use ($getGalleryMediaUr
 
 <!-- Gallery Section with Filter Tabs -->
 <section class="py-20 px-4 bg-[#FAFAFA]">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="text-center mb-8" data-aos="fade-up">
             <h2 class="text-4xl md:text-5xl mb-3 text-[#0F3D3E]" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">Featured Events</h2>
             <p class="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
@@ -241,7 +241,7 @@ $lightboxItems = array_map(static function (array $item) use ($getGalleryMediaUr
 
 <!-- Event Categories Showcase -->
 <section class="py-20 px-4 bg-white">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="text-center mb-16">
             <span class="inline-block px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider mb-4" style="background: rgba(200, 169, 81, 0.15); color: #C8A951;">What We Do</span>
             <h2 class="text-4xl md:text-5xl mb-4 text-[#0F3D3E]" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">Event Categories</h2>
@@ -320,7 +320,7 @@ $lightboxItems = array_map(static function (array $item) use ($getGalleryMediaUr
 
 <!-- Testimonials Section -->
 <section class="py-20 px-4 bg-[#F8F5F2]">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="text-center mb-16">
             <span class="inline-block px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider mb-4" style="background: rgba(200, 169, 81, 0.15); color: #C8A951;">Testimonials</span>
             <h2 class="text-4xl md:text-5xl mb-4 text-[#0F3D3E]" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">Client Stories</h2>

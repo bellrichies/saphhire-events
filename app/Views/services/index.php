@@ -63,7 +63,7 @@ $getPackageImageUrl = static function ($image) {
 
 <!-- Service Categories Section -->
 <section id="services" class="py-20 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <!-- Section Header -->
         <div class="text-center mb-16" data-aos="fade-up">
             <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
@@ -240,7 +240,7 @@ $getPackageImageUrl = static function ($image) {
     <div class="absolute top-0 left-0 w-full h-24" style="background: linear-gradient(to bottom, #F8F5F2, transparent);"></div>
     <div class="absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-5" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
     
-    <div class="max-w-7xl mx-auto relative">
+    <div class="site-container relative">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
             <div class="lg:col-span-7">
                 <div class="mb-10" data-aos="fade-up">
@@ -303,7 +303,7 @@ $getPackageImageUrl = static function ($image) {
 
 <!-- Why Choose Us Section -->
 <section class="py-20 px-4 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto relative">
+    <div class="site-container relative">
         <!-- Section Header -->
         <div class="text-center mb-16" data-aos="fade-up">
             <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
@@ -371,7 +371,7 @@ $getPackageImageUrl = static function ($image) {
 
 <!-- Packages Section -->
 <section class="py-20 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
             <div>
                 <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
@@ -638,5 +638,4 @@ $getPackageImageUrl = static function ($image) {
 $content = ob_get_clean();
 require VIEW_PATH . '/layouts/app.php';
 ?>
-
 

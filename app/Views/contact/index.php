@@ -21,7 +21,7 @@ ob_start();
 </section>
 
 <section class="py-12 md:py-14 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
+    <div class="site-container grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
         <article class="contact-info-card" data-aos="fade-up">
             <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
             <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.email_title', 'Email')); ?></h3>
@@ -58,7 +58,7 @@ ob_start();
 </section>
 
 <section class="py-16 md:py-20 px-4">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-8 items-start">
+    <div class="site-container grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-8 items-start">
         <div class="lg:col-span-7" data-aos="fade-right">
             <article class="contact-panel">
                 <div class="mb-7">
@@ -289,7 +289,7 @@ ob_start();
 </section>
 
 <section class="py-16 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-12 gap-7">
+    <div class="site-container grid grid-cols-1 xl:grid-cols-12 gap-7">
         <div class="xl:col-span-7" data-aos="fade-up">
             <article class="contact-panel p-0 overflow-hidden">
                 <div class="p-6 md:p-7 border-b border-gray-100">

@@ -25,8 +25,8 @@ $languageFlags = [
 $currentLanguageFlag = $languageFlags[$currentLanguage] ?? route('assets/images/flags/gb.svg');
 ?>
 
-<header class="bg-white sticky top-0 z-50 border-b border-gray-100">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 relative">
+<header class="sticky top-0 z-50 border-b border-[#f0d7eb]/70 backdrop-blur-md" style="background: linear-gradient(180deg, rgba(255, 247, 253, 0.95) 0%, rgba(251, 231, 248, 0.88) 100%);">
+    <nav class="site-container site-gutter py-2 relative">
         <div class="flex justify-between items-center">
             <a href="<?php echo route('/'); ?>" class="flex items-center space-x-2 md:space-x-3 group min-w-0" translate="no">
                 <img src="<?php echo route('assets/images/favicon.png'); ?>" alt="Sapphire Events & Decorations Logo" class="w-10 md:w-12 h-auto border border-border group-hover:scale-110 transition-transform shrink-0">
@@ -37,16 +37,16 @@ $currentLanguageFlag = $languageFlags[$currentLanguage] ?? route('assets/images/
             </a>
 
             <div class="hidden md:flex space-x-8 items-center">
-                <a href="<?php echo route('/'); ?>" class="hover:text-yellow-600 transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem;"><?php echo htmlspecialchars(trans('pages.header.home', 'Home')); ?></a>
-                <a href="<?php echo route('/services'); ?>" class="hover:text-yellow-600 transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem;"><?php echo htmlspecialchars(trans('pages.header.services', 'Services')); ?></a>
-                <a href="<?php echo route('/packages'); ?>" class="hover:text-yellow-600 transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem;"><?php echo htmlspecialchars(trans('pages.header.packages', 'Packages')); ?></a>
-                <a href="<?php echo route('/gallery'); ?>" class="hover:text-yellow-600 transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem;"><?php echo htmlspecialchars(trans('pages.header.gallery', 'Gallery')); ?></a>
-                <a href="<?php echo route('/about'); ?>" class="hover:text-yellow-600 transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem;"><?php echo htmlspecialchars(trans('pages.header.about', 'About')); ?></a>
-                <a href="<?php echo route('/faqs'); ?>" class="hover:text-yellow-600 transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem;"><?php echo htmlspecialchars(trans('pages.header.faqs', 'FAQs')); ?></a>
-                <a href="<?php echo route('/contact'); ?>" class="hover:text-yellow-600 transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem;"><?php echo htmlspecialchars(trans('pages.header.contact', 'Contact')); ?></a>
+                <a href="<?php echo route('/'); ?>" class="site-nav-link transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem; color: #0F3D3E;"><?php echo htmlspecialchars(trans('pages.header.home', 'Home')); ?></a>
+                <a href="<?php echo route('/services'); ?>" class="site-nav-link transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem; color: #0F3D3E;"><?php echo htmlspecialchars(trans('pages.header.services', 'Services')); ?></a>
+                <a href="<?php echo route('/packages'); ?>" class="site-nav-link transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem; color: #0F3D3E;"><?php echo htmlspecialchars(trans('pages.header.packages', 'Packages')); ?></a>
+                <a href="<?php echo route('/gallery'); ?>" class="site-nav-link transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem; color: #0F3D3E;"><?php echo htmlspecialchars(trans('pages.header.gallery', 'Gallery')); ?></a>
+                <a href="<?php echo route('/about'); ?>" class="site-nav-link transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem; color: #0F3D3E;"><?php echo htmlspecialchars(trans('pages.header.about', 'About')); ?></a>
+                <a href="<?php echo route('/faqs'); ?>" class="site-nav-link transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem; color: #0F3D3E;"><?php echo htmlspecialchars(trans('pages.header.faqs', 'FAQs')); ?></a>
+                <a href="<?php echo route('/contact'); ?>" class="site-nav-link transition" style="font-family: 'Montserrat', sans-serif; font-weight: 500; letter-spacing: 0.03em; font-size: 0.875rem; color: #0F3D3E;"><?php echo htmlspecialchars(trans('pages.header.contact', 'Contact')); ?></a>
 
                 <div class="relative group">
-                    <button class="flex items-center space-x-2 px-3 py-2 text-sm font-semibold rounded transition hover:bg-gray-100" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif;" type="button" aria-label="<?php echo htmlspecialchars(trans('pages.header.switch_language', 'Switch Language')); ?>">
+                    <button class="flex items-center space-x-2 px-3 py-2 text-sm font-semibold rounded transition hover:bg-white/70" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif;" type="button" aria-label="<?php echo htmlspecialchars(trans('pages.header.switch_language', 'Switch Language')); ?>">
                         <img src="<?php echo htmlspecialchars($currentLanguageFlag); ?>" alt="<?php echo htmlspecialchars(strtoupper($currentLanguage)); ?> flag" class="w-5 h-4 rounded-sm object-cover border border-gray-200" loading="lazy" decoding="async">
                         <span><?php echo strtoupper(htmlspecialchars($currentLanguage)); ?></span>
                         <i class="fas fa-chevron-down text-xs opacity-60"></i>
@@ -71,14 +71,14 @@ $currentLanguageFlag = $languageFlags[$currentLanguage] ?? route('assets/images/
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden absolute left-0 right-0 top-full mt-2 z-50 rounded-xl border border-gray-200 bg-white p-4 space-y-4 shadow-xl max-h-[75vh] overflow-y-auto">
-            <a href="<?php echo route('/'); ?>" class="block hover:text-yellow-600" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.home', 'Home')); ?></a>
-            <a href="<?php echo route('/services'); ?>" class="block hover:text-yellow-600" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.services', 'Services')); ?></a>
-            <a href="<?php echo route('/packages'); ?>" class="block hover:text-yellow-600" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.packages', 'Packages')); ?></a>
-            <a href="<?php echo route('/gallery'); ?>" class="block hover:text-yellow-600" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.gallery', 'Gallery')); ?></a>
-            <a href="<?php echo route('/about'); ?>" class="block hover:text-yellow-600" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.about', 'About')); ?></a>
-            <a href="<?php echo route('/faqs'); ?>" class="block hover:text-yellow-600" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.faqs', 'FAQs')); ?></a>
-            <a href="<?php echo route('/contact'); ?>" class="block hover:text-yellow-600" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.contact', 'Contact')); ?></a>
+        <div id="mobile-menu" class="hidden md:hidden absolute left-0 right-0 top-full mt-2 z-50 rounded-xl border border-[#f0d7eb] bg-[#fff9fe] p-4 space-y-4 shadow-xl max-h-[75vh] overflow-y-auto">
+            <a href="<?php echo route('/'); ?>" class="block site-nav-link" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.home', 'Home')); ?></a>
+            <a href="<?php echo route('/services'); ?>" class="block site-nav-link" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.services', 'Services')); ?></a>
+            <a href="<?php echo route('/packages'); ?>" class="block site-nav-link" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.packages', 'Packages')); ?></a>
+            <a href="<?php echo route('/gallery'); ?>" class="block site-nav-link" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.gallery', 'Gallery')); ?></a>
+            <a href="<?php echo route('/about'); ?>" class="block site-nav-link" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.about', 'About')); ?></a>
+            <a href="<?php echo route('/faqs'); ?>" class="block site-nav-link" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.faqs', 'FAQs')); ?></a>
+            <a href="<?php echo route('/contact'); ?>" class="block site-nav-link" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.contact', 'Contact')); ?></a>
 
             <div class="pt-4 border-t border-gray-200">
                 <p class="text-xs font-semibold text-gray-500 mb-3" style="font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('pages.header.switch_language', 'Switch Language')); ?></p>
@@ -122,6 +122,20 @@ $currentLanguageFlag = $languageFlags[$currentLanguage] ?? route('assets/images/
         }
     });
 </script>
+<!-- The container for the widget -->
+<div id="google_translate_element"></div>
 
+<!-- The initialization script -->
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en', 
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
+</script>
+
+<!-- The external Google script -->
+<script type="text/javascript" src="//://translate.google.com"></script>
 
 

@@ -12,7 +12,7 @@ ob_start();
     <div class="absolute top-10 right-10 w-40 h-40 rounded-full opacity-10 animate-float" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
     <div class="absolute bottom-10 left-10 w-32 h-32 rounded-full opacity-15 animate-float-delayed" style="background: radial-gradient(circle, #ffffff 0%, transparent 70%);"></div>
     
-    <div class="max-w-6xl mx-auto relative z-10">
+    <div class="site-container relative z-10">
         <!-- Breadcrumb -->
         <nav class="mb-10" data-aos="fade-up">
             <ol class="flex items-center gap-2 text-sm text-gray-400">
@@ -68,7 +68,7 @@ ob_start();
 
 <!-- Key Features Section -->
 <section class="py-16 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-6xl mx-auto">
+    <div class="site-container">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="group bg-white rounded-2xl p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-aos="fade-up" style="box-shadow: 0 4px 20px rgba(15, 61, 62, 0.08);">
                 <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110" style="background: linear-gradient(135deg, rgba(15, 61, 62, 0.1), rgba(200, 169, 81, 0.1));">
@@ -99,7 +99,7 @@ ob_start();
 
 <!-- What's Included Section -->
 <section class="py-20 px-4">
-    <div class="max-w-6xl mx-auto">
+    <div class="site-container">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div data-aos="fade-right">
                 <span class="inline-block px-4 py-2 rounded-full mb-6 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
@@ -203,7 +203,7 @@ ob_start();
 
 <!-- Related Services Section -->
 <section class="py-20 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-6xl mx-auto">
+    <div class="site-container">
         <div class="text-center mb-16" data-aos="fade-up">
             <span class="inline-block px-4 py-2 rounded-full mb-6 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
                 Explore More

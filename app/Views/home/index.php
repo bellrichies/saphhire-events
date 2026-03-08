@@ -50,7 +50,7 @@ $getGalleryMediaType = static function ($media) {
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl opacity-30" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4">
+    <div class="md:w-max-7xl site-container site-gutter relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div class="lg:col-span-7" data-aos="fade-up">
                 <span class="inline-block px-4 py-2 rounded-full mb-6 text-xs font-semibold tracking-[0.2em] uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif;">
@@ -103,9 +103,10 @@ $getGalleryMediaType = static function ($media) {
     </div>
 </section>
 
-<section class="py-16 md:py-20 px-4 max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        <div data-aos="fade-right">
+<section class="py-16 md:py-20">
+    <div class="site-container site-gutter">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div data-aos="fade-right">
             <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif;">
                 <?php echo htmlspecialchars(trans('content.home.about_section.badge', 'About Us')); ?>
             </span>
@@ -126,20 +127,21 @@ $getGalleryMediaType = static function ($media) {
             </a>
         </div>
 
-        <div class="relative" data-aos="fade-left">
-            <div class="rounded-2xl overflow-hidden luxury-shadow aspect-[3/4] md:aspect-[4/5] max-w-md mx-auto md:mx-0 md:ml-auto bg-[#f3eee8]">
-                <img src="<?= route('/assets/images/about-home.avif') ?>" alt="Sapphire Events team at work" class="w-full h-full object-cover object-top">
-            </div>
-            <div class="hidden md:block absolute -bottom-8 -left-8 bg-white rounded-xl p-5 luxury-shadow">
-                <p class="text-xs uppercase tracking-[0.16em] mb-1" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('content.home.about_section.trusted_label', 'Trusted by Clients')); ?></p>
-                <p class="text-2xl" style="font-family: 'Cormorant Garamond', serif; color: #C8A951;"><?php echo htmlspecialchars(trans('content.home.about_section.trusted_value', 'Weddings, Corporate, Private')); ?></p>
+            <div class="relative" data-aos="fade-left">
+                <div class="rounded-2xl overflow-hidden luxury-shadow aspect-[3/4] md:aspect-[4/5] max-w-md mx-auto md:mx-0 md:ml-auto bg-[#f3eee8]">
+                    <img src="<?= route('/assets/images/about-home.avif') ?>" alt="Sapphire Events team at work" class="w-full h-full object-cover object-top">
+                </div>
+                <div class="hidden md:block absolute -bottom-8 -left-8 bg-white rounded-xl p-5 luxury-shadow">
+                    <p class="text-xs uppercase tracking-[0.16em] mb-1" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('content.home.about_section.trusted_label', 'Trusted by Clients')); ?></p>
+                    <p class="text-2xl" style="font-family: 'Cormorant Garamond', serif; color: #C8A951;"><?php echo htmlspecialchars(trans('content.home.about_section.trusted_value', 'Weddings, Corporate, Private')); ?></p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <section id="core-services" class="py-16 md:py-20 px-4 overflow-hidden" style="background-color: #F8F5F2;">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
             <div>
                 <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif;">
@@ -217,9 +219,10 @@ $getGalleryMediaType = static function ($media) {
     </div>
 </section>
 
-<section class="py-16 md:py-20 px-4 max-w-7xl mx-auto">
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
-        <div>
+<section class="py-16 md:py-20">
+    <div class="site-container site-gutter">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
+            <div>
             <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif;">
                 <?php echo htmlspecialchars(trans('content.home.portfolio.badge', 'Portfolio')); ?>
             </span>
@@ -230,12 +233,12 @@ $getGalleryMediaType = static function ($media) {
                 <?php echo htmlspecialchars(trans('content.home.portfolio.description', 'A bold visual snapshot of our latest decor transformations, creative styling, and signature event setups.')); ?>
             </p>
         </div>
-        <a href="<?php echo route('/gallery'); ?>" class="inline-flex items-center text-sm font-semibold" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase;">
-            <?php echo htmlspecialchars(trans('content.home.portfolio.view_all', 'View Full Gallery')); ?> <i class="fas fa-arrow-right ml-2"></i>
-        </a>
-    </div>
+            <a href="<?php echo route('/gallery'); ?>" class="inline-flex items-center text-sm font-semibold" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase;">
+                <?php echo htmlspecialchars(trans('content.home.portfolio.view_all', 'View Full Gallery')); ?> <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10" id="gallery-grid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10" id="gallery-grid">
         <?php foreach ($featuredGallery as $index => $item): ?>
             <?php
                 $mediaPath = uploadedImageUrl($item['image'] ?? '');
@@ -272,41 +275,41 @@ $getGalleryMediaType = static function ($media) {
                 </div>
             </article>
         <?php endforeach; ?>
-    </div>
+        </div>
 
-    <div id="lightbox-modal" class="fixed inset-0 z-50 hidden bg-black/95 flex items-center justify-center" style="backdrop-filter: blur(4px);">
-        <div class="relative w-full h-full flex items-center justify-center p-4">
-            <button id="lightbox-close" class="absolute top-6 right-6 z-60 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white/10" style="color: #C8A951; font-size: 1.5rem;">
-                <i class="fas fa-times"></i>
-            </button>
-
-            <div class="relative w-full max-w-5xl mx-auto">
-                <img id="lightbox-image" src="" alt="Gallery Item" class="w-full h-auto rounded-lg max-h-[80vh] object-contain">
-                <video id="lightbox-video" class="hidden w-full h-auto rounded-lg max-h-[80vh] object-contain" controls playsinline></video>
-                <button id="lightbox-prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white/10" style="color: #C8A951; font-size: 1.5rem;">
-                    <i class="fas fa-chevron-left"></i>
+        <div id="lightbox-modal" class="fixed inset-0 z-50 hidden bg-black/95 flex items-center justify-center" style="backdrop-filter: blur(4px);">
+            <div class="relative w-full h-full flex items-center justify-center p-4">
+                <button id="lightbox-close" class="absolute top-6 right-6 z-60 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white/10" style="color: #C8A951; font-size: 1.5rem;">
+                    <i class="fas fa-times"></i>
                 </button>
-                <button id="lightbox-next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white/10" style="color: #C8A951; font-size: 1.5rem;">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
 
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 rounded-b-lg">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h3 id="lightbox-title" class="text-2xl font-bold mb-2" style="color: #C8A951; font-family: 'Cormorant Garamond', serif;"></h3>
-                        <p id="lightbox-category" class="text-sm text-gray-300 uppercase tracking-wider" style="font-family: 'Montserrat', sans-serif;"></p>
+                <div class="relative w-full max-w-5xl mx-auto">
+                    <img id="lightbox-image" src="" alt="Gallery Item" class="w-full h-auto rounded-lg max-h-[80vh] object-contain">
+                    <video id="lightbox-video" class="hidden w-full h-auto rounded-lg max-h-[80vh] object-contain" controls playsinline></video>
+                    <button id="lightbox-prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white/10" style="color: #C8A951; font-size: 1.5rem;">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="lightbox-next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white/10" style="color: #C8A951; font-size: 1.5rem;">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 rounded-b-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 id="lightbox-title" class="text-2xl font-bold mb-2" style="color: #C8A951; font-family: 'Cormorant Garamond', serif;"></h3>
+                            <p id="lightbox-category" class="text-sm text-gray-300 uppercase tracking-wider" style="font-family: 'Montserrat', sans-serif;"></p>
+                        </div>
+                        <div id="lightbox-counter" class="text-lg font-semibold text-gray-400" style="color: #C8A951; font-family: 'Montserrat', sans-serif;"></div>
                     </div>
-                    <div id="lightbox-counter" class="text-lg font-semibold text-gray-400" style="color: #C8A951; font-family: 'Montserrat', sans-serif;"></div>
                 </div>
             </div>
         </div>
     </div>
-
 </section>
 
 <section id="home-packages" class="py-16 md:py-20 px-4" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
             <div>
                 <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif;">
@@ -375,7 +378,7 @@ $getGalleryMediaType = static function ($media) {
 </section>
 
 <section class="py-16 md:py-20 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
             <span class="inline-block px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider mb-4" style="background: rgba(200, 169, 81, 0.15); color: #C8A951; font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('content.home.testimonials.badge', 'Testimonials')); ?></span>
             <h2 class="home-section-title text-4xl md:text-5xl mb-4 text-[#0F3D3E]" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;"><?php echo htmlspecialchars(trans('content.home.testimonials.title', 'Client Stories')); ?></h2>

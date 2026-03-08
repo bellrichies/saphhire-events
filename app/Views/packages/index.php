@@ -46,7 +46,7 @@ $getImageUrl = static function (?string $image): string {
 </section>
 
 <section class="py-20 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="text-center mb-14" data-aos="fade-up">
             <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
                 Package Categories
@@ -97,7 +97,7 @@ $getImageUrl = static function (?string $image): string {
 </section>
 
 <section class="py-20 px-4">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="text-center mb-14" data-aos="fade-up">
             <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
                 Highlighted Offers

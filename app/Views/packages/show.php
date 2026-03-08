@@ -30,7 +30,7 @@ $getImageUrl = static function (?string $image): string {
 <section class="relative py-16 md:py-20 px-4 overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
     <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
 
-    <div class="max-w-6xl mx-auto relative z-10 text-center" data-aos="fade-up">
+    <div class="site-container relative z-10 text-center" data-aos="fade-up">
         <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; letter-spacing: 0.2em;">
             Package Category
         </span>
@@ -44,7 +44,7 @@ $getImageUrl = static function (?string $image): string {
 </section>
 
 <section class="py-16 md:py-20 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10" data-aos="fade-up">
             <a href="<?php echo route('/packages'); ?>" class="inline-flex items-center text-sm font-semibold" style="color: #0F3D3E; letter-spacing: 0.06em; text-transform: uppercase;">
                 <i class="fas fa-arrow-left mr-2"></i> All Categories

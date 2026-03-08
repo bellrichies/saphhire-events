@@ -63,7 +63,7 @@ $faqSchema = [
 </section>
 
 <section class="py-12 md:py-14 px-4" style="background-color: #F8F5F2;">
-    <div class="max-w-7xl mx-auto">
+    <div class="site-container">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-8 items-start">
             <aside class="lg:col-span-4" data-aos="fade-right">
                 <article class="faqs-panel lg:sticky lg:top-24">

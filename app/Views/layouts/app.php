@@ -68,7 +68,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800&family=Parisienne&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -77,10 +77,17 @@
     
     <style>
         :root {
-            --emerald: #0F3D3E;
-            --gold: #C8A951;
-            --off-white: #F8F5F2;
-            --charcoal: #1C1C1C;
+            --emerald: #7D3171;
+            --gold: #F6CCF0;
+            --off-white: #FBECF9;
+            --blush: #F6CCF0;
+            --blush-soft: #FBECF9;
+            --blush-mist: #FFF8FE;
+            --accent-strong: #7D3171;
+            --base-light: #FFFFFF;
+            --base-dark: #000000;
+            --rose-shadow: rgba(126, 78, 118, 0.14);
+            --charcoal: #000000;
         }
 
         html {
@@ -95,13 +102,25 @@
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Lora', serif;
             color: var(--charcoal);
-            background-color: #FFFFFF;
+            background: radial-gradient(circle at 8% 8%, rgba(246, 204, 240, 0.62) 0%, rgba(246, 204, 240, 0) 28%),
+                        radial-gradient(circle at 92% 8%, rgba(251, 236, 249, 0.9) 0%, rgba(251, 236, 249, 0) 28%),
+                        linear-gradient(180deg, #ffffff 0%, #fff8fe 55%, #fbecf9 100%);
             font-weight: 400;
             line-height: 1.6;
             letter-spacing: 0.2px;
             overflow-x: hidden;
+        }
+
+        .site-container {
+            width: 100%;
+            max-width: none;
+            margin-inline: 0;
+        }
+
+        .site-gutter {
+            padding-inline: clamp(1rem, 2.5vw, 2.5rem);
         }
 
         main {
@@ -140,62 +159,62 @@
         h1 {
             font-family: 'Cormorant Garamond', serif;
             font-size: 3.5rem;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: -0.5px;
-            line-height: 1.2;
+            line-height: 1.14;
         }
 
         h2 {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.5rem;
             font-weight: 600;
-            letter-spacing: -0.3px;
-            line-height: 1.3;
+            letter-spacing: -0.45px;
+            line-height: 1.18;
         }
 
         h3 {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Cormorant Garamond', serif;
             font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
+            font-weight: 600;
+            letter-spacing: 0.01em;
         }
 
         h4 {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Lora', serif;
             font-size: 1.25rem;
             font-weight: 600;
             letter-spacing: 0.02em;
         }
 
         h5, h6 {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Lora', serif;
             font-weight: 600;
             letter-spacing: 0.05em;
         }
 
         p {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Lora', serif;
             font-weight: 400;
             letter-spacing: 0.25px;
         }
 
         a {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Lora', serif;
             font-weight: 500;
         }
 
         span, small {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Lora', serif;
         }
 
         .btn-primary {
             background-color: var(--emerald);
-            color: white;
+            color: var(--base-light);
             padding: 12px 24px;
             border-radius: 8px;
             transition: all 0.3s ease;
-            border: 2px solid var(--emerald);
-            font-family: 'Montserrat', sans-serif;
+            border: 2px solid var(--accent-strong);
+            font-family: 'Manrope', sans-serif;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -203,18 +222,18 @@
         }
 
         .btn-primary:hover {
-            background-color: transparent;
-            color: var(--emerald);
+            background-color: var(--base-light);
+            color: var(--accent-strong);
         }
 
         .btn-secondary {
-            background-color: var(--gold);
-            color: var(--charcoal);
+            background-color: var(--blush);
+            color: var(--accent-strong);
             padding: 12px 24px;
             border-radius: 8px;
             transition: all 0.3s ease;
-            border: 2px solid var(--gold);
-            font-family: 'Montserrat', sans-serif;
+            border: 2px solid var(--blush);
+            font-family: 'Manrope', sans-serif;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -222,12 +241,13 @@
         }
 
         .btn-secondary:hover {
-            background-color: transparent;
-            color: var(--gold);
+            background-color: var(--base-light);
+            color: var(--accent-strong);
+            border-color: var(--accent-strong);
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, var(--emerald) 0%, var(--gold) 100%);
+            background: linear-gradient(135deg, var(--accent-strong) 0%, var(--blush) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -247,7 +267,7 @@
 
         /* Typography Enhancements */
         .subtitle {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Lora', serif;
             font-size: 0.875rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
@@ -255,9 +275,9 @@
         }
 
         .accent-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-weight: 300;
+            font-family: 'Parisienne', cursive;
+            font-style: normal;
+            font-weight: 400;
         }
 
         .section-title {
@@ -268,13 +288,13 @@
         }
 
         small {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Lora', serif;
             font-weight: 400;
             letter-spacing: 0.25px;
         }
 
         .text-label {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Lora', serif;
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
@@ -289,13 +309,14 @@
 
         /* Elegant Service Card - Home Page */
         .service-card-home {
-            background: white;
-            box-shadow: 0 8px 32px rgba(15, 61, 62, 0.12);
-            border: 1px solid rgba(200, 169, 81, 0.1);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 248, 252, 0.92) 100%);
+            box-shadow: 0 10px 32px var(--rose-shadow);
+            border: 1px solid rgba(246, 204, 240, 0.55);
+            backdrop-filter: blur(1.5px);
         }
 
         .service-card-home:hover {
-            box-shadow: 0 20px 60px rgba(15, 61, 62, 0.2);
+            box-shadow: 0 20px 60px rgba(126, 78, 118, 0.26);
             transform: translateY(-6px);
         }
 
@@ -320,6 +341,65 @@
 
         .service-card-home:hover .w-1 {
             background-color: #0F3D3E;
+        }
+
+        .site-nav-link:hover {
+            color: var(--accent-strong) !important;
+        }
+
+        section[style*="background-color: #F8F5F2"] {
+            background-color: var(--blush-soft) !important;
+        }
+
+        .site-topbar {
+            background-color: var(--accent-strong);
+            color: var(--base-light);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .site-topbar-inner {
+            min-height: 42px;
+        }
+
+        .site-topbar a {
+            color: var(--base-light);
+            text-decoration: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .site-topbar a:hover {
+            opacity: 0.82;
+        }
+
+        .topbar-chip {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.75rem;
+            line-height: 1;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .topbar-cta {
+            background: var(--blush);
+            color: var(--accent-strong) !important;
+            font-weight: 700;
+            border-color: transparent;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
 
         /* Responsive Design */
@@ -360,6 +440,19 @@
 
             .service-card-home > div:last-child {
                 width: 100% !important;
+            }
+
+            .site-topbar-inner {
+                min-height: 38px;
+            }
+
+            .topbar-chip {
+                padding: 4px 10px;
+                font-size: 0.68rem;
+            }
+
+            .site-gutter {
+                padding-inline: clamp(0.875rem, 4vw, 1.25rem);
             }
         }
 
@@ -439,6 +532,31 @@
 </head>
 <body>
     <?php ob_start(); ?>
+    <?php
+    $topBarPhone = appConfig('site.phone', '+372-5160427');
+    $topBarEmail = appConfig('site.email', 'Sapphireeventsglitz@gmail.com');
+    ?>
+    <div class="site-topbar">
+        <div class="site-topbar-inner site-container site-gutter flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar">
+                <a class="topbar-chip" href="tel:<?php echo htmlspecialchars(preg_replace('/\s+/', '', $topBarPhone)); ?>" aria-label="Call us">
+                    <i class="fas fa-phone-alt text-[0.65rem]" aria-hidden="true"></i>
+                    <span><?php echo htmlspecialchars($topBarPhone); ?></span>
+                </a>
+                <a class="topbar-chip hidden sm:inline-flex" href="mailto:<?php echo htmlspecialchars($topBarEmail); ?>" aria-label="Email us">
+                    <i class="fas fa-envelope text-[0.65rem]" aria-hidden="true"></i>
+                    <span><?php echo htmlspecialchars($topBarEmail); ?></span>
+                </a>
+                <span class="topbar-chip hidden md:inline-flex" aria-hidden="true">
+                    <i class="fas fa-star text-[0.65rem]"></i>
+                    <span>Elegant Event Styling</span>
+                </span>
+            </div>
+            <a href="<?php echo route('/contact'); ?>" class="topbar-chip topbar-cta hidden sm:inline-flex">
+                Book Consultation
+            </a>
+        </div>
+    </div>
     <?php include VIEW_PATH . '/partials/header.php'; ?>
 
     <main>
