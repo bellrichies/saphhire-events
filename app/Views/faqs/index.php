@@ -1,10 +1,10 @@
 <?php
-$title = "Frequently Asked Questions";
+$title = trans('content.faqs_page.page_title', 'Frequently Asked Questions');
 ob_start();
 
 $groupedFaqs = [];
 foreach (($faqs ?? []) as $item) {
-    $category = $item['category'] ?? 'General';
+    $category = $item['category'] ?? trans('content.faqs_page.labels.default_category', 'General');
     if (!isset($groupedFaqs[$category])) {
         $groupedFaqs[$category] = [];
     }
@@ -23,10 +23,10 @@ $faqSchema = [
             'name' => $faq['question'] ?? '',
             'acceptedAnswer' => [
                 '@type' => 'Answer',
-                'text' => $faq['answer'] ?? ''
-            ]
+                'text' => strip_tags((string) ($faq['answer'] ?? '')),
+            ],
         ];
-    }, $faqs ?? [])
+    }, $faqs ?? []),
 ];
 ?>
 
@@ -36,27 +36,27 @@ $faqSchema = [
 
     <div class="max-w-5xl mx-auto text-center relative z-10" data-aos="fade-up">
         <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
-            Support Center
+            <?php echo htmlspecialchars(trans('content.faqs_page.hero.badge', 'Support Center')); ?>
         </span>
-        <h1 class="text-4xl md:text-5xl font-light mb-4 leading-tight text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-            Frequently Asked Questions
+        <h1 class="text-4xl md:text-5xl font-light mb-4 leading-tight text-white" style="letter-spacing: -0.02em;">
+            <?php echo htmlspecialchars(trans('content.faqs_page.hero.title', 'Frequently Asked Questions')); ?>
         </h1>
         <p class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed" style="font-family: 'Montserrat', sans-serif;">
-            Browse clear answers about planning, pricing, timelines, and event execution. If you need more guidance, our team is ready to help.
+            <?php echo htmlspecialchars(trans('content.faqs_page.hero.description', 'Find answers to common questions and learn about the step-by-step process for booking, decorating, and planning your special day with Sapphire Events.')); ?>
         </p>
 
         <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-2xl mx-auto mt-8" data-aos="fade-up" data-aos-delay="80">
             <div class="faqs-kpi-card">
-                <p class="faqs-kpi-value"><?php echo (int)$faqCount; ?></p>
-                <p class="faqs-kpi-label">Answered Questions</p>
+                <p class="faqs-kpi-value"><?php echo (int) $faqCount; ?></p>
+                <p class="faqs-kpi-label"><?php echo htmlspecialchars(trans('content.faqs_page.kpis.answered_questions', 'Answered Questions')); ?></p>
             </div>
             <div class="faqs-kpi-card">
-                <p class="faqs-kpi-value"><?php echo (int)$categoryCount; ?></p>
-                <p class="faqs-kpi-label">Help Categories</p>
+                <p class="faqs-kpi-value"><?php echo (int) $categoryCount; ?></p>
+                <p class="faqs-kpi-label"><?php echo htmlspecialchars(trans('content.faqs_page.kpis.help_categories', 'Help Categories')); ?></p>
             </div>
             <div class="faqs-kpi-card col-span-2 md:col-span-1">
                 <p class="faqs-kpi-value">24h</p>
-                <p class="faqs-kpi-label">Typical Response Time</p>
+                <p class="faqs-kpi-label"><?php echo htmlspecialchars(trans('content.faqs_page.kpis.response_time', 'Typical Response Time')); ?></p>
             </div>
         </div>
     </div>
@@ -67,25 +67,31 @@ $faqSchema = [
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-8 items-start">
             <aside class="lg:col-span-4" data-aos="fade-right">
                 <article class="faqs-panel lg:sticky lg:top-24">
-                    <h2 class="text-2xl mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; font-weight: 600;">
-                        Find Answers Faster
-                    </h2>
+                    <h3 class="text-3xl mb-4" style="color: #0F3D3E; font-weight: 600;">
+                        <?php echo htmlspecialchars(trans('content.faqs_page.sidebar.title', 'Find Answers Faster')); ?>
+                    </h3>
                     <p class="text-sm text-gray-600 mb-5">
-                        Search by keyword or jump to a category. Questions are grouped to make browsing faster.
+                        <?php echo htmlspecialchars(trans('content.faqs_page.sidebar.description', 'Search by keyword or jump to a category. Questions are grouped to make browsing faster.')); ?>
                     </p>
 
                     <div class="relative mb-5">
-                        <input type="text" id="faqSearch" placeholder="Search questions or answers" class="faqs-search-input" aria-label="Search FAQs">
+                        <input
+                            type="text"
+                            id="faqSearch"
+                            placeholder="<?php echo htmlspecialchars(trans('content.faqs_page.sidebar.search_placeholder', 'Search questions or answers')); ?>"
+                            class="faqs-search-input"
+                            aria-label="<?php echo htmlspecialchars(trans('content.faqs_page.sidebar.search_aria', 'Search FAQs')); ?>"
+                        >
                         <i class="fas fa-search faqs-search-icon" aria-hidden="true"></i>
                     </div>
 
                     <div class="flex items-center gap-2 mb-4">
-                        <button type="button" id="faqs-expand-all" class="faqs-action-chip">Expand all</button>
-                        <button type="button" id="faqs-collapse-all" class="faqs-action-chip">Collapse all</button>
+                        <button type="button" id="faqs-expand-all" class="faqs-action-chip"><?php echo htmlspecialchars(trans('content.faqs_page.sidebar.expand_all', 'Expand all')); ?></button>
+                        <button type="button" id="faqs-collapse-all" class="faqs-action-chip"><?php echo htmlspecialchars(trans('content.faqs_page.sidebar.collapse_all', 'Collapse all')); ?></button>
                     </div>
 
                     <div class="space-y-2" id="faq-category-nav">
-                        <button type="button" class="faqs-category-btn is-active" data-category="all">All Categories</button>
+                        <button type="button" class="faqs-category-btn is-active" data-category="all"><?php echo htmlspecialchars(trans('content.faqs_page.sidebar.all_categories', 'All Categories')); ?></button>
                         <?php foreach ($groupedFaqs as $category => $items): ?>
                             <button type="button" class="faqs-category-btn" data-category="<?php echo htmlspecialchars($category); ?>">
                                 <?php echo htmlspecialchars($category); ?>
@@ -103,29 +109,29 @@ $faqSchema = [
                         <?php foreach ($groupedFaqs as $category => $items): ?>
                             <section class="faq-group" data-category="<?php echo htmlspecialchars($category); ?>">
                                 <header class="faqs-group-header">
-                                    <h3 class="text-2xl md:text-3xl" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+                                    <h3 class="text-2xl md:text-3xl" style="color: #0F3D3E; letter-spacing: -0.02em;">
                                         <?php echo htmlspecialchars($category); ?>
                                     </h3>
                                     <p class="text-xs font-semibold uppercase tracking-[0.14em]" style="color: #C8A951; font-family: 'Montserrat', sans-serif;">
-                                        <?php echo count($items); ?> Questions
+                                        <?php echo count($items); ?> <?php echo htmlspecialchars(trans('content.faqs_page.labels.questions', 'Questions')); ?>
                                     </p>
                                 </header>
 
                                 <div class="space-y-3.5">
                                     <?php foreach ($items as $faq): ?>
                                         <?php
-                                            $faqId = (int)($faq['id'] ?? 0);
-                                            $question = $faq['question'] ?? '';
-                                            $answer = $faq['answer'] ?? '';
-                                            $searchBlob = strtolower($category . ' ' . $question . ' ' . $answer);
+                                        $faqId = (int) ($faq['id'] ?? 0);
+                                        $question = (string) ($faq['question'] ?? '');
+                                        $answer = (string) ($faq['answer'] ?? '');
+                                        $searchBlob = strtolower(strip_tags($category . ' ' . $question . ' ' . $answer));
                                         ?>
                                         <article class="faq-item" data-search="<?php echo htmlspecialchars($searchBlob); ?>" data-category="<?php echo htmlspecialchars($category); ?>" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>">
-                                            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-<?php echo $faqId; ?>">
+                                            <button class="faq-question" type="button" aria-expanded="true" aria-controls="faq-answer-<?php echo $faqId; ?>">
                                                 <span><?php echo htmlspecialchars($question); ?></span>
                                                 <i class="fas fa-chevron-down" aria-hidden="true"></i>
                                             </button>
-                                            <div id="faq-answer-<?php echo $faqId; ?>" class="faq-answer hidden" role="region">
-                                                <p><?php echo htmlspecialchars($answer); ?></p>
+                                            <div id="faq-answer-<?php echo $faqId; ?>" class="faq-answer" role="region">
+                                                <div><?php echo $answer; ?></div>
                                             </div>
                                         </article>
                                         <?php $delay = ($delay + 40) % 220; ?>
@@ -136,36 +142,35 @@ $faqSchema = [
                     </div>
                 <?php else: ?>
                     <article class="faqs-panel text-center py-12">
-                        <h3 class="text-2xl mb-2" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;">No FAQs Available</h3>
-                        <p class="text-gray-600">Questions and answers will appear here once published.</p>
+                        <h3 class="text-2xl mb-2" style="color: #0F3D3E;"><?php echo htmlspecialchars(trans('content.faqs_page.empty.title', 'No FAQs Available')); ?></h3>
+                        <p class="text-gray-600"><?php echo htmlspecialchars(trans('content.faqs_page.empty.description', 'Questions and answers will appear here once published.')); ?></p>
                     </article>
                 <?php endif; ?>
 
                 <div id="noResults" class="hidden faqs-panel text-center mt-6 py-10">
                     <i class="fas fa-search text-3xl mb-3" style="color: #C8A951;"></i>
-                    <h3 class="text-2xl mb-2" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;">No matching results</h3>
-                    <p class="text-gray-600">Try a broader keyword or switch back to all categories.</p>
+                    <h3 class="text-2xl mb-2" style="color: #0F3D3E;"><?php echo htmlspecialchars(trans('content.faqs_page.no_results.title', 'No matching results')); ?></h3>
+                    <p class="text-gray-600"><?php echo htmlspecialchars(trans('content.faqs_page.no_results.description', 'Try a broader keyword or switch back to all categories.')); ?></p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-16 px-4 relative overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
-    <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><circle cx=%2250%22 cy=%2250%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
-    <div class="max-w-3xl mx-auto text-center relative z-10" data-aos="fade-up">
-        <h2 class="text-3xl md:text-4xl font-light mb-5 text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-            Need More Help?
+<section class="py-10 md:py-8 px-4 text-center" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
+    <div class="max-w-3xl mx-auto" data-aos="fade-up">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-3" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.01em;">
+            <?php echo htmlspecialchars(trans('content.faqs_page.cta.title', 'Need More Information?')); ?>
         </h2>
-        <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
-            If your question is not covered here, our team can guide you directly based on your event requirements.
+        <p class="text-sm md:text-base text-gray-600 mb-5 max-w-2xl mx-auto leading-relaxed">
+            <?php echo htmlspecialchars(trans('content.faqs_page.cta.description', 'If you have any other questions or need additional assistance, do not hesitate to reach out to us directly. We are here to help make your event unforgettable.')); ?>
         </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="<?php echo route('/contact'); ?>" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg" style="background-color: #C8A951; color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem;">
-                Contact Our Team
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a href="<?php echo route('/contact'); ?>" class="inline-flex items-center justify-center px-7 py-3 rounded-lg font-bold transition-all duration-300 hover:shadow-md w-full sm:w-auto" style="background-color: #C8A951; color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.75rem; box-shadow: 0 2px 8px rgba(200, 169, 81, 0.25);">
+                <?php echo htmlspecialchars(trans('content.faqs_page.cta.primary', 'Contact Our Team')); ?>
             </a>
-            <a href="<?php echo route('/services'); ?>" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg font-semibold border border-white/40 text-white transition-all duration-300 hover:bg-white/10" style="font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem;">
-                Explore Services
+            <a href="<?php echo route('/services'); ?>" class="inline-flex items-center justify-center px-7 py-3 rounded-lg font-bold border-2 transition-all duration-300 hover:shadow-md w-full sm:w-auto" style="border-color: #C8A951; color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.75rem; background-color: transparent;">
+                <?php echo htmlspecialchars(trans('content.faqs_page.cta.secondary', 'Explore Services')); ?>
             </a>
         </div>
     </div>
@@ -455,6 +460,10 @@ $faqSchema = [
         color: #4B5563;
         font-size: 0.92rem;
         line-height: 1.6;
+    }
+
+    .faq-question[aria-expanded="true"] i {
+        transform: rotate(180deg);
     }
 
     @keyframes faqs-float {

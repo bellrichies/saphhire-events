@@ -36,6 +36,7 @@
             };
             this.modal = null;
             this.searchDebounce = null;
+            this.dragDepth = 0;
         }
 
         open(options = {}) {
@@ -58,6 +59,7 @@
                 this.modal.remove();
                 this.modal = null;
             }
+            this.dragDepth = 0;
             if (typeof this.state.onClosed === 'function') {
                 this.state.onClosed();
             }
@@ -89,8 +91,14 @@
                             <button type="button" data-media-upload-btn class="px-3 py-2 rounded-lg text-sm font-medium text-white bg-[#0F3D3E] hover:bg-[#0d3334]">Upload</button>
                         </div>
                     </div>
-                    <div class="flex-1 overflow-auto p-4">
-                        <input type="file" data-media-upload class="hidden">
+                    <div class="flex-1 overflow-auto p-4 relative" data-media-dropzone>
+                        <input type="file" data-media-upload class="hidden" multiple>
+                        <div class="hidden absolute inset-4 z-10 rounded-2xl border-2 border-dashed border-[#0F3D3E] bg-[#0F3D3E]/6 backdrop-blur-sm items-center justify-center text-center px-6" data-media-drop-overlay>
+                            <div>
+                                <p class="text-base font-semibold text-[#0F3D3E]">Drop files to upload</p>
+                                <p class="mt-1 text-sm text-slate-600">Upload multiple images, videos, or files at once.</p>
+                            </div>
+                        </div>
                         <div data-media-grid class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
                         <p data-media-empty class="hidden py-12 text-center text-sm text-slate-500">No media found.</p>
                     </div>
@@ -137,13 +145,54 @@
 
             const uploadInput = this.modal.querySelector('[data-media-upload]');
             const uploadBtn = this.modal.querySelector('[data-media-upload-btn]');
+            const dropzone = this.modal.querySelector('[data-media-dropzone]');
             uploadBtn.addEventListener('click', () => uploadInput.click());
             uploadInput.addEventListener('change', async () => {
-                const file = uploadInput.files && uploadInput.files[0] ? uploadInput.files[0] : null;
-                if (!file) return;
-                await this.uploadFile(file);
+                const files = uploadInput.files ? Array.from(uploadInput.files).filter(Boolean) : [];
+                if (files.length === 0) return;
+                await this.uploadFiles(files, uploadBtn);
                 uploadInput.value = '';
             });
+
+            const setDropActive = (active) => {
+                const overlay = this.modal?.querySelector('[data-media-drop-overlay]');
+                if (!overlay) return;
+                overlay.classList.toggle('hidden', !active);
+                overlay.classList.toggle('flex', active);
+            };
+
+            if (dropzone) {
+                dropzone.addEventListener('dragenter', (event) => {
+                    event.preventDefault();
+                    this.dragDepth += 1;
+                    setDropActive(true);
+                });
+
+                dropzone.addEventListener('dragover', (event) => {
+                    event.preventDefault();
+                    if (event.dataTransfer) {
+                        event.dataTransfer.dropEffect = 'copy';
+                    }
+                    setDropActive(true);
+                });
+
+                dropzone.addEventListener('dragleave', (event) => {
+                    event.preventDefault();
+                    this.dragDepth = Math.max(0, this.dragDepth - 1);
+                    if (this.dragDepth === 0) {
+                        setDropActive(false);
+                    }
+                });
+
+                dropzone.addEventListener('drop', async (event) => {
+                    event.preventDefault();
+                    this.dragDepth = 0;
+                    setDropActive(false);
+                    const files = event.dataTransfer?.files ? Array.from(event.dataTransfer.files).filter(Boolean) : [];
+                    if (files.length === 0) return;
+                    await this.uploadFiles(files, uploadBtn);
+                });
+            }
 
             const prev = this.modal.querySelector('[data-media-prev]');
             const next = this.modal.querySelector('[data-media-next]');
@@ -279,23 +328,53 @@
             next.disabled = this.state.page >= this.state.totalPages;
         }
 
-        async uploadFile(file) {
-            const formData = new FormData();
-            formData.set('file', file);
-            formData.set('_csrf_token', getCsrfToken());
-
-            const response = await fetch(API.upload, {
-                method: 'POST',
-                body: formData,
-            });
-            const data = await response.json();
-            if (data.csrf_token) setCsrfToken(data.csrf_token);
-            if (!response.ok) {
-                alert(data.error || 'Upload failed');
+        async uploadFiles(files, uploadButton = null) {
+            if (!Array.isArray(files) || files.length === 0) {
                 return;
             }
 
+            const originalLabel = uploadButton ? uploadButton.textContent : '';
+            if (uploadButton) {
+                uploadButton.disabled = true;
+                uploadButton.textContent = files.length > 1 ? `Uploading ${files.length} files...` : 'Uploading...';
+            }
+
+            const failures = [];
+
+            for (const file of files) {
+                const formData = new FormData();
+                formData.set('file', file);
+                formData.set('_csrf_token', getCsrfToken());
+
+                const response = await fetch(API.upload, {
+                    method: 'POST',
+                    body: formData,
+                });
+                const data = await response.json();
+                if (data.csrf_token) setCsrfToken(data.csrf_token);
+
+                if (!response.ok) {
+                    failures.push({
+                        name: file.name,
+                        error: data.error || 'Upload failed',
+                    });
+                }
+            }
+
+            if (uploadButton) {
+                uploadButton.disabled = false;
+                uploadButton.textContent = originalLabel || 'Upload';
+            }
+
             await this.loadList();
+
+            if (failures.length > 0) {
+                const message = failures
+                    .slice(0, 3)
+                    .map((failure) => `${failure.name}: ${failure.error}`)
+                    .join('\n');
+                alert(message + (failures.length > 3 ? '\nMore files failed to upload.' : ''));
+            }
         }
     }
 

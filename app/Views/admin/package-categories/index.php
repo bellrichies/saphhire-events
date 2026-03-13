@@ -13,6 +13,7 @@ ob_start();
             <table class="w-full">
                 <thead style="background-color: #0F3D3E; color: white;">
                     <tr>
+                        <th class="px-6 py-4 text-left">Image</th>
                         <th class="px-6 py-4 text-left">Name</th>
                         <th class="px-6 py-4 text-left">Slug</th>
                         <th class="px-6 py-4 text-left">Packages</th>
@@ -22,6 +23,15 @@ ob_start();
                 <tbody>
                     <?php foreach ($categories as $cat): ?>
                         <tr class="border-b hover:bg-gray-50">
+                            <td class="px-6 py-4">
+                                <?php if (!empty($cat['image'])): ?>
+                                    <img src="<?php echo htmlspecialchars(uploadedImageUrl($cat['image'])); ?>" alt="<?php echo htmlspecialchars($cat['name']); ?>" class="w-16 h-12 rounded-lg object-cover border border-slate-200">
+                                <?php else: ?>
+                                    <div class="w-16 h-12 rounded-lg border border-dashed border-slate-300 flex items-center justify-center text-slate-400">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
                             <td class="px-6 py-4"><?php echo htmlspecialchars($cat['name']); ?></td>
                             <td class="px-6 py-4"><code><?php echo htmlspecialchars($cat['slug']); ?></code></td>
                             <td class="px-6 py-4"><?php echo (int)$cat['package_count']; ?></td>

@@ -23,12 +23,12 @@ class PackageController extends Controller
             'featuredPackages' => $featuredPackages,
             'csrf_token' => CSRF::getToken(),
             'seo' => [
-                'title' => 'Event Packages | Sapphire Events & Decorations',
-                'description' => 'Discover curated event packages for weddings, birthdays, corporate celebrations and more, with flexible options from Sapphire Events.',
+                'title' => trans('content.packages_page.seo.title', 'Event Packages | Sapphire Events & Decorations'),
+                'description' => trans('content.packages_page.seo.description', 'Discover curated event packages for weddings, birthdays, corporate celebrations and more, with flexible options from Sapphire Events.'),
                 'canonical' => route('/packages'),
                 'url' => route('/packages'),
                 'image' => 'assets/images/proposal-001.avif',
-                'image_alt' => 'Sapphire Events package offerings',
+                'image_alt' => trans('content.packages_page.seo.image_alt', 'Sapphire Events package offerings'),
             ],
         ]);
     }
@@ -61,12 +61,12 @@ class PackageController extends Controller
             'booked' => isset($_GET['booked']) && $_GET['booked'] === '1',
             'bookingError' => $_GET['error'] ?? '',
             'seo' => [
-                'title' => ($category['name'] ?? 'Event') . ' Packages | Sapphire Events',
-                'description' => $category['description'] ?? 'Explore package options tailored to your event goals and budget with Sapphire Events.',
+                'title' => ($category['name'] ?? 'Event') . ' ' . trans('content.package_category_page.seo.title_suffix', 'Packages | Sapphire Events'),
+                'description' => $category['description'] ?? trans('content.package_category_page.seo.description_fallback', 'Explore package options tailored to your event goals and budget with Sapphire Events.'),
                 'canonical' => route('/packages/' . $slug),
                 'url' => route('/packages/' . $slug),
                 'image' => $packages[0]['image'] ?? 'assets/images/ceo-image.png',
-                'image_alt' => ($category['name'] ?? 'Event') . ' package options by Sapphire Events',
+                'image_alt' => ($category['name'] ?? 'Event') . ' ' . trans('content.package_category_page.seo.image_alt_suffix', 'package options by Sapphire Events'),
             ],
         ]);
     }

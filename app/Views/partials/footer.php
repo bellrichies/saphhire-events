@@ -1,13 +1,13 @@
 <footer class="bg-charcoal text-white mt-20" style="background: linear-gradient(165deg, #1f1722 0%, #261a2b 48%, #2f1f33 100%);">
     <!-- Main Footer Content -->
-    <div class="site-container site-gutter py-16">
+    <div class="md:max-w-[1320px] mx-auto site-gutter py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
             <!-- Brand Section -->
             <div class="lg:col-span-1">
                 <div class="mb-6">
                     <div class="flex flex-col leading-none mb-4">
                         <h3 class="text-2xl tracking-widest font-semibold" style="color: #C8A951; font-family: 'Cormorant Garamond', serif; letter-spacing: 0.38em;">SAPPHIRE</h3>
-                        <p class="text-[0.65rem] tracking-widest font-semibold mt-1" style="color: #d8a9cf; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">EVENTS & DECORATIONS</p>
+                        <p class="text-[0.65rem] tracking-widest font-semibold mt-1 text-gray-400" style=" font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">EVENTS & DECORATIONS</p>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed">
                         Adding glitz & glam to your events since day one. Transforming ordinary moments into extraordinary memories.
@@ -20,22 +20,22 @@
                     <div class="flex space-x-3">
                         <a href="https://www.instagram.com/sapphire_events_decorations" target="_blank" rel="noopener noreferrer" 
                            class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                           style="background-color: rgba(246, 204, 240, 0.2); color: #f6ccf0;">
+                           style="background-color: rgba(246, 204, 240, 0.2); color: #C8A951">
                             <i class="fab fa-instagram text-sm"></i>
                         </a>
                         <a href="https://www.facebook.com/rararestperfumes" target="_blank" rel="noopener noreferrer"
                            class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                           style="background-color: rgba(246, 204, 240, 0.2); color: #f6ccf0;">
+                           style="background-color: rgba(246, 204, 240, 0.2); color: #C8A951;">
                             <i class="fab fa-facebook text-sm"></i>
                         </a>
                         <a href="https://www.tiktok.com/@sapphire_events__" target="_blank" rel="noopener noreferrer"
                            class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                           style="background-color: rgba(246, 204, 240, 0.2); color: #f6ccf0;">
+                           style="background-color: rgba(246, 204, 240, 0.2); color: #C8A951;">
                             <i class="fab fa-tiktok text-sm"></i>
                         </a>
                         <a href="https://www.whatsapp.com/catalog/3725160427/" target="_blank" rel="noopener noreferrer"
                            class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                           style="background-color: rgba(246, 204, 240, 0.2); color: #f6ccf0;">
+                           style="background-color: rgba(246, 204, 240, 0.2); color: #C8A951;">
                             <i class="fab fa-whatsapp text-sm"></i>
                         </a>
                     </div>
@@ -96,6 +96,11 @@
                     <li>
                         <a href="<?php echo route('/about'); ?>" class="text-gray-400 hover:text-white transition-colors text-sm">
                             About Us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo route('/team'); ?>" class="text-gray-400 hover:text-white transition-colors text-sm">
+                            Our Team
                         </a>
                     </li>
                     <li>
@@ -172,7 +177,7 @@
                     <button
                         type="submit"
                         class="w-full px-4 py-2 rounded text-sm font-semibold transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-                        style="background-color: #f6ccf0; color: #241a26;"
+                        style="background-color: #C8A951; color: #241a26;"
                     >
                         Subscribe
                     </button>

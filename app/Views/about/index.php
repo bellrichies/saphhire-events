@@ -11,7 +11,7 @@ ob_start();
         <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
             <?php echo htmlspecialchars(trans('content.about.hero.badge', 'About Sapphire Events')); ?>
         </span>
-        <h1 class="text-4xl md:text-5xl font-light mb-4 leading-tight text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+        <h1 class="text-4xl md:text-5xl font-light mb-4 leading-tight text-white" style="font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
             <?php echo htmlspecialchars(trans('content.about.hero.title', 'Crafting Celebrations with Purpose')); ?>
         </h1>
         <p class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed" style="font-family: 'Montserrat', sans-serif;">
@@ -21,284 +21,122 @@ ob_start();
 </section>
 
 <section class="pt-20 pb-10 px-4" style="background-color: #F8F5F2;">
-    <div class="site-container">
+    <div class="w-full">
         <div class="text-center mb-14" data-aos="fade-up">
             <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em;">
-                <?php echo htmlspecialchars(trans('content.about.team.badge', 'Our Team')); ?>
+                <?php echo htmlspecialchars(trans('content.about.team.badge', 'The Full Story')); ?>
             </span>
-            <h2 class="text-3xl md:text-4xl font-light mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+            <p class="text-3xl md:text-3xl font-light mb-4" style="color: #0F3D3E;  letter-spacing: -0.02em;">
                 <?php echo htmlspecialchars(trans('content.about.team.title', 'People Behind the Experience')); ?>
-            </h2>
-            <p class="text-base text-gray-600 max-w-2xl mx-auto">
+            </p>
+            <p class="text-base text-gray-600 max-w-5xl mx-auto">
                 <?php echo htmlspecialchars(trans('content.about.team.description', 'A multidisciplinary team focused on design excellence, flawless coordination, and high-touch client support.')); ?>
             </p>
         </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-            <div class="lg:col-span-7">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <?php if (!empty($teamMembers ?? [])): ?>
-                        <?php foreach (($teamMembers ?? []) as $index => $member): ?>
-                            <article class="team-card overflow-hidden" data-aos="fade-up" data-aos-delay="<?php echo $index * 90; ?>">
-                                <div class="team-card-media">
-                                    <img
-                                        src="<?php echo htmlspecialchars(uploadedImageUrl($member['image'] ?? '')); ?>"
-                                        alt="<?php echo htmlspecialchars('Portrait of ' . ($member['name'] ?? trans('content.about.team.default_member_name', 'Team Member')) . ', ' . ($member['role'] ?? trans('content.about.team.default_member_role', 'Team'))); ?>"
-                                        loading="lazy"
-                                        class="w-full h-full object-cover">
-                                </div>
-                                <div class="p-5">
-                                    <h3 class="text-xl mb-1" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;"><?php echo htmlspecialchars($member['name'] ?? trans('content.about.team.default_member_name', 'Team Member')); ?></h3>
-                                    <p class="text-xs uppercase tracking-widest mb-3" style="color: #C8A951; font-family: 'Montserrat', sans-serif; font-weight: 700;"><?php echo htmlspecialchars($member['role'] ?? trans('content.about.team.default_member_role', 'Team')); ?></p>
-                                    <p class="text-sm text-gray-600 leading-relaxed">
-                                        <?php echo htmlspecialchars($member['bio'] ?? ''); ?>
-                                    </p>
-                                </div>
-                            </article>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="sm:col-span-2 text-center py-8 text-gray-500">
-                            <?php echo htmlspecialchars(trans('content.about.team.empty', 'Team members will appear here once available.')); ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
+        <div class="space-y-8 lg:space-y-10">
+            <div class="about-story-row" data-aos="fade-up">
+                <figure class="about-story-media">
+                    <video
+                        class="about-story-image about-story-image--mission"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="auto"
+                        aria-label="<?php echo htmlspecialchars(trans('content.about.mission_vision.mission_image_alt', 'Our mission and vision')); ?>">
+                        <source src="/sapphireevents/assets/uploads/media/video/2026/03/46b910cd7e6c35205bcc990eed4d9662.mp4" type="video/mp4">
+                    </video>
+                </figure>
+                <article class="about-feature-card about-story-card pt-10 md:pt-12">
+                    <h3 class="text-center text-3xl font-bold mb-3" style="color: #0F3D3E;">
+                        <?php echo htmlspecialchars(trans('content.about.mission_vision.mission_title', 'Mission')); ?>
+                    </h3>
+                    <p class="text-gray-600 text-lg leading-relaxed pt-8  md:px-8 line-spacing-1.6">
+                        <?php echo htmlspecialchars(trans('content.about.mission_vision.mission_desc', 'At Sapphire Events & Decorations, our mission is to transform your special occasions into unforgettable experiences. With meticulous attention to detail and a passion for creativity, we strive to exceed your expectations, delivering exceptional event planning and stunning decorations that bring your vision to life.')); ?>
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed mt-4 md:px-8 line-spacing-1.6">Let us make your moments shine with elegance and sophistication.</p>
+                </article>
             </div>
+            <div class="about-story-row about-story-row--reverse" data-aos="fade-up" data-aos-delay="100">
+                <figure class="about-story-media">
+                    <img src="<?php echo asset('images/about-team.avif'); ?>" alt="<?php echo htmlspecialchars(trans('content.about.team.team_image_alt', 'Our team')); ?>" class="about-story-image about-story-image--top about-story-image--vision">
+                </figure>
+                <article class="about-feature-card about-story-card pt-10 md:pt-12">
+                    <h3 class="text-center text-3xl font-bold mb-3" style="color: #0F3D3E;">
+                        <?php echo htmlspecialchars(trans('content.about.mission_vision.vision_title', 'Vision')); ?>
+                    </h3>
+                    <p class="text-gray-600 text-lg leading-relaxed pt-8 md:px-8 line-spacing-1.6">
+                        <?php echo htmlspecialchars(trans('content.about.mission_vision.vision_desc', 'Our vision at Sapphire Events & Decorations is to be the first choice for creating magical moments that last a lifetime. We aim to inspire and delight our clients with innovative designs, impeccable service, and a commitment to excellence in every event we undertake.')); ?>
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed mt-4 md:px-8"> With our expertise and dedication, we envision turning dreams into reality, one celebration at a time.</p>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
 
-            <div class="lg:col-span-5" data-aos="fade-left">
-                <div class="rounded-2xl p-3 md:p-8 bg-[#f3eee8] luxury-shadow">
-                    <div class="space-y-8">
-                        <article class="about-feature-card mb-6">
-                            <!-- <div class="about-icon-wrap"><i class="fas fa-bullseye"></i></div> -->
-                            <h3 class="text-2xl mb-3" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;">
-                                <?php echo htmlspecialchars(trans('content.about.mission_vision.mission_title', 'Our Mission')); ?>
-                            </h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">
-                                <?php echo htmlspecialchars(trans('content.about.mission_vision.mission_desc', 'At Sapphire Events & Decorations, our mission is to transform your special occasions into unforgettable experiences. With meticulous attention to detail and a passion for creativity, we strive to exceed your expectations, delivering exceptional event planning and stunning decorations that bring your vision to life.')); ?>
-                            </p>
-                        </article>
-                        <article class="about-feature-card">
-                            <!-- <div class="about-icon-wrap"><i class="fas fa-star"></i></div> -->
-                            <h3 class="text-2xl mb-3" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;">
-                                <?php echo htmlspecialchars(trans('content.about.mission_vision.vision_title', 'Our Vision')); ?>
-                            </h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">
-                                <?php echo htmlspecialchars(trans('content.about.mission_vision.vision_desc', 'Our vision at Sapphire Events & Decorations is to be the first choice for creating magical moments that last a lifetime. We aim to inspire and delight our clients with innovative designs, impeccable service, and a commitment to excellence in every event we undertake. With our expertise and dedication, we envision turning dreams into reality, one celebration at a time.')); ?>
-                            </p>
-                        </article>
+<section class="py-20 px-4" style="background-color: #fff;">
+    <div class="w-full">
+        <div class="text-center mb-14" data-aos="fade-up">
+            <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em;">
+                <?php echo htmlspecialchars(trans('content.about.gallery.badge', 'Visual Highlights')); ?>
+            </span>
+            <h2 class="text-3xl md:text-4xl font-light mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+                Our Signature Aesthetic
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+            <?php 
+            $getGalleryMediaUrl = static function (?string $media): string {
+                if (!$media) {
+                    return '';
+                }
+                if (preg_match('/^https?:\/\//', $media)) {
+                    return $media;
+                }
+                return uploadedImageUrl($media);
+            };
+
+            $galleryItems = $highlightImages ?? [];
+            
+            if (!empty($galleryItems)):
+                foreach ($galleryItems as $index => $item):
+                    $mediaUrl = $getGalleryMediaUrl($item['image'] ?? null);
+            ?>
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300" data-aos="fade-up" data-aos-delay="<?php echo ($index % 4) * 50; ?>">
+                    <div class="relative aspect-square overflow-hidden bg-gray-200">
+                        <?php if (!empty($mediaUrl)): ?>
+                            <img 
+                                src="<?php echo htmlspecialchars($mediaUrl); ?>" 
+                                alt="<?php echo htmlspecialchars($item['title'] ?? 'Gallery item'); ?>" 
+                                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                loading="lazy"
+                            >
+                        <?php else: ?>
+                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-300 to-gray-400">
+                                <i class="fas fa-image text-gray-500 text-3xl"></i>
+                            </div>
+                        <?php endif; ?>
+                        <div class="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                            <a href="<?php echo route('/gallery'); ?>" class="opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <i class="fas fa-expand text-white text-xl"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php 
+                endforeach;
+            else:
+            ?>
+                <p class="col-span-full text-center text-gray-500 py-12"><?php echo htmlspecialchars(trans('content.about.gallery.empty', 'Gallery images will appear here soon.')); ?></p>
+            <?php 
+            endif;
+            ?>
         </div>
     </div>
 </section>
 
-<section class="pb-20 px-4" style="background-color: #F8F5F2;">
-    <div class="site-container">
-        <!-- <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-16">
-            <div class="lg:col-span-7" data-aos="fade-right">
-                <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em;">
-                    <?php echo htmlspecialchars(trans('content.about.story.badge', 'Our Story')); ?>
-                </span>
-                <h2 class="text-4xl md:text-5xl font-light mb-5" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-                    <?php echo htmlspecialchars(trans('content.about.story.title', 'From Passion Project to Trusted Partner')); ?>
-                </h2>
-                <p class="text-gray-700 mb-4 leading-relaxed">
-                    <?php echo htmlspecialchars(trans('content.about.story.paragraph_1', 'Sapphire Events & Decorations was founded on one principle: every event should feel intentionally designed and flawlessly delivered. What started as a small creative initiative has grown into a full-service event planning and decoration partner.')); ?>
-                </p>
-                <p class="text-gray-700 mb-4 leading-relaxed">
-                    <?php echo htmlspecialchars(trans('content.about.story.paragraph_2', 'We support weddings, corporate functions, proposals, birthdays, and bespoke private experiences. Our process combines creative concepting, detailed logistics, and disciplined execution to ensure every touchpoint works together.')); ?>
-                </p>
-                <p class="text-gray-700 leading-relaxed">
-                    <?php echo htmlspecialchars(trans('content.about.story.paragraph_3', 'Today, clients choose us for our reliability, calm communication, and consistent quality from the first consultation through the final setup.')); ?>
-                </p>
-            </div>
-
-            <div class="lg:col-span-5 relative" data-aos="fade-left">
-                <div class="h-[440px] rounded-2xl overflow-hidden luxury-shadow" style="background: linear-gradient(135deg, #0F3D3E 0%, #C8A951 100%);">
-                    <img src="<?= route('assets/images/engagement.avif') ?>" alt="Sapphire Events story" class="w-full h-full object-cover object-center opacity-95">
-                </div>
-                <div class="hidden md:block absolute -bottom-6 -left-6 bg-white rounded-xl p-4 luxury-shadow">
-                    <p class="text-xs uppercase tracking-widest mb-1" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('content.about.story.established', 'Established')); ?></p>
-                    <p class="text-2xl" style="color: #C8A951; font-family: 'Cormorant Garamond', serif;"><?php echo htmlspecialchars(trans('content.about.story.established_value', 'With Vision & Craft')); ?></p>
-                </div>
-            </div>
-        </div> -->
-
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" data-aos="fade-up">
-            <div class="about-kpi-card">
-                <p class="text-3xl mb-1" style="font-family: 'Cormorant Garamond', serif; color: #C8A951;">150+</p>
-                <p class="text-sm text-gray-700 font-semibold"><?php echo htmlspecialchars(trans('content.about.kpi.events_delivered', 'Events Delivered')); ?></p>
-            </div>
-            <div class="about-kpi-card">
-                <p class="text-3xl mb-1" style="font-family: 'Cormorant Garamond', serif; color: #C8A951;">2000+</p>
-                <p class="text-sm text-gray-700 font-semibold"><?php echo htmlspecialchars(trans('content.about.kpi.guests_served', 'Guests Served')); ?></p>
-            </div>
-            <div class="about-kpi-card">
-                <p class="text-3xl mb-1" style="font-family: 'Cormorant Garamond', serif; color: #C8A951;">98%</p>
-                <p class="text-sm text-gray-700 font-semibold"><?php echo htmlspecialchars(trans('content.about.kpi.client_satisfaction', 'Client Satisfaction')); ?></p>
-            </div>
-            <div class="about-kpi-card">
-                <p class="text-3xl mb-1" style="font-family: 'Cormorant Garamond', serif; color: #C8A951;">24/7</p>
-                <p class="text-sm text-gray-700 font-semibold"><?php echo htmlspecialchars(trans('content.about.kpi.planning_support', 'Planning Support')); ?></p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-20 px-4">
-    <div class="site-container">
-        <div class="text-center mb-14" data-aos="fade-up">
-            <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em;">
-                <?php echo htmlspecialchars(trans('content.about.capabilities.badge', 'What Sets Us Apart')); ?>
-            </span>
-            <h2 class="text-3xl md:text-4xl font-light mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-                <?php echo htmlspecialchars(trans('content.about.capabilities.title', 'Our Core Capabilities')); ?>
-            </h2>
-            <p class="text-base text-gray-600 max-w-2xl mx-auto">
-                <?php echo htmlspecialchars(trans('content.about.capabilities.description', 'We operate at the intersection of creativity and execution so your event looks exceptional and runs effortlessly.')); ?>
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <article class="about-feature-card" data-aos="fade-up">
-                <div class="about-icon-wrap"><i class="fas fa-palette"></i></div>
-                <h3 class="text-xl mb-3" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;"><?php echo htmlspecialchars(trans('content.about.capabilities.creative_title', 'Creative Direction')); ?></h3>
-                <p class="text-gray-600 text-sm leading-relaxed">
-                    <?php echo htmlspecialchars(trans('content.about.capabilities.creative_desc', 'Distinct concept development, styling systems, and cohesive visual storytelling tailored to your event goals.')); ?>
-                </p>
-            </article>
-            <article class="about-feature-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="about-icon-wrap"><i class="fas fa-clipboard-check"></i></div>
-                <h3 class="text-xl mb-3" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;"><?php echo htmlspecialchars(trans('content.about.capabilities.operations_title', 'Operational Precision')); ?></h3>
-                <p class="text-gray-600 text-sm leading-relaxed">
-                    <?php echo htmlspecialchars(trans('content.about.capabilities.operations_desc', 'Structured planning frameworks, timeline control, and vendor coordination to reduce risk and maintain quality.')); ?>
-                </p>
-            </article>
-            <article class="about-feature-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="about-icon-wrap"><i class="fas fa-heart"></i></div>
-                <h3 class="text-xl mb-3" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;"><?php echo htmlspecialchars(trans('content.about.capabilities.service_title', 'Client-Centered Service')); ?></h3>
-                <p class="text-gray-600 text-sm leading-relaxed">
-                    <?php echo htmlspecialchars(trans('content.about.capabilities.service_desc', 'Transparent communication, responsive support, and tailored recommendations from consultation to event day.')); ?>
-                </p>
-            </article>
-        </div>
-    </div>
-</section>
-
-<section class="py-20 px-4" style="background-color: #F8F5F2;">
-    <div class="site-container">
-        <div class="text-center mb-14" data-aos="fade-up">
-            <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em;">
-                <?php echo htmlspecialchars(trans('content.about.process.badge', 'Our Process')); ?>
-            </span>
-            <h2 class="text-3xl md:text-4xl font-light mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-                <?php echo htmlspecialchars(trans('content.about.process.title', 'How We Deliver Excellence')); ?>
-            </h2>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="about-step-card" data-aos="fade-up">
-                <div class="about-step-num">01</div>
-                <h4 class="font-bold mb-2" style="color: #0F3D3E;"><?php echo htmlspecialchars(trans('content.about.process.step_1_title', 'Discovery')); ?></h4>
-                <p class="text-sm text-gray-600"><?php echo htmlspecialchars(trans('content.about.process.step_1_desc', 'Understand objectives, audience, venue constraints, and priorities.')); ?></p>
-            </div>
-            <div class="about-step-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="about-step-num">02</div>
-                <h4 class="font-bold mb-2" style="color: #0F3D3E;"><?php echo htmlspecialchars(trans('content.about.process.step_2_title', 'Concept & Plan')); ?></h4>
-                <p class="text-sm text-gray-600"><?php echo htmlspecialchars(trans('content.about.process.step_2_desc', 'Build a clear concept, layout direction, and execution roadmap.')); ?></p>
-            </div>
-            <div class="about-step-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="about-step-num">03</div>
-                <h4 class="font-bold mb-2" style="color: #0F3D3E;"><?php echo htmlspecialchars(trans('content.about.process.step_3_title', 'Coordination')); ?></h4>
-                <p class="text-sm text-gray-600"><?php echo htmlspecialchars(trans('content.about.process.step_3_desc', 'Align vendors, timelines, materials, and setup logistics.')); ?></p>
-            </div>
-            <div class="about-step-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="about-step-num">04</div>
-                <h4 class="font-bold mb-2" style="color: #0F3D3E;"><?php echo htmlspecialchars(trans('content.about.process.step_4_title', 'Execution')); ?></h4>
-                <p class="text-sm text-gray-600"><?php echo htmlspecialchars(trans('content.about.process.step_4_desc', 'Deliver a polished event experience with on-site quality control.')); ?></p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-20 px-4" style="background-color: #F8F5F2;">
-    <div class="site-container">
-        <div class="text-center mb-12" data-aos="fade-up">
-            <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em;">
-                <?php echo htmlspecialchars(trans('content.about.testimonials.badge', 'Testimonials')); ?>
-            </span>
-            <h2 class="text-3xl md:text-4xl font-light mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-                <?php echo htmlspecialchars(trans('content.about.testimonials.title', 'What Clients Say About Working With Us')); ?>
-            </h2>
-            <p class="text-base text-gray-600 max-w-2xl mx-auto">
-                <?php echo htmlspecialchars(trans('content.about.testimonials.description', 'Feedback from clients who trusted Sapphire Events with milestone celebrations and business events.')); ?>
-            </p>
-        </div>
-
-        <div class="relative" data-aos="fade-up" data-aos-delay="100">
-            <div class="swiper aboutTestimonialSwiper px-2 md:px-12">
-                <div class="swiper-wrapper">
-                    <?php foreach (($testimonials ?? []) as $item): ?>
-                        <div class="swiper-slide h-auto">
-                            <article class="testimonial-card h-full">
-                                <div class="flex items-center gap-4 mb-4">
-                                    <div class="testimonial-avatar">
-                                        <i class="fas fa-user text-white"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-lg" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; font-weight: 600;">
-                                            <?php echo htmlspecialchars($item['name']); ?>
-                                        </h3>
-                                        <div class="flex gap-1 mt-1" aria-label="5 star rating">
-                                            <?php for ($i = 0; $i < 5; $i++): ?>
-                                                <i class="fas fa-star text-xs" style="color: #C8A951;"></i>
-                                            <?php endfor; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="text-sm text-gray-700 leading-relaxed line-clamp-5">
-                                    "<?php echo htmlspecialchars($item['content']); ?>"
-                                </p>
-                            </article>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <!-- <button class="about-testimonial-btn about-testimonial-prev" aria-label="<?php echo htmlspecialchars(trans('content.about.testimonials.prev_aria', 'Previous testimonial')); ?>">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="about-testimonial-btn about-testimonial-next" aria-label="<?php echo htmlspecialchars(trans('content.about.testimonials.next_aria', 'Next testimonial')); ?>">
-                <i class="fas fa-chevron-right"></i>
-            </button> -->
-        </div>
-
-        <?php if (empty($testimonials ?? [])): ?>
-            <p class="text-center text-gray-500 mt-8"><?php echo htmlspecialchars(trans('content.about.testimonials.empty', 'Testimonials will appear here once available.')); ?></p>
-        <?php endif; ?>
-    </div>
-</section>
-
-<section class="py-16 px-4 relative overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
-    <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><circle cx=%2250%22 cy=%2250%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
-    <div class="max-w-3xl mx-auto text-center relative z-10" data-aos="fade-up">
-        <h2 class="text-3xl md:text-4xl font-light mb-5 text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-            <?php echo htmlspecialchars(trans('content.about.cta.title', "Let's Build Your Next Event")); ?>
-        </h2>
-        <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
-            <?php echo htmlspecialchars(trans('content.about.cta.description', "Share your vision and requirements. We'll recommend the best service path and package direction for your event.")); ?>
-        </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="<?php echo route('/contact'); ?>" class="group px-10 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-2xl hover:scale-105" style="background-color: #C8A951; color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
-                <?php echo htmlspecialchars(trans('content.about.cta.primary', 'Start Planning')); ?>
-                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
-            </a>
-            <a href="<?php echo route('/services'); ?>" class="px-10 py-4 rounded-xl font-semibold border-2 border-white/30 text-white transition-all duration-300 hover:bg-white/10" style="font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
-                <?php echo htmlspecialchars(trans('content.about.cta.secondary', 'Explore Services')); ?>
-            </a>
-        </div>
-    </div>
-</section>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -350,14 +188,64 @@ ob_start();
         background: #fff;
         border-radius: 1rem;
         padding: 1.6rem;
-        box-shadow: 0 6px 24px rgba(15, 61, 62, 0.08);
         transition: transform 0.35s ease, box-shadow 0.35s ease;
-        border: 1px solid rgba(200, 169, 81, 0.12);
     }
 
     .about-feature-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 14px 36px rgba(15, 61, 62, 0.16);
+    }
+
+    .about-story-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+        align-items: stretch;
+    }
+
+    .about-story-media {
+        margin: 0;
+        min-height: 100%;
+        overflow: hidden;
+    }
+
+    .about-story-image {
+        width: 100%;
+        height: 100%;
+        min-height: 250px;
+        max-height: 440px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .about-story-image--top {
+        object-position: top center;
+    }
+
+    .about-story-image--vision {
+        min-height: 400px;
+        max-height: 620px;
+    }
+
+    .about-story-image--mission {
+        min-height: 400px;
+        max-height: 620px;
+    }
+
+    .about-story-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 100%;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .about-story-card > h3,
+    .about-story-card > p {
+        width: 100%;
+        max-width: 34rem;
+        overflow-wrap: anywhere;
     }
 
     .about-icon-wrap {
@@ -482,6 +370,19 @@ ob_start();
         overflow: hidden;
     }
 
+    .gallery-item {
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(15, 61, 62, 0.15);
+    }
+
+    .gallery-item img {
+        transition: transform 0.35s ease;
+    }
+
     @keyframes float {
         0%, 100% { transform: translateY(0) rotate(0deg); }
         50% { transform: translateY(-15px) rotate(3deg); }
@@ -517,6 +418,36 @@ ob_start();
         .about-testimonial-btn {
             width: 36px;
             height: 36px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .about-story-row {
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+            gap: 2rem;
+        }
+
+        .about-story-row--reverse .about-story-media {
+            order: 2;
+        }
+
+        .about-story-row--reverse .about-story-card {
+            order: 1;
+        }
+
+        .about-story-image {
+            min-height: 280px;
+            max-height: 340px;
+        }
+
+        .about-story-image--vision {
+            min-height: 400px;
+            max-height: 620px;
+        }
+
+        .about-story-image--mission {
+            min-height: 400px;
+            max-height: 620px;
         }
     }
 </style>

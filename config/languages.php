@@ -38,7 +38,8 @@ return [
 
     // Google Translate configuration (optional, for server-side translation)
     'google_translate' => [
-        'enabled' => true,
+        'enabled' => !empty($_ENV['GOOGLE_TRANSLATE_API_KEY'] ?? ''),
         'api_key' => $_ENV['GOOGLE_TRANSLATE_API_KEY'] ?? '',
+        'translate_rendered_html' => false,
     ],
 ];

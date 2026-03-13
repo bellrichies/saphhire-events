@@ -39,7 +39,7 @@ $getGalleryMediaType = static function ($media) {
 
 <section class="home-hero relative min-h-[72vh] md:min-h-[82vh] flex items-center pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden" style="background: linear-gradient(140deg, #0F3D3E 0%, #1C1C1C 72%);">
     <video
-        class="absolute inset-0 w-full h-full object-cover opacity-85"
+        class="absolute inset-0 w-full h-full object-cover "
         autoplay
         muted
         loop
@@ -47,16 +47,16 @@ $getGalleryMediaType = static function ($media) {
     >
         <source src="<?= route('/assets/images/hero.mp4') ?>" type="video/mp4">
     </video>
-    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-0 bg-black/30"></div>
     <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl opacity-30" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
 
-    <div class="md:w-max-7xl site-container site-gutter relative z-10">
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div class="lg:col-span-7" data-aos="fade-up">
                 <span class="inline-block px-4 py-2 rounded-full mb-6 text-xs font-semibold tracking-[0.2em] uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif;">
                     <?php echo htmlspecialchars(trans('content.home.hero.badge', 'Premium Event Solutions')); ?>
                 </span>
-                <h1 class="home-hero-title text-4xl sm:text-5xl lg:text-6xl font-light text-white leading-tight mb-5" style="font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+                <h1 class="home-hero-title text-4xl sm:text-5xl lg:text-6xl font-light text-white leading-tight mb-5" style="font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
                     <?php echo htmlspecialchars(trans('content.home.hero.title_main', 'Crafted Celebrations,')); ?>
                     <span style="color: #C8A951;"><?php echo htmlspecialchars(trans('content.home.hero.title_highlight', 'Flawless Execution')); ?></span>
                 </h1>
@@ -103,37 +103,54 @@ $getGalleryMediaType = static function ($media) {
     </div>
 </section>
 
-<section class="py-16 md:py-20">
-    <div class="site-container site-gutter">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div data-aos="fade-right">
-            <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif;">
-                <?php echo htmlspecialchars(trans('content.home.about_section.badge', 'About Us')); ?>
-            </span>
-            <h2 class="home-section-title text-4xl md:text-5xl font-light mb-5" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-                <?php echo htmlspecialchars(trans('content.home.about_section.title', 'Design-Led Event Planning')); ?>
-            </h2>
-            <p class="home-section-copy text-gray-700 mb-4" style="font-family: 'Montserrat', sans-serif;">
-                Welcome to Sapphire Events&mdash;where your most meaningful occasions become lasting memories. Driven by creativity and defined by excellence, we design bespoke events and breathtaking d&eacute;cor that reflect your unique style and vision.
-            </p>
-            <p class="home-section-copy text-gray-700 mb-4" style="font-family: 'Montserrat', sans-serif;">
-                From elegant weddings to polished corporate functions and every celebration in between, our experienced team is committed to delivering events that are seamless, sophisticated, and truly unforgettable.
-            </p>
-            <p class="home-section-copy text-gray-700 mb-7" style="font-family: 'Montserrat', sans-serif;">
-                From the first idea to the final detail, Sapphire Events ensures every moment shines. Experience the art of exceptional event design with us.
-            </p>
-            <a href="<?php echo route('/about'); ?>" class="inline-flex items-center px-7 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg" style="background-color: #0F3D3E; color: #fff; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.8rem;">
-                <?php echo htmlspecialchars(trans('content.home.about_section.button', 'Learn Our Story')); ?>
-            </a>
-        </div>
-
-            <div class="relative" data-aos="fade-left">
-                <div class="rounded-2xl overflow-hidden luxury-shadow aspect-[3/4] md:aspect-[4/5] max-w-md mx-auto md:mx-0 md:ml-auto bg-[#f3eee8]">
-                    <img src="<?= route('/assets/images/about-home.avif') ?>" alt="Sapphire Events team at work" class="w-full h-full object-cover object-top">
+<section class="py-16 md:py-12 overflow-hidden" >
+    <div class="w-full" style="background-color: #F6CCF0;">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+            <div class="relative" data-aos="fade-right">
+                <div class="about-feature-image overflow-hidden luxury-shadow bg-[#f3eee8]">
+                    <img src="<?= route('/assets/images/about-home.avif') ?>" alt="Sapphire Events decor setup" class="w-full h-full object-cover object-center">
                 </div>
-                <div class="hidden md:block absolute -bottom-8 -left-8 bg-white rounded-xl p-5 luxury-shadow">
+                <div class="hidden lg:block absolute -bottom-6 -right-6 bg-white rounded-xl p-5 luxury-shadow">
                     <p class="text-xs uppercase tracking-[0.16em] mb-1" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('content.home.about_section.trusted_label', 'Trusted by Clients')); ?></p>
                     <p class="text-2xl" style="font-family: 'Cormorant Garamond', serif; color: #C8A951;"><?php echo htmlspecialchars(trans('content.home.about_section.trusted_value', 'Weddings, Corporate, Private')); ?></p>
+                </div>
+            </div>
+
+            <div class="py-2 lg:py-6 px-4 sm:px-6 lg:px-8" data-aos="fade-left">
+                <div class="about-content-panel h-full flex flex-col justify-center">
+                    <h2 class="home-section-title text-4xl md:text-5xl font-light mb-8 justify-center" style="color: #0F3D3E;  letter-spacing: -0.02em;">
+                        <?php echo htmlspecialchars(trans('content.home.about_section.title', 'Let Us Plan & <br> Decorate Your Next Event')); ?>
+                    </h2>
+
+                    <div class="about-content-grid grid grid-cols-1 md:grid-cols-2 gap-1 lg:gap-2 items-stretch">
+                        <div class="about-column-card about-copy-card">
+                            <div class="about-copy max-w-xl">
+                                <p class="home-section-copy text-gray-700 mb-4" style="font-family: 'Montserrat', sans-serif;">
+                                    <?php echo htmlspecialchars(trans('content.home.about_section.paragraph_1', 'We combine creative direction, meticulous planning, and production precision to create experiences that feel elegant and effortless.')); ?>
+                                </p>
+                                <p class="home-section-copy text-gray-700 mb-4" style="font-family: 'Montserrat', sans-serif;">
+                                    <?php echo htmlspecialchars(trans('content.home.about_section.paragraph_2', 'Every event is customized to your audience, space, and goals, with a dedicated team from initial concept through day-of execution.')); ?>
+                                </p>
+                                <p class="home-section-copy text-gray-700 mb-0" style="font-family: 'Montserrat', sans-serif;">
+                                    <?php echo htmlspecialchars(trans('content.home.about_section.paragraph_3', 'From planning to decorating, we deliver polished design, reliable coordination, and the elevated finish your day deserves.')); ?>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="about-column-card about-ceo-card">
+                            <div class="about-ceo-media overflow-hidden">
+                                <img src="<?= route('/assets/images/founder-ceo.avif') ?>" alt="CEO of Sapphire Events & Decorations" class="w-full h-full object-contain object-left">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-cta-group flex flex-col sm:flex-row gap-3 pt-6 text-center">
+                        <a href="<?php echo route('/packages'); ?>" class="inline-flex items-center justify-center px-7 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg" style="background-color: #0F3D3E; color: #fff; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.8rem;">
+                            <?php echo htmlspecialchars(trans('content.home.about_section.button_packages', 'Select Our Package')); ?>
+                        </a>
+                        <a href="<?php echo route('/contact'); ?>" class="inline-flex items-center justify-center px-7 py-3 rounded-lg font-semibold border border-[#0F3D3E] transition-all duration-300 hover:bg-[#0F3D3E] hover:text-white" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.8rem;">
+                            <?php echo htmlspecialchars(trans('content.home.about_section.button_contact', 'Contact Us')); ?>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,110 +158,91 @@ $getGalleryMediaType = static function ($media) {
 </section>
 
 <section id="core-services" class="py-16 md:py-20 px-4 overflow-hidden" style="background-color: #F8F5F2;">
-    <div class="site-container">
-        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
-            <div>
-                <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif;">
-                    <?php echo htmlspecialchars(trans('content.home.core_services.badge', 'Core Services')); ?>
-                </span>
-                <h2 class="home-section-title text-4xl md:text-5xl font-light" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-                    <?php echo htmlspecialchars(trans('content.home.core_services.title', 'End-to-End Event Expertise')); ?>
-                </h2>
-                <p class="home-section-copy text-gray-600 mt-3 max-w-2xl" style="font-family: 'Montserrat', sans-serif;">
-                    <?php echo htmlspecialchars(trans('content.home.core_services.description', 'Strategic planning, creative styling, and execution support tailored to your venue, audience, and event goals.')); ?>
-                </p>
+    <div class="w-full">
+            <div class="md:max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
+                <div>
+                    <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif;">
+                        <?php echo htmlspecialchars(trans('content.home.core_services.badge', 'Core Services')); ?>
+                    </span>
+                    <h2 class="home-section-title text-4xl md:text-5xl font-light" style="color: #0F3D3E; font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
+                        <?php echo htmlspecialchars(trans('content.home.core_services.title', 'Services')); ?>
+                    </h2>
+                    <p class="home-section-copy text-gray-600 mt-3 max-w-2xl" style="font-family: 'Montserrat', sans-serif;">
+                        <?php echo htmlspecialchars(trans('content.home.core_services.description', 'Strategic planning, creative styling, and execution support tailored to your venue, audience, and event goals.')); ?>
+                    </p>
+                </div>
+                <a href="<?php echo route('/services'); ?>" class="inline-flex items-center text-sm font-semibold" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase;">
+                    <?php echo htmlspecialchars(trans('content.home.core_services.view_all', 'View All Services')); ?> <i class="fas fa-arrow-right ml-2"></i>
+                </a>
             </div>
-            <a href="<?php echo route('/services'); ?>" class="inline-flex items-center text-sm font-semibold" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase;">
-                <?php echo htmlspecialchars(trans('content.home.core_services.view_all', 'View All Services')); ?> <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-        </div>
 
-        <div class="relative" data-aos="fade-up" data-aos-delay="100">
-            <button type="button" class="home-service-swiper-btn home-service-swiper-prev" aria-label="Previous service">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button type="button" class="home-service-swiper-btn home-service-swiper-next" aria-label="Next service">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-
-            <div class="swiper homeServicesSwiper">
-                <div class="swiper-wrapper">
-                    <?php foreach (array_slice($services ?? [], 0, 6) as $index => $service): ?>
-                        <div class="swiper-slide">
-                            <article class="service-scroll-card h-full rounded-2xl overflow-hidden bg-white" data-aos="fade-up" data-aos-delay="<?php echo $index * 80; ?>">
-                                <div class="service-scroll-card-inner">
-                                    <div class="service-scroll-image-wrap">
-                                        <?php if (!empty($service['image'])): ?>
-                                            <img src="<?php echo htmlspecialchars(uploadedImageUrl($service['image'])); ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" class="service-scroll-image">
-                                        <?php else: ?>
-                                            <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #0F3D3E 0%, #2d5a5b 100%);">
-                                                <i class="fas fa-image text-white text-5xl opacity-30"></i>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <div class="service-scroll-content">
-                                        <div>
-                                            <h3 class="text-2xl mb-3" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.02em; font-weight: 600;">
-                                                <?php echo htmlspecialchars($service['title']); ?>
-                                            </h3>
-                                            <p class="service-card-description text-sm text-gray-600 leading-relaxed mb-4 line-clamp-4">
-                                                <?php echo htmlspecialchars($service['description']); ?>
-                                            </p>
-                                            <div class="space-y-2 mb-5">
-                                                <p class="text-xs text-gray-700 flex items-center gap-2" style="font-family: 'Montserrat', sans-serif;">
-                                                    <i class="fas fa-check-circle" style="color: #C8A951;"></i>
-                                                    <?php echo htmlspecialchars(trans('content.home.core_services.bullet_1', 'Personalized concept and event styling')); ?>
-                                                </p>
-                                                <p class="text-xs text-gray-700 flex items-center gap-2" style="font-family: 'Montserrat', sans-serif;">
-                                                    <i class="fas fa-check-circle" style="color: #C8A951;"></i>
-                                                    <?php echo htmlspecialchars(trans('content.home.core_services.bullet_2', 'Timeline, logistics, and vendor support')); ?>
-                                                </p>
-                                            </div>
+            <div class="relative" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper homeServicesSwiper">
+                    <div class="swiper-wrapper">
+                        <?php foreach (array_slice($services ?? [], 0, 6) as $index => $service): ?>
+                            <div class="swiper-slide">
+                                <article class="service-scroll-card h-full  overflow-hidden bg-white" data-aos="fade-up" data-aos-delay="<?php echo $index * 80; ?>">
+                                    <div class="service-scroll-card-inner">
+                                        <div class="service-scroll-image-wrap">
+                                            <?php if (!empty($service['image'])): ?>
+                                                <img src="<?php echo htmlspecialchars(uploadedImageUrl($service['image'])); ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" class="service-scroll-image">
+                                            <?php else: ?>
+                                                <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #0F3D3E 0%, #2d5a5b 100%);">
+                                                    <i class="fas fa-image text-white text-5xl opacity-30"></i>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
 
-                                        <a href="<?php echo route('/services/' . $service['id']); ?>" class="inline-flex items-center text-xs font-semibold transition-all duration-300 hover:opacity-80" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase;">
-                                            <?php echo htmlspecialchars(trans('content.home.core_services.explore', 'Explore')); ?>
-                                            <i class="fas fa-arrow-right ml-2"></i>
-                                        </a>
+                                        <div class="service-scroll-content">
+                                            <div>
+                                                <h3 class="text-2xl mb-2" style="font-family: 'Dancing Script', cursive; color: #0F3D3E; letter-spacing: -0.02em; font-weight: 600;">
+                                                    <?php echo htmlspecialchars($service['title']); ?>
+                                                </h3>
+                                                <p class="service-card-description text-sm text-gray-600"><?php echo nl2br(htmlspecialchars(trim((string)$service['description']))); ?></p>
+                                            </div>
+
+                                            <a href="<?php echo route('/services/' . $service['id']); ?>" class="inline-flex items-center text-xs font-semibold transition-all duration-300 hover:opacity-80" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase;">
+                                                <?php echo htmlspecialchars(trans('content.home.core_services.explore', 'Explore')); ?>
+                                                <i class="fas fa-arrow-right ml-2"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            </article>
-                        </div>
-                    <?php endforeach; ?>
+                                </article>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 
 <section class="py-16 md:py-20">
-    <div class="site-container site-gutter">
-        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="md:max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
             <div>
-            <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif;">
-                <?php echo htmlspecialchars(trans('content.home.portfolio.badge', 'Portfolio')); ?>
-            </span>
-            <h2 class="home-section-title text-4xl md:text-5xl font-light" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
-                <?php echo htmlspecialchars(trans('content.home.portfolio.title', 'Featured Gallery')); ?>
-            </h2>
-            <p class="home-section-copy text-gray-600 mt-3 max-w-2xl" style="font-family: 'Montserrat', sans-serif;">
-                <?php echo htmlspecialchars(trans('content.home.portfolio.description', 'A bold visual snapshot of our latest decor transformations, creative styling, and signature event setups.')); ?>
-            </p>
-        </div>
+                <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif;">
+                    <?php echo htmlspecialchars(trans('content.home.portfolio.badge', 'Portfolio')); ?>
+                </span>
+                <h2 class="home-section-title text-4xl md:text-5xl font-light" style="color: #0F3D3E; font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
+                    <?php echo htmlspecialchars(trans('content.home.portfolio.title', 'Featured Gallery')); ?>
+                </h2>
+                <p class="home-section-copy text-gray-600 mt-3 max-w-2xl" style="font-family: 'Montserrat', sans-serif;">
+                    <?php echo htmlspecialchars(trans('content.home.portfolio.description', 'A bold visual snapshot of our latest decor transformations, creative styling, and signature event setups.')); ?>
+                </p>
+            </div>
             <a href="<?php echo route('/gallery'); ?>" class="inline-flex items-center text-sm font-semibold" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase;">
                 <?php echo htmlspecialchars(trans('content.home.portfolio.view_all', 'View Full Gallery')); ?> <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10" id="gallery-grid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mb-10" id="gallery-grid">
         <?php foreach ($featuredGallery as $index => $item): ?>
             <?php
                 $mediaPath = uploadedImageUrl($item['image'] ?? '');
                 $mediaType = $getGalleryMediaType($item['image'] ?? '');
             ?>
-            <article class="gallery-item group relative overflow-hidden rounded-xl luxury-shadow aspect-[3/4] cursor-pointer"
+            <article class="gallery-item group relative overflow-hidden  luxury-shadow aspect-[3/4] cursor-pointer"
                      data-aos="zoom-in" data-aos-delay="<?php echo $index * 50; ?>"
                      data-media="<?php echo htmlspecialchars($mediaPath); ?>"
                      data-media-type="<?php echo htmlspecialchars($mediaType); ?>"
@@ -267,12 +265,6 @@ $getGalleryMediaType = static function ($media) {
                         <i class="fas fa-image text-white text-5xl opacity-30"></i>
                     </div>
                 <?php endif; ?>
-
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                <div class="absolute inset-0 flex flex-col justify-end p-5 text-white">
-                    <h3 class="text-2xl mb-1" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;"><?php echo htmlspecialchars($item['title']); ?></h3>
-                    <p class="text-xs uppercase tracking-[0.14em] text-gray-200" style="font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars($item['category_name'] ?? ''); ?></p>
-                </div>
             </article>
         <?php endforeach; ?>
         </div>
@@ -297,7 +289,7 @@ $getGalleryMediaType = static function ($media) {
                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 rounded-b-lg">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h3 id="lightbox-title" class="text-2xl font-bold mb-2" style="color: #C8A951; font-family: 'Cormorant Garamond', serif;"></h3>
+                            <h3 id="lightbox-title" class="text-2xl font-bold mb-2" style="color: #C8A951; font-family: 'Dancing Script', cursive;"></h3>
                             <p id="lightbox-category" class="text-sm text-gray-300 uppercase tracking-wider" style="font-family: 'Montserrat', sans-serif;"></p>
                         </div>
                         <div id="lightbox-counter" class="text-lg font-semibold text-gray-400" style="color: #C8A951; font-family: 'Montserrat', sans-serif;"></div>
@@ -309,13 +301,13 @@ $getGalleryMediaType = static function ($media) {
 </section>
 
 <section id="home-packages" class="py-16 md:py-20 px-4" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
-    <div class="site-container">
-        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
+    <div class="w-full ">
+        <div class="md:max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
             <div>
                 <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-[0.18em] uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif;">
                     <?php echo htmlspecialchars(trans('content.home.packages.badge', 'Packages')); ?>
                 </span>
-                <h2 class="home-section-title text-4xl md:text-5xl font-light" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+                <h2 class="home-section-title text-4xl md:text-5xl font-light" style="color: #0F3D3E; font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
                     <?php echo htmlspecialchars(trans('content.home.packages.title', 'New Package Collections')); ?>
                 </h2>
                 <p class="home-section-copy text-gray-600 mt-3 max-w-2xl" style="font-family: 'Montserrat', sans-serif;">
@@ -327,10 +319,18 @@ $getGalleryMediaType = static function ($media) {
             </a>
         </div>
 
-        <div class="home-package-categories flex flex-wrap gap-3 mb-8" data-aos="fade-up" data-aos-delay="80">
+        <div class="md:max-w-7xl mx-auto home-package-categories flex flex-wrap gap-3 mb-8" data-aos="fade-up" data-aos-delay="80">
             <?php foreach (($packageCategories ?? []) as $category): ?>
-                <a href="<?php echo route('/packages/' . $category['slug']); ?>" class="inline-flex items-center px-4 py-2 rounded-full text-xs font-semibold transition-all duration-300 hover:shadow-md" style="background-color: rgba(15, 61, 62, 0.08); color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase;">
-                    <?php echo htmlspecialchars($category['name']); ?> (<?php echo (int)($category['package_count'] ?? 0); ?>)
+                <?php $packageCategoryImage = $getPackageImageUrl($category['image'] ?? null); ?>
+                <a href="<?php echo route('/packages/' . $category['slug']); ?>" class="inline-flex items-center gap-3 px-3 py-2 rounded-full text-xs font-semibold transition-all duration-300 hover:shadow-md" style="background-color: rgba(15, 61, 62, 0.08); color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase;">
+                    <?php if ($packageCategoryImage): ?>
+                        <img src="<?php echo htmlspecialchars($packageCategoryImage); ?>" alt="<?php echo htmlspecialchars($category['name']); ?>" class="w-9 h-9 rounded-full object-cover border border-white/70">
+                    <?php else: ?>
+                        <span class="w-9 h-9 rounded-full flex items-center justify-center text-[11px] text-white" style="background: linear-gradient(135deg, #0F3D3E 0%, #2d5a5b 100%);">
+                            <i class="fas fa-image"></i>
+                        </span>
+                    <?php endif; ?>
+                    <span><?php echo htmlspecialchars($category['name']); ?> (<?php echo (int)($category['package_count'] ?? 0); ?>)</span>
                 </a>
             <?php endforeach; ?>
         </div>
@@ -354,13 +354,12 @@ $getGalleryMediaType = static function ($media) {
                                 </span>
                             </div>
                             <div class="p-5 sm:p-6">
-                                <h3 class="text-xl mb-2" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; font-weight: 600; letter-spacing: -0.02em;">
+                                <h3 class="text-xl font-bold mb-2" style="color: #0F3D3E; font-family: 'Dancing Script', cursive; font-weight: 600; letter-spacing: -0.02em;">
                                     <?php echo htmlspecialchars($package['title']); ?>
                                 </h3>
-                                <p class="text-2xl mb-4" style="color: #C8A951; font-family: 'Cormorant Garamond', serif; font-weight: 700;">
+                                <p class="text-xl mb-4" style="color: #C8A951; font-family: 'Cormorant Garamond', serif; font-weight: 700;">
                                     <?php echo htmlspecialchars($formatPackagePrice($package)); ?>
                                 </p>
-                                <p class="text-sm text-gray-600 line-clamp-3 mb-5"><?php echo htmlspecialchars($package['description']); ?></p>
                                 <a href="<?php echo route('/packages/' . ($package['category_slug'] ?? '')); ?>" class="inline-flex items-center text-sm font-semibold" style="color: #0F3D3E; letter-spacing: 0.06em; text-transform: uppercase;">
                                     <?php echo htmlspecialchars(trans('content.home.packages.card_explore', 'Explore')); ?> <i class="fas fa-arrow-right ml-2"></i>
                                 </a>
@@ -377,12 +376,11 @@ $getGalleryMediaType = static function ($media) {
     </div>
 </section>
 
-<section class="py-16 md:py-20 px-4" style="background-color: #F8F5F2;">
+<section class="py-8 md:py-10 px-4 md:px-12" style="background-color: #F8F5F2;">
     <div class="site-container">
-        <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
-            <span class="inline-block px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider mb-4" style="background: rgba(200, 169, 81, 0.15); color: #C8A951; font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('content.home.testimonials.badge', 'Testimonials')); ?></span>
-            <h2 class="home-section-title text-4xl md:text-5xl mb-4 text-[#0F3D3E]" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;"><?php echo htmlspecialchars(trans('content.home.testimonials.title', 'Client Stories')); ?></h2>
-            <p class="home-section-copy text-base sm:text-lg text-gray-600 max-w-2xl mx-auto" style="font-family: 'Montserrat', sans-serif;">
+        <div class="text-center mb-6 md:mb-8" data-aos="fade-up">
+            <h2 class="home-section-title text-2xl md:text-3xl mb-2 text-[#0F3D3E]" style="font-family: 'Dancing Script', cursive; font-weight: 600;"><?php echo htmlspecialchars(trans('content.home.testimonials.title', 'Client Stories')); ?></h2>
+            <p class="home-section-copy text-sm text-gray-600 max-w-xl mx-auto" style="font-family: 'Montserrat', sans-serif;">
                 <?php echo htmlspecialchars(trans('content.home.testimonials.description', 'Hear from clients who trusted us to bring their vision to life.')); ?>
             </p>
         </div>
@@ -392,7 +390,7 @@ $getGalleryMediaType = static function ($media) {
         ?>
 
         <?php if (!empty($featuredTestimonials)): ?>
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5">
                 <?php foreach ($featuredTestimonials as $index => $testimonial): ?>
                     <?php
                         $name = trim((string)($testimonial['name'] ?? trans('content.home.testimonials.default_name', 'Client')));
@@ -409,21 +407,21 @@ $getGalleryMediaType = static function ($media) {
                             $initials = 'CL';
                         }
                     ?>
-                    <article class="bg-white rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-shadow relative" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
-                        <div class="absolute -top-4 left-8 text-6xl text-[#C8A951]/20" style="font-family: 'Cormorant Garamond', serif;">"</div>
-                        <div class="flex gap-1 mb-4" aria-label="Five-star rating">
+                    <article class="bg-white rounded-2xl p-4 sm:p-5 shadow-md hover:shadow-lg transition-shadow relative" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
+                        <div class="absolute -top-3 left-6 text-5xl text-[#C8A951]/20" style="font-family: 'Cormorant Garamond', serif;">"</div>
+                        <div class="flex gap-1 mb-2" aria-label="Five-star rating">
                             <?php for ($i = 0; $i < 5; $i++): ?>
-                                <svg class="w-5 h-5 text-[#C8A951]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-4 h-4 text-[#C8A951]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                             <?php endfor; ?>
                         </div>
-                        <p class="text-gray-700 mb-6 leading-relaxed italic line-clamp-4" style="font-family: 'Montserrat', sans-serif;">
+                        <p class="text-gray-700 mb-3 leading-relaxed italic line-clamp-4 text-xs" style="font-family: 'Montserrat', sans-serif;">
                             "<?php echo htmlspecialchars($testimonial['content'] ?? trans('content.home.testimonials.default_content', 'Sapphire Events made our celebration seamless, elegant, and unforgettable.')); ?>"
                         </p>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#0F3D3E] to-[#C8A951] flex items-center justify-center text-white font-bold"><?php echo htmlspecialchars($initials); ?></div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#0F3D3E] to-[#C8A951] flex items-center justify-center text-white font-bold text-xs"><?php echo htmlspecialchars($initials); ?></div>
                             <div>
-                                <p class="font-bold text-[#0F3D3E]" style="font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars($name); ?></p>
-                                <p class="text-sm text-gray-500" style="font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('content.home.testimonials.verified_client', 'Verified Client')); ?></p>
+                                <p class="font-bold text-[#0F3D3E] text-xs" style="font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars($name); ?></p>
+                                <p class="text-xs text-gray-500" style="font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('content.home.testimonials.verified_client', 'Verified Client')); ?></p>
                             </div>
                         </div>
                     </article>
@@ -437,12 +435,12 @@ $getGalleryMediaType = static function ($media) {
     </div>
 </section>
 
-<section class="py-16 md:py-20 px-4 text-center" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
-    <div class="max-w-3xl mx-auto" data-aos="fade-up">
-        <h2 class="home-section-title text-4xl md:text-5xl font-light mb-5" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.02em;">
+<section class="py-16 md:py-12 px-4 text-center" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
+    <div class="md:max-w-4xl mx-auto" data-aos="fade-up">
+        <h2 class="home-section-title text-3xl md:text-4xl font-light mb-5" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.02em;">
             <?php echo htmlspecialchars(trans('content.home.cta.title', 'Ready to Plan Your Next Event?')); ?>
         </h2>
-        <p class="home-section-copy text-gray-700 mb-8" style="font-family: 'Montserrat', sans-serif;">
+        <p class="max-w-3xl mx-auto text-gray-700 mb-8" style="font-family: 'Montserrat', sans-serif;">
             <?php echo htmlspecialchars(trans('content.home.cta.description', 'Tell us your goals, timeline, and style preferences. We will turn them into an event experience your guests remember.')); ?>
         </p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
@@ -471,10 +469,6 @@ $getGalleryMediaType = static function ($media) {
                     enabled: true,
                     onlyInViewport: true
                 },
-                navigation: {
-                    nextEl: '.home-service-swiper-next',
-                    prevEl: '.home-service-swiper-prev'
-                },
                 autoplay: reduceMotion ? false : {
                     delay: 2800,
                     disableOnInteraction: false,
@@ -482,19 +476,19 @@ $getGalleryMediaType = static function ($media) {
                 },
                 breakpoints: {
                     640: {
-                        slidesPerView: 1.3,
+                        slidesPerView: 1.45,
                         spaceBetween: 18
                     },
                     768: {
-                        slidesPerView: 1.5,
+                        slidesPerView: 2.15,
                         spaceBetween: 20
                     },
                     1024: {
-                        slidesPerView: 1.85,
+                        slidesPerView: 3.1,
                         spaceBetween: 22
                     },
                     1280: {
-                        slidesPerView: 2.1,
+                        slidesPerView: 4.05,
                         spaceBetween: 24
                     }
                 }
@@ -543,10 +537,102 @@ $getGalleryMediaType = static function ($media) {
         padding: 0.85rem;
     }
 
+    .about-feature-image {
+        min-height: 100%;
+        height: 100%;
+    }
+
+    .about-feature-image img {
+        min-height: 420px;
+    }
+
+    .about-ceo-card img {
+        width: 100%;
+        aspect-ratio: 4 / 5;
+    }
+
+    .about-content-panel {
+        border-radius: 1.75rem;
+        padding: 1.5rem;
+        max-width: 860px;
+        margin: 0 auto;
+    }
+
+    .about-content-panel .home-section-title,
+    .about-content-panel .home-section-copy {
+        color: #161616 !important;
+    }
+
+    .about-content-grid {
+        grid-auto-rows: 1fr;
+    }
+
+    .about-column-card {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .about-copy-card {
+        align-items: stretch;
+        justify-content: center;
+    }
+
+    .about-copy {
+        margin-left: auto;
+        width: 100%;
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 100%;
+        max-width: 100%;
+    }
+
+    .about-copy .home-section-copy {
+        font-size: 1rem;
+        line-height: 1.95;
+        letter-spacing: 0.01em;
+        color: #2b2b2b !important;
+    }
+
+    .about-copy .home-section-copy + .home-section-copy {
+        margin-top: 0.5rem;
+    }
+
+    .about-ceo-card {
+        align-items: stretch;
+    }
+
+    .about-ceo-media {
+        flex: 1 1 auto;
+        min-height: 100%;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    .about-ceo-media img {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+    }
+
+    .about-cta-group {
+        margin-top: auto;
+        justify-content: flex-end;
+    }
+
     .service-scroll-card {
         box-shadow: 0 8px 28px rgba(15, 61, 62, 0.12);
         transition: transform 0.35s ease, box-shadow 0.35s ease;
-        height: 372px;
+        height: auto;
+        min-height: 100%;
+        display: flex;
     }
 
     .service-scroll-card:hover {
@@ -557,7 +643,8 @@ $getGalleryMediaType = static function ($media) {
     .service-scroll-card-inner {
         height: 100%;
         display: grid;
-        grid-template-columns: 52% 48%;
+        grid-template-rows: 250px minmax(0, 1fr);
+        width: 100%;
     }
 
     .service-scroll-image-wrap {
@@ -577,42 +664,28 @@ $getGalleryMediaType = static function ($media) {
     }
 
     .service-scroll-content {
-        padding: 1.25rem;
+        padding: 1rem 1rem 1.1rem;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        gap: 0.9rem;
+        gap: 0.7rem;
+        background: #ffffff;
+        height: 100%;
     }
 
-    .home-service-swiper-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 44px;
-        height: 44px;
-        border-radius: 9999px;
-        border: 1px solid rgba(200, 169, 81, 0.6);
-        background: rgba(15, 61, 62, 0.92);
-        color: #C8A951;
+    .service-card-description {
+        overflow: visible;
+        display: block;
+        white-space: pre-wrap;
+    }
+
+    .service-scroll-content > a {
+        margin-top: auto;
+        padding-top: 1rem;
+    }
+
+    .homeServicesSwiper .swiper-slide {
+        height: auto;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 20;
-        transition: all 0.3s ease;
-    }
-
-    .home-service-swiper-btn:hover {
-        background: #C8A951;
-        color: #0F3D3E;
-        box-shadow: 0 10px 22px rgba(15, 61, 62, 0.22);
-    }
-
-    .home-service-swiper-prev {
-        left: -6px;
-    }
-
-    .home-service-swiper-next {
-        right: -6px;
     }
 
     .line-clamp-3 {
@@ -681,37 +754,32 @@ $getGalleryMediaType = static function ($media) {
             line-height: 1;
         }
 
+        .about-feature-image img,
+        .about-ceo-card img {
+            min-height: 320px;
+        }
+
+        .about-content-panel {
+            padding: 1.25rem;
+        }
+
         .service-scroll-card {
             height: auto;
-            min-height: 370px;
+            min-height: 100%;
         }
 
         .service-scroll-card-inner {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto 1fr;
             height: auto;
+            grid-template-rows: 210px minmax(0, 1fr);
         }
 
         .service-scroll-image-wrap {
-            height: 180px;
+            height: 210px;
         }
 
         .service-scroll-content {
-            padding: 1rem;
+            padding: 0.95rem;
             gap: 0.65rem;
-            justify-content: flex-start;
-        }
-
-        .service-card-description {
-            display: block;
-            -webkit-line-clamp: unset;
-            -webkit-box-orient: unset;
-            overflow: visible;
-        }
-
-        .home-service-swiper-btn {
-            width: 38px;
-            height: 38px;
         }
 
         .home-package-categories {
@@ -759,6 +827,28 @@ $getGalleryMediaType = static function ($media) {
         #lightbox-prev,
         #lightbox-next {
             display: none;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .about-feature-image img {
+            min-height: 620px;
+        }
+
+        .about-content-panel {
+            padding: 2rem;
+        }
+
+        .about-column-card {
+            min-height: 540px;
+        }
+
+        .about-copy {
+            max-width: 13rem;
+        }
+
+        .about-copy .home-section-copy {
+            line-height: 2.05;
         }
     }
 

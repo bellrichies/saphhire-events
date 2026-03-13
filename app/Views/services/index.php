@@ -41,7 +41,7 @@ $getPackageImageUrl = static function ($image) {
             <?php echo htmlspecialchars(trans('content.services.hero.badge', 'Professional Event Planning')); ?>
         </span>
         
-        <h1 class="text-4xl md:text-5xl font-light mb-5 leading-tight" style="font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em; color: white;">
+        <h1 class="text-4xl md:text-5xl font-light mb-5 leading-tight" style="font-family: 'Dancing Script', cursive; letter-spacing: -0.02em; color: white;">
             <?php echo htmlspecialchars(trans('content.services.hero.title_main', 'Comprehensive Event')); ?> <span class="italic" style="color: #C8A951;"><?php echo htmlspecialchars(trans('content.services.hero.title_highlight', 'Solutions')); ?></span>
         </h1>
         
@@ -69,7 +69,7 @@ $getPackageImageUrl = static function ($image) {
             <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
                 <?php echo htmlspecialchars(trans('content.services.details.badge', 'Detailed Services')); ?>
             </span>
-            <h2 class="text-3xl md:text-4xl font-light mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+            <h2 class="text-3xl md:text-4xl font-light mb-4" style="color: #0F3D3E; font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
                 <?php echo htmlspecialchars(trans('content.services.details.title', 'Service Category Details')); ?>
             </h2>
             <p class="text-base text-gray-600 max-w-xl mx-auto" style="font-family: 'Montserrat', sans-serif;">
@@ -95,7 +95,7 @@ $getPackageImageUrl = static function ($image) {
                     </div>
                     <div class="p-8 lg:p-10 flex flex-col justify-center">
                         <div class="w-12 h-1 rounded-full mb-6" style="background-color: #C8A951;"></div>
-                        <h3 class="text-2xl font-semibold mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;"><?php echo htmlspecialchars(trans('content.services.details.card_1.title', 'Full Event Planning')); ?></h3>
+                        <h3 class="text-2xl font-semibold mb-4" style="color: #0F3D3E; font-family: 'Dancing Script', cursive;"><?php echo htmlspecialchars(trans('content.services.details.card_1.title', 'Full Event Planning')); ?></h3>
                         <p class="text-gray-600 mb-6 leading-relaxed text-sm">
                             <?php echo htmlspecialchars(trans('content.services.details.card_1.description', 'Our complete planning service handles every aspect of your event from conception to execution, allowing you to sit back and enjoy your celebration.')); ?>
                         </p>
@@ -134,7 +134,7 @@ $getPackageImageUrl = static function ($image) {
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
                     <div class="p-8 lg:p-10 flex flex-col justify-center order-2 lg:order-1">
                         <div class="w-12 h-1 rounded-full mb-6" style="background-color: #C8A951;"></div>
-                        <h3 class="text-2xl font-semibold mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;"><?php echo htmlspecialchars(trans('content.services.details.card_2.title', 'Decoration & Styling')); ?></h3>
+                        <h3 class="text-2xl font-semibold mb-4" style="color: #0F3D3E; font-family: 'Dancing Script', cursive;"><?php echo htmlspecialchars(trans('content.services.details.card_2.title', 'Decoration & Styling')); ?></h3>
                         <p class="text-gray-600 mb-6 leading-relaxed text-sm">
                             <?php echo htmlspecialchars(trans('content.services.details.card_2.description', 'Transform your venue with our expert decoration and styling services. From floral arrangements to lighting design, we create stunning visual experiences.')); ?>
                         </p>
@@ -197,7 +197,7 @@ $getPackageImageUrl = static function ($image) {
                     </div>
                     <div class="p-8 lg:p-10 flex flex-col justify-center">
                         <div class="w-12 h-1 rounded-full mb-6" style="background-color: #C8A951;"></div>
-                        <h3 class="text-2xl font-semibold mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;"><?php echo htmlspecialchars(trans('content.services.details.card_3.title', 'Day-of Coordination')); ?></h3>
+                        <h3 class="text-2xl font-semibold mb-4" style="color: #0F3D3E; font-family: 'Dancing Script', cursive;"><?php echo htmlspecialchars(trans('content.services.details.card_3.title', 'Day-of Coordination')); ?></h3>
                         <p class="text-gray-600 mb-6 leading-relaxed text-sm">
                             <?php echo htmlspecialchars(trans('content.services.details.card_3.description', 'Already planned your event? Our day-of coordination service ensures flawless execution. We manage all logistics so you can focus on enjoying your celebration.')); ?>
                         </p>
@@ -247,7 +247,7 @@ $getPackageImageUrl = static function ($image) {
                     <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
                         <?php echo htmlspecialchars(trans('content.services.process.badge', 'How We Work')); ?>
                     </span>
-                    <h2 class="text-3xl md:text-4xl font-light mb-4" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+                    <h2 class="text-3xl md:text-4xl font-light mb-4" style="color: #0F3D3E; font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
                         <?php echo htmlspecialchars(trans('content.services.process.title', 'Our Event Planning Process')); ?>
                     </h2>
                     <p class="text-base text-gray-600 max-w-2xl" style="font-family: 'Montserrat', sans-serif;">
@@ -377,7 +377,7 @@ $getPackageImageUrl = static function ($image) {
                 <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
                     <?php echo htmlspecialchars(trans('content.services.packages.badge', 'Pricing')); ?>
                 </span>
-                <h2 class="text-3xl md:text-4xl font-light mb-3" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+                <h2 class="text-3xl md:text-4xl font-light mb-3" style="color: #0F3D3E; font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
                     <?php echo htmlspecialchars(trans('content.services.packages.title', 'New Package Concept')); ?>
                 </h2>
                 <p class="text-base text-gray-600 max-w-2xl" style="font-family: 'Montserrat', sans-serif;">
@@ -462,7 +462,7 @@ $getPackageImageUrl = static function ($image) {
 </section>
 
 <!-- CTA Section -->
-<section class="py-16 px-4 relative overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
+<section class="py-10 md:py-8 px-4 relative overflow-hidden" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
     <!-- Animated Background -->
     <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><circle cx=%2250%22 cy=%2250%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
     
@@ -470,19 +470,19 @@ $getPackageImageUrl = static function ($image) {
     <div class="absolute top-10 left-10 w-32 h-32 rounded-full opacity-10 animate-float" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
     <div class="absolute bottom-10 right-10 w-40 h-40 rounded-full opacity-10 animate-float-delayed" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
     
-    <div class="max-w-3xl mx-auto text-center relative z-10" data-aos="fade-up">
-        <h2 class="text-3xl md:text-4xl font-light mb-6 text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+    <div class="max-w-xl mx-auto text-center relative z-10" data-aos="fade-up">
+        <h2 class="text-2xl md:text-3xl font-semibold mb-3" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.01em;">
             <?php echo htmlspecialchars(trans('content.services.cta.title_main', 'Ready to Create Something')); ?> <span class="italic" style="color: #C8A951;"><?php echo htmlspecialchars(trans('content.services.cta.title_highlight', 'Beautiful?')); ?></span>
         </h2>
-        <p class="text-lg mb-10 text-gray-300 leading-relaxed max-w-xl mx-auto" style="font-family: 'Montserrat', sans-serif;">
+        <p class="text-sm md:text-base text-gray-600 mb-5 leading-relaxed max-w-2xl mx-auto" style="font-family: 'Montserrat', sans-serif;">
             <?php echo htmlspecialchars(trans('content.services.cta.description', "Let's discuss your event vision and create a customized plan.")); ?>
         </p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="<?php echo route('/contact'); ?>" class="group px-10 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-2xl hover:scale-105" style="background-color: #C8A951; color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a href="<?php echo route('/contact'); ?>" class="inline-flex items-center justify-center px-7 py-3 rounded-lg font-bold transition-all duration-300 hover:shadow-md w-full sm:w-auto" style="background-color: #C8A951; color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.75rem; box-shadow: 0 2px 8px rgba(200, 169, 81, 0.25);">
                 <?php echo htmlspecialchars(trans('content.services.cta.primary', 'Get Started')); ?>
-                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                <i class="fas fa-arrow-right ml-2"></i>
             </a>
-            <a href="<?php echo route('/faqs'); ?>" class="px-10 py-4 rounded-xl font-semibold border-2 border-white/30 text-white transition-all duration-300 hover:bg-white/10" style="font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
+            <a href="<?php echo route('/faqs'); ?>" class="inline-flex items-center justify-center px-7 py-3 rounded-lg font-bold border-2 transition-all duration-300 hover:shadow-md w-full sm:w-auto" style="border-color: #C8A951; color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.75rem; background-color: transparent;">
                 <?php echo htmlspecialchars(trans('content.services.cta.secondary', 'Learn More')); ?>
             </a>
         </div>

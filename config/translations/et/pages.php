@@ -15,6 +15,7 @@ return [
         'packages' => 'Paketid',
         'gallery' => 'Galerii',
         'about' => 'Meist',
+        'team' => 'Meeskond',
         'faqs' => 'KKK',
         'contact' => 'Kontakt',
         'admin' => 'Admin',

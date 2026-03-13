@@ -68,7 +68,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800&family=Parisienne&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=League+Spartan:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Love+Light&family=Manrope:wght@300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800&family=Parisienne&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Betania+Patmos+GDL&family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -79,10 +80,10 @@
         :root {
             --emerald: #7D3171;
             --gold: #F6CCF0;
-            --off-white: #FBECF9;
-            --blush: #F6CCF0;
-            --blush-soft: #FBECF9;
-            --blush-mist: #FFF8FE;
+            --off-white: #FFFFFF;
+            --blush: #FFFFFF;
+            --blush-soft: #FFFFFF;
+            --blush-mist: #FFFFFF;
             --accent-strong: #7D3171;
             --base-light: #FFFFFF;
             --base-dark: #000000;
@@ -104,9 +105,7 @@
         body {
             font-family: 'Lora', serif;
             color: var(--charcoal);
-            background: radial-gradient(circle at 8% 8%, rgba(246, 204, 240, 0.62) 0%, rgba(246, 204, 240, 0) 28%),
-                        radial-gradient(circle at 92% 8%, rgba(251, 236, 249, 0.9) 0%, rgba(251, 236, 249, 0) 28%),
-                        linear-gradient(180deg, #ffffff 0%, #fff8fe 55%, #fbecf9 100%);
+            background: #FFFFFF;
             font-weight: 400;
             line-height: 1.6;
             letter-spacing: 0.2px;
@@ -117,6 +116,13 @@
             width: 100%;
             max-width: none;
             margin-inline: 0;
+        }
+
+        @media (min-width: 1024px) {
+            body.page-inner .site-container {
+                max-width: 80rem;
+                margin-inline: auto;
+            }
         }
 
         .site-gutter {
@@ -157,7 +163,7 @@
         }
 
         h1 {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Syncopate', 'Montserrat', sans-serif !important;
             font-size: 3.5rem;
             font-weight: 600;
             letter-spacing: -0.5px;
@@ -165,7 +171,7 @@
         }
 
         h2 {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Syncopate', 'Montserrat', sans-serif !important;
             font-size: 2.5rem;
             font-weight: 600;
             letter-spacing: -0.45px;
@@ -180,7 +186,7 @@
         }
 
         h4 {
-            font-family: 'Lora', serif;
+            font-family: 'League Spartan', 'Montserrat', sans-serif;
             font-size: 1.25rem;
             font-weight: 600;
             letter-spacing: 0.02em;
@@ -193,7 +199,7 @@
         }
 
         p {
-            font-family: 'Lora', serif;
+            font-family: 'League Spartan', 'Montserrat', sans-serif;
             font-weight: 400;
             letter-spacing: 0.25px;
         }
@@ -205,6 +211,21 @@
 
         span, small {
             font-family: 'Lora', serif;
+        }
+
+        section span.inline-block {
+            font-family: 'Love Light', 'Times New Roman', cursive !important;
+            text-transform: none !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            font-size: clamp(1.9rem, 2.8vw, 3rem) !important;
+            font-weight: 400 !important;
+            letter-spacing: 0.03em !important;
+            line-height: 1.1;
+            display: inline-block;
         }
 
         .btn-primary {
@@ -530,14 +551,20 @@
         }
     </style>
 </head>
-<body>
+<?php
+$requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+$requestPath = parse_url($requestUri, PHP_URL_PATH) ?: '/';
+$normalizedPath = trim($requestPath, '/');
+$bodyClass = $normalizedPath === '' ? 'page-home' : 'page-inner';
+?>
+<body class="<?php echo htmlspecialchars($bodyClass); ?>">
     <?php ob_start(); ?>
     <?php
     $topBarPhone = appConfig('site.phone', '+372-5160427');
     $topBarEmail = appConfig('site.email', 'Sapphireeventsglitz@gmail.com');
     ?>
-    <div class="site-topbar">
-        <div class="site-topbar-inner site-container site-gutter flex items-center justify-between gap-3">
+    <!-- <div class="site-topbar">
+        <div class="site-topbar-inner site-gutter flex items-center justify-between gap-3">
             <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar">
                 <a class="topbar-chip" href="tel:<?php echo htmlspecialchars(preg_replace('/\s+/', '', $topBarPhone)); ?>" aria-label="Call us">
                     <i class="fas fa-phone-alt text-[0.65rem]" aria-hidden="true"></i>
@@ -556,7 +583,7 @@
                 Book Consultation
             </a>
         </div>
-    </div>
+    </div> -->
     <?php include VIEW_PATH . '/partials/header.php'; ?>
 
     <main>

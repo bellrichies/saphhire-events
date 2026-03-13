@@ -222,6 +222,10 @@ if (!function_exists('uploadedImageUrl')) {
         }
 
         if (str_starts_with($image, '/')) {
+            $basePath = determineBasePath();
+            if ($basePath !== '/' && str_starts_with($image, $basePath)) {
+                return $image;
+            }
             return route($image);
         }
 

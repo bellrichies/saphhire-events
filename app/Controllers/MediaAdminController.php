@@ -392,6 +392,7 @@ class MediaAdminController extends Controller
 
         $checks = [
             ['table' => 'gallery_items', 'column' => 'image', 'label' => 'Gallery'],
+            ['table' => 'package_categories', 'column' => 'image', 'label' => 'Package Categories'],
             ['table' => 'services', 'column' => 'image', 'label' => 'Services'],
             ['table' => 'packages', 'column' => 'image', 'label' => 'Packages'],
             ['table' => 'team_members', 'column' => 'image', 'label' => 'Team'],

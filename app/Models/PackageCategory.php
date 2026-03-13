@@ -64,6 +64,28 @@ class PackageCategory extends Model
         }
     }
 
+    public function findRaw(int $id)
+    {
+        $this->ensureSchema();
+
+        try {
+            return parent::find($id);
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
+    public function findBySlugRaw(string $slug)
+    {
+        $this->ensureSchema();
+
+        try {
+            return parent::findBy('slug', $slug);
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
     private function ensureSchema(): void
     {
         if (self::$schemaEnsured) {
@@ -77,12 +99,19 @@ class PackageCategory extends Model
                     `name` VARCHAR(120) NOT NULL,
                     `slug` VARCHAR(160) UNIQUE NOT NULL,
                     `description` TEXT,
+                    `image` VARCHAR(255) NULL,
                     `display_order` INT DEFAULT 0,
                     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     INDEX `idx_slug` (`slug`),
                     INDEX `idx_order` (`display_order`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
             );
+
+            if (!$this->tableHasColumn($this->table, 'image')) {
+                $this->connection->exec(
+                    "ALTER TABLE `package_categories` ADD COLUMN `image` VARCHAR(255) NULL AFTER `description`"
+                );
+            }
 
             $this->connection->exec(
                 "CREATE TABLE IF NOT EXISTS `packages` (

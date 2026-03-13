@@ -18,6 +18,7 @@ $router->get('/packages', 'PackageController@index');
 $router->post('/packages/book', 'PackageController@book');
 $router->get('/packages/{slug}', 'PackageController@show');
 $router->get('/about', 'AboutController@index');
+$router->get('/team', 'TeamController@index');
 $router->get('/faqs', 'FaqController@index');
 $router->get('/contact', 'ContactController@index');
 $router->post('/contact', 'ContactController@store');

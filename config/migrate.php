@@ -52,6 +52,7 @@ class Database
             `name` VARCHAR(120) NOT NULL,
             `slug` VARCHAR(160) UNIQUE NOT NULL,
             `description` TEXT,
+            `image` VARCHAR(255) NULL,
             `display_order` INT DEFAULT 0,
             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             INDEX `idx_slug` (`slug`),
@@ -127,6 +128,10 @@ class Database
             $db->exec($testimonialsTable);
             $db->exec($inquiriesTable);
             $db->exec($mediaTable);
+            $categoryImageColumn = $db->query("SHOW COLUMNS FROM `package_categories` LIKE 'image'")->fetch();
+            if (!$categoryImageColumn) {
+                $db->exec("ALTER TABLE `package_categories` ADD COLUMN `image` VARCHAR(255) NULL AFTER `description`");
+            }
 
             echo "✓ Database tables created successfully\n";
         } catch (\Exception $e) {

@@ -97,7 +97,11 @@ class MachineTranslator
 
         foreach ($normalized as $original) {
             $key = $this->cacheKey($original);
-            if (isset($cache[$key]) && is_string($cache[$key]) && $cache[$key] !== '') {
+            if (
+                isset($cache[$key])
+                && is_string($cache[$key])
+                && trim($cache[$key]) !== ''
+            ) {
                 $result[$original] = $cache[$key];
                 continue;
             }

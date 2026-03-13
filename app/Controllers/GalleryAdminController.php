@@ -145,6 +145,7 @@ class GalleryAdminController extends Controller
         }
 
         if ($mediaUrl !== '') {
+            $mediaUrl = $this->normalizeStoredMediaReference($mediaUrl);
             if (!$this->isValidMediaUrl($mediaUrl)) {
                 $this->json(['error' => 'Invalid media URL. Supported formats: JPG, PNG, WEBP, AVIF, MP4, WEBM, OGV, MOV'], 422);
                 return;
@@ -252,6 +253,7 @@ class GalleryAdminController extends Controller
         if ($removeMedia) {
             $mediaName = null;
         } elseif ($mediaUrl !== '') {
+            $mediaUrl = $this->normalizeStoredMediaReference($mediaUrl);
             if (!$this->isValidMediaUrl($mediaUrl)) {
                 $this->json(['error' => 'Invalid media URL. Supported formats: JPG, PNG, WEBP, AVIF, MP4, WEBM, OGV, MOV'], 422);
                 return;
@@ -434,6 +436,37 @@ class GalleryAdminController extends Controller
 
         return in_array($ext, self::ALLOWED_IMAGE_EXTENSIONS, true)
             || in_array($ext, self::ALLOWED_VIDEO_EXTENSIONS, true);
+    }
+
+    private function normalizeStoredMediaReference(string $mediaUrl): string
+    {
+        $mediaUrl = trim($mediaUrl);
+        if ($mediaUrl === '') {
+            return '';
+        }
+
+        if (preg_match('/^https?:\/\//i', $mediaUrl)) {
+            $path = (string)(parse_url($mediaUrl, PHP_URL_PATH) ?? '');
+            if ($path !== '') {
+                $basePath = determineBasePath();
+                if ($basePath !== '/' && str_starts_with($path, $basePath)) {
+                    $path = '/' . ltrim(substr($path, strlen($basePath)), '/');
+                }
+
+                if (preg_match('#^/(assets|uploads)/#', $path) === 1) {
+                    return $path;
+                }
+            }
+
+            return $mediaUrl;
+        }
+
+        $basePath = determineBasePath();
+        if ($basePath !== '/' && str_starts_with($mediaUrl, $basePath)) {
+            $mediaUrl = '/' . ltrim(substr($mediaUrl, strlen($basePath)), '/');
+        }
+
+        return $mediaUrl;
     }
 
     private function detectMime(string $tmpName): ?string

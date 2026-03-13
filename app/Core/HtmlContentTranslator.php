@@ -18,9 +18,15 @@ class HtmlContentTranslator
         $targetLanguage = (string) $translator->getCurrentLanguage();
         $config = require CONFIG_PATH . '/languages.php';
         $defaultLanguage = (string) ($config['default'] ?? 'en');
+        $googleConfig = $config['google_translate'] ?? [];
+        $shouldTranslateRenderedHtml = (bool) ($googleConfig['translate_rendered_html'] ?? false);
 
         $machineTranslator = new MachineTranslator();
-        if (!$machineTranslator->shouldTranslate($targetLanguage)) {
+        if (
+            !$shouldTranslateRenderedHtml
+            || !$machineTranslator->shouldTranslate($targetLanguage)
+            || !$machineTranslator->isAvailable()
+        ) {
             return $html;
         }
 
@@ -215,4 +221,3 @@ class HtmlContentTranslator
         return true;
     }
 }
-

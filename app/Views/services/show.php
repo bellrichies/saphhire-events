@@ -29,12 +29,10 @@ ob_start();
                 <span class="inline-block px-4 py-2 rounded-full mb-6 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
                     Professional Service
                 </span>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-light mb-6 text-white leading-tight" style="font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-light mb-6 text-white leading-tight" style="font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
                     <?php echo htmlspecialchars($service['title']); ?>
                 </h1>
-                <p class="text-lg text-gray-300 mb-8 leading-relaxed max-w-xl">
-                    <?php echo htmlspecialchars($service['description']); ?>
-                </p>
+                <p class="text-lg text-gray-300 mb-8 leading-relaxed max-w-xl" style="white-space: pre-wrap;"><?php echo nl2br(htmlspecialchars(trim((string)$service['description']))); ?></p>
                 <div class="flex flex-wrap gap-4">
                     <a href="<?php echo route('/contact'); ?>" class="group px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:shadow-2xl" style="background-color: #C8A951; color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
                         Get Quote
@@ -74,7 +72,7 @@ ob_start();
                 <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110" style="background: linear-gradient(135deg, rgba(15, 61, 62, 0.1), rgba(200, 169, 81, 0.1));">
                     <i class="fas fa-check-circle text-2xl" style="color: #C8A951;"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;">Professional Planning</h3>
+                <h3 class="text-xl font-bold mb-3" style="color: #0F3D3E; font-family: 'Dancing Script', cursive;">Professional Planning</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">Experienced team dedicated to your event success with meticulous attention to detail.</p>
             </div>
 
@@ -82,7 +80,7 @@ ob_start();
                 <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110" style="background: linear-gradient(135deg, rgba(15, 61, 62, 0.1), rgba(200, 169, 81, 0.1));">
                     <i class="fas fa-star text-2xl" style="color: #C8A951;"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;">Premium Service</h3>
+                <h3 class="text-xl font-bold mb-3" style="color: #0F3D3E; font-family: 'Dancing Script', cursive;">Premium Service</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">Attention to every detail for a perfect event that exceeds your expectations.</p>
             </div>
 
@@ -90,7 +88,7 @@ ob_start();
                 <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110" style="background: linear-gradient(135deg, rgba(15, 61, 62, 0.1), rgba(200, 169, 81, 0.1));">
                     <i class="fas fa-award text-2xl" style="color: #C8A951;"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3" style="color: #0F3D3E; font-family: 'Cormorant Garamond', serif;">Award Winning</h3>
+                <h3 class="text-xl font-bold mb-3" style="color: #0F3D3E; font-family: 'Dancing Script', cursive;">Award Winning</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">Recognized for excellence in event design and customer satisfaction.</p>
             </div>
         </div>

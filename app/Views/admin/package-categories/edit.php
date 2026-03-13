@@ -1,5 +1,8 @@
 <?php
 ob_start();
+
+$currentImage = $category['image'] ?? null;
+$currentImageUrl = uploadedImageUrl($currentImage);
 ?>
 
 <div class="space-y-4">
@@ -9,15 +12,21 @@ ob_start();
     </div>
 
     <div>
-        <div class="max-w-3xl bg-white rounded-lg luxury-shadow p-8">
-            <form id="package-category-edit-form" method="POST" action="<?php echo route('/admin/package-categories/update'); ?>" novalidate>
+        <div class="max-w-4xl bg-white rounded-lg luxury-shadow p-8">
+            <form id="package-category-edit-form" method="POST" action="<?php echo route('/admin/package-categories/update'); ?>" enctype="multipart/form-data" novalidate>
                 <?php echo \App\Core\CSRF::hidden(); ?>
                 <input type="hidden" name="id" value="<?php echo (int)$category['id']; ?>">
 
-                <div class="mb-6">
-                    <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Category Name</label>
-                    <input type="text" name="name" value="<?php echo htmlspecialchars($category['name']); ?>" required maxlength="255" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600" placeholder="e.g., Proposal Packages">
-                    <small class="text-red-500 error-name block mt-1"></small>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="lg:col-span-2">
+                        <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Category Name</label>
+                        <input type="text" name="name" value="<?php echo htmlspecialchars($category['name']); ?>" required maxlength="255" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600" placeholder="e.g., Proposal Packages">
+                        <small class="text-red-500 error-name block mt-1"></small>
+                    </div>
+                    <div>
+                        <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Display Order</label>
+                        <input type="number" name="display_order" value="<?php echo (int)($category['display_order'] ?? 0); ?>" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600">
+                    </div>
                 </div>
 
                 <div class="mb-6">
@@ -30,9 +39,29 @@ ob_start();
                     <textarea name="description" rows="4" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600" placeholder="Category summary shown on the packages page."><?php echo htmlspecialchars($category['description'] ?? ''); ?></textarea>
                 </div>
 
-                <div class="mb-6">
-                    <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Display Order</label>
-                    <input type="number" name="display_order" value="<?php echo (int)($category['display_order'] ?? 0); ?>" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="lg:col-span-2">
+                        <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Package Image URL</label>
+                        <input type="text" id="edit-category-image-url" name="image_url" placeholder="https://example.com/category-image.jpg or /assets/uploads/media/..." spellcheck="false" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600 mb-3">
+
+                        <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Or Upload New Image</label>
+                        <input type="file" id="edit-category-image-file" name="image" accept="image/*" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg">
+                        <p class="text-xs text-gray-500 mt-2">Use the media library/image URL, upload a replacement, or remove the current image.</p>
+                    </div>
+                    <div>
+                        <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Current Image</label>
+                        <div id="edit-category-image-preview-wrap" class="<?php echo $currentImageUrl ? 'h-44 border-2 border-gray-200 rounded-lg overflow-hidden bg-slate-50' : 'h-44 border-2 border-dashed border-gray-300 rounded-lg overflow-hidden flex items-center justify-center text-sm text-gray-500 bg-slate-50'; ?>">
+                            <?php if ($currentImageUrl): ?>
+                                <img src="<?php echo htmlspecialchars($currentImageUrl); ?>" alt="Current category image" class="w-full h-full object-cover">
+                            <?php else: ?>
+                                No image set
+                            <?php endif; ?>
+                        </div>
+                        <label class="inline-flex items-center gap-2 text-sm mt-3">
+                            <input type="checkbox" id="edit-remove-category-image" name="remove_image" value="1" class="w-4 h-4">
+                            Remove current image
+                        </label>
+                    </div>
                 </div>
 
                 <div id="form-message" class="mb-4 p-4 rounded-lg hidden"></div>
@@ -49,16 +78,22 @@ ob_start();
 </div>
 
 <script>
-const form = document.getElementById('package-category-edit-form');
-const submitButton = document.getElementById('update-category-btn');
+const categoryEditForm = document.getElementById('package-category-edit-form');
+const updateCategoryButton = document.getElementById('update-category-btn');
+const editCategoryImageUrl = document.getElementById('edit-category-image-url');
+const editCategoryImageFile = document.getElementById('edit-category-image-file');
+const editCategoryImagePreviewWrap = document.getElementById('edit-category-image-preview-wrap');
+const editRemoveCategoryImage = document.getElementById('edit-remove-category-image');
+const existingCategoryImageSrc = '<?php echo htmlspecialchars($currentImageUrl, ENT_QUOTES); ?>';
+let editCategoryObjectUrl = null;
 
-const clearFieldErrors = () => {
+const clearCategoryFieldErrors = () => {
     document.querySelectorAll('.error-name').forEach((el) => {
         el.textContent = '';
     });
 };
 
-const showMessage = (message, success = false) => {
+const showCategoryMessage = (message, success = false) => {
     const messageDiv = document.getElementById('form-message');
     messageDiv.className = success
         ? 'mb-4 p-4 rounded-lg bg-green-100 text-green-700'
@@ -67,23 +102,83 @@ const showMessage = (message, success = false) => {
     messageDiv.classList.remove('hidden');
 };
 
-form.addEventListener('submit', async (e) => {
+const clearEditCategoryObjectUrl = () => {
+    if (editCategoryObjectUrl) {
+        URL.revokeObjectURL(editCategoryObjectUrl);
+        editCategoryObjectUrl = null;
+    }
+};
+
+const renderEditCategoryPreview = (src) => {
+    if (!src) {
+        editCategoryImagePreviewWrap.className = 'h-44 border-2 border-dashed border-gray-300 rounded-lg overflow-hidden flex items-center justify-center text-sm text-gray-500 bg-slate-50';
+        editCategoryImagePreviewWrap.textContent = 'No image selected';
+        return;
+    }
+
+    editCategoryImagePreviewWrap.className = 'h-44 border-2 border-gray-200 rounded-lg overflow-hidden bg-slate-50';
+    editCategoryImagePreviewWrap.innerHTML = '<img src="' + src + '" alt="Category preview" class="w-full h-full object-cover">';
+};
+
+editCategoryImageFile.addEventListener('change', () => {
+    const file = editCategoryImageFile.files && editCategoryImageFile.files[0] ? editCategoryImageFile.files[0] : null;
+    if (!file) {
+        clearEditCategoryObjectUrl();
+        renderEditCategoryPreview(existingCategoryImageSrc);
+        return;
+    }
+
+    editCategoryImageUrl.value = '';
+    editRemoveCategoryImage.checked = false;
+    clearEditCategoryObjectUrl();
+    editCategoryObjectUrl = URL.createObjectURL(file);
+    renderEditCategoryPreview(editCategoryObjectUrl);
+});
+
+editCategoryImageUrl.addEventListener('input', () => {
+    const url = editCategoryImageUrl.value.trim();
+    if (!url) {
+        clearEditCategoryObjectUrl();
+        renderEditCategoryPreview(existingCategoryImageSrc);
+        return;
+    }
+
+    editCategoryImageFile.value = '';
+    editRemoveCategoryImage.checked = false;
+    clearEditCategoryObjectUrl();
+    renderEditCategoryPreview(url);
+});
+
+editRemoveCategoryImage.addEventListener('change', () => {
+    if (!editRemoveCategoryImage.checked) {
+        clearEditCategoryObjectUrl();
+        renderEditCategoryPreview(existingCategoryImageSrc);
+        return;
+    }
+
+    editCategoryImageUrl.value = '';
+    editCategoryImageFile.value = '';
+    clearEditCategoryObjectUrl();
+    renderEditCategoryPreview('');
+});
+
+categoryEditForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    clearFieldErrors();
-    const formData = new FormData(form);
+    clearCategoryFieldErrors();
+    const formData = new FormData(categoryEditForm);
     const name = String(formData.get('name') || '').trim();
     if (!name) {
         const target = document.querySelector('.error-name');
         if (target) {
             target.textContent = 'Name is required';
         }
-        showMessage('Please fill in the required fields.');
+        showCategoryMessage('Please fill in the required fields.');
         return;
     }
 
-    submitButton.disabled = true;
-    submitButton.classList.add('opacity-70', 'cursor-not-allowed');
+    updateCategoryButton.disabled = true;
+    updateCategoryButton.classList.add('opacity-70', 'cursor-not-allowed');
 
     try {
         const response = await fetch('<?php echo route('/admin/package-categories/update'); ?>', {
@@ -94,30 +189,19 @@ form.addEventListener('submit', async (e) => {
         const data = await response.json();
 
         if (data.success) {
-            showMessage(data.message, true);
+            showCategoryMessage(data.message, true);
             setTimeout(() => {
                 window.location.href = '<?php echo route('/admin/package-categories'); ?>';
             }, 1200);
             return;
         }
 
-        if (data.errors) {
-            Object.keys(data.errors).forEach((field) => {
-                const target = document.querySelector('.error-' + field);
-                if (target) {
-                    target.textContent = data.errors[field];
-                }
-            });
-            showMessage('Please fix the highlighted fields.');
-            return;
-        }
-
-        showMessage(data.error || 'Failed to update category');
+        showCategoryMessage(data.error || 'Failed to update category');
     } catch (error) {
-        showMessage('A network error occurred. Please try again.');
+        showCategoryMessage('A network error occurred. Please try again.');
     } finally {
-        submitButton.disabled = false;
-        submitButton.classList.remove('opacity-70', 'cursor-not-allowed');
+        updateCategoryButton.disabled = false;
+        updateCategoryButton.classList.remove('opacity-70', 'cursor-not-allowed');
     }
 });
 </script>
@@ -126,4 +210,3 @@ form.addEventListener('submit', async (e) => {
 $content = ob_get_clean();
 require VIEW_PATH . '/layouts/admin.php';
 ?>
-

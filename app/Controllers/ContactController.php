@@ -40,15 +40,15 @@ class ContactController extends Controller
         $rules = [
             'name' => 'required|min:3|max:150',
             'email' => 'required|email',
-            'phone' => 'required|max:50',
+            'phone' => 'max:50',
             'service_type' => 'required|max:150',
-            'event_type' => 'required',
+            'event_type' => '',
             'event_date' => 'required',
             'event_time' => 'required|max:20',
             'budget' => 'required|max:150',
             'guest_count' => 'required|max:50',
             'event_location' => 'required|max:255',
-            'lead_source' => 'required|max:100',
+            'lead_source' => 'max:100',
             'message' => 'required|min:10|max:5000',
         ];
 
@@ -65,6 +65,7 @@ class ContactController extends Controller
             'event_location' => $_POST['event_location'] ?? '',
             'lead_source' => $_POST['lead_source'] ?? '',
             'message' => $_POST['message'] ?? '',
+            'package_id' => $_POST['package_id'] ?? '',
         ];
 
         $errors = $this->validate($data, $rules);
@@ -146,6 +147,7 @@ class ContactController extends Controller
             'Budget: ' . $data['budget'],
             'Guest Count: ' . $data['guest_count'],
             'Event Location: ' . $data['event_location'],
+            'Selected Package ID: ' . ($data['package_id'] !== '' ? $data['package_id'] : 'None selected'),
             'Inspiration Image: ' . ($uploadMeta !== '' ? $uploadMeta : 'Not provided'),
             'Inspiration Image Path: ' . ($uploadPath !== '' ? $uploadPath : 'Not provided'),
             'How Did You Hear About Us: ' . $data['lead_source'],

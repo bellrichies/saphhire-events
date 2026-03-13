@@ -9,6 +9,7 @@
 /ai-model/
 /testing/
 /docs/
+/Microsoft/
 
 # Runtime and cache
 /storage/*.log

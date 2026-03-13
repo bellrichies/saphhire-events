@@ -73,8 +73,8 @@ class ServiceAdminController extends Controller
         ];
 
         $data = [
-            'title' => $_POST['title'] ?? '',
-            'description' => $_POST['description'] ?? '',
+            'title' => trim((string)($_POST['title'] ?? '')),
+            'description' => $this->normalizeMultilineContent((string)($_POST['description'] ?? '')),
         ];
 
         $errors = $this->validate($data, $rules);
@@ -119,11 +119,12 @@ class ServiceAdminController extends Controller
         }
 
         $service = new Service();
-        $payload = $this->appendLocalizedFields([
+        $payload = [
             'title' => $data['title'],
             'description' => $data['description'],
             'image' => $imageName,
-        ], $_POST, ['title', 'description']);
+        ];
+        $payload = $this->appendServiceLocalizedFields($payload, $_POST);
 
         if ($service->create($payload)) {
             $this->json(['success' => true, 'message' => 'Service created successfully']);
@@ -167,8 +168,8 @@ class ServiceAdminController extends Controller
         ];
 
         $data = [
-            'title' => $_POST['title'] ?? '',
-            'description' => $_POST['description'] ?? '',
+            'title' => trim((string)($_POST['title'] ?? '')),
+            'description' => $this->normalizeMultilineContent((string)($_POST['description'] ?? '')),
         ];
 
         $errors = $this->validate($data, $rules);
@@ -223,11 +224,12 @@ class ServiceAdminController extends Controller
             $imageName = $newImage;
         }
 
-        $payload = $this->appendLocalizedFields([
+        $payload = [
             'title' => $data['title'],
             'description' => $data['description'],
             'image' => $imageName,
-        ], $_POST, ['title', 'description']);
+        ];
+        $payload = $this->appendServiceLocalizedFields($payload, $_POST);
 
         $updated = $service->update($id, $payload);
 
@@ -317,6 +319,28 @@ class ServiceAdminController extends Controller
         }
 
         return true;
+    }
+
+    private function normalizeMultilineContent(string $value): string
+    {
+        return str_replace(["\r\n", "\r"], "\n", $value);
+    }
+
+    private function appendServiceLocalizedFields(array $payload, array $input): array
+    {
+        foreach ($this->getTranslatableLocales() as $locale) {
+            $titleKey = 'title_' . $locale;
+            if (array_key_exists($titleKey, $input)) {
+                $payload[$titleKey] = trim((string)$input[$titleKey]);
+            }
+
+            $descriptionKey = 'description_' . $locale;
+            if (array_key_exists($descriptionKey, $input)) {
+                $payload[$descriptionKey] = $this->normalizeMultilineContent((string)$input[$descriptionKey]);
+            }
+        }
+
+        return $payload;
     }
 
     private function uploadErrorMessage(int $code): string

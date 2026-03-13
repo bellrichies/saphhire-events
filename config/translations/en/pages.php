@@ -15,6 +15,7 @@ return [
         'packages' => 'Packages',
         'gallery' => 'Gallery',
         'about' => 'About',
+        'team' => 'Team',
         'faqs' => 'FAQs',
         'contact' => 'Contact',
         'admin' => 'Admin',

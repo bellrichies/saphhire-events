@@ -40,11 +40,11 @@ class GalleryController extends Controller
         }
 
         $galleryTitle = $categoryName !== ''
-            ? $categoryName . ' Gallery | Sapphire Events'
-            : 'Event Gallery | Sapphire Events & Decorations';
+            ? $categoryName . ' ' . trans('content.gallery_page.seo.category_suffix', 'Gallery | Sapphire Events')
+            : trans('content.gallery_page.seo.title', 'Event Gallery | Sapphire Events & Decorations');
         $galleryDescription = $categoryName !== ''
-            ? 'Browse our ' . $categoryName . ' event portfolio with curated decor, styling, and celebration highlights from Sapphire Events.'
-            : 'Explore Sapphire Events gallery featuring weddings, birthdays, proposals, corporate events, and custom decor transformations.';
+            ? trans('content.gallery_page.seo.category_prefix', 'Browse our ') . $categoryName . trans('content.gallery_page.seo.category_suffix_description', ' event portfolio with curated decor, styling, and celebration highlights from Sapphire Events.')
+            : trans('content.gallery_page.seo.description', 'Explore Sapphire Events gallery featuring weddings, birthdays, proposals, corporate events, and custom decor transformations.');
 
         $this->view('gallery.index', [
             'items' => $items,
@@ -59,7 +59,7 @@ class GalleryController extends Controller
                 'canonical' => route('/gallery'),
                 'url' => currentUrl(),
                 'image' => 'assets/images/gallery-image-007.avif',
-                'image_alt' => 'Sapphire Events gallery showcase',
+                'image_alt' => trans('content.gallery_page.seo.image_alt', 'Sapphire Events gallery showcase'),
             ],
         ]);
     }
