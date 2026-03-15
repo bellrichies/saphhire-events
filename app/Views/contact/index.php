@@ -20,7 +20,7 @@ ob_start();
     </div>
 </section>
 
-<section class="py-12 md:py-14 px-4" style="background-color: #F8F5F2;">
+<section class="page-deferred-section py-12 md:py-14 px-4" style="background-color: #F8F5F2;">
     <div class="site-container grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
         <article class="contact-info-card" data-aos="fade-up">
             <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
@@ -57,7 +57,7 @@ ob_start();
     </div>
 </section>
 
-<section class="py-16 md:py-20 px-4">
+<section class="page-deferred-section py-16 md:py-20 px-4">
     <div class="site-container grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-8 items-start">
         <div class="lg:col-span-7" data-aos="fade-right">
             <article class="contact-panel">
@@ -147,12 +147,12 @@ ob_start();
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="contact-label" for="contact-event-date"><?php echo htmlspecialchars(trans('content.contact.form.event_date', 'Date of the Event')); ?> <span class="contact-required-indicator" aria-hidden="true">*</span></label>
-                            <input id="contact-event-date" type="text" name="event_date" required class="contact-input" placeholder="YYYY-MM-DD" autocomplete="off">
+                            <input id="contact-event-date" type="date" name="event_date" required class="contact-input" autocomplete="off">
                             <small class="contact-error error-event_date"></small>
                         </div>
                         <div>
                             <label class="contact-label" for="contact-event-time"><?php echo htmlspecialchars(trans('content.contact.form.event_time', 'Event Time')); ?> <span class="contact-required-indicator" aria-hidden="true">*</span></label>
-                            <input id="contact-event-time" type="text" name="event_time" required class="contact-input" placeholder="HH:MM" autocomplete="off">
+                            <input id="contact-event-time" type="time" name="event_time" required class="contact-input" autocomplete="off" step="300">
                             <small class="contact-error error-event_time"></small>
                         </div>
                     </div>
@@ -304,7 +304,7 @@ ob_start();
     </div>
 </section>
 
-<section class="py-16 px-4" style="background-color: #F8F5F2;">
+<section class="page-deferred-section py-16 px-4" style="background-color: #F8F5F2;">
     <div class="site-container grid grid-cols-1 xl:grid-cols-12 gap-7">
         <div class="xl:col-span-7" data-aos="fade-up">
             <article class="contact-panel p-0 overflow-hidden">
@@ -378,7 +378,7 @@ ob_start();
     </div>
 </section>
 
-<section class="py-16 px-4 relative overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
+<section class="page-deferred-section py-16 px-4 relative overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
     <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><circle cx=%2250%22 cy=%2250%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
     <div class="max-w-3xl mx-auto text-center relative z-10" data-aos="fade-up">
         <h2 class="text-3xl md:text-4xl font-light mb-5 text-white" style="font-family: 'Cormorant Garamond', serif; letter-spacing: -0.02em;">
@@ -398,8 +398,6 @@ ob_start();
     </div>
 </section>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('contact-form');
@@ -420,26 +418,9 @@ ob_start();
             packageIdField.value = packageId;
         }
 
-        if (typeof flatpickr === 'function' && eventDateInput) {
-            flatpickr(eventDateInput, {
-                dateFormat: 'Y-m-d',
-                minDate: 'today',
-                disableMobile: true
-            });
-        } else if (eventDateInput) {
+        if (eventDateInput) {
             const today = new Date().toISOString().split('T')[0];
             eventDateInput.setAttribute('min', today);
-        }
-
-        if (typeof flatpickr === 'function' && eventTimeInput) {
-            flatpickr(eventTimeInput, {
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: 'H:i',
-                time_24hr: true,
-                minuteIncrement: 5,
-                disableMobile: true
-            });
         }
 
         const setUploadFile = function (file) {
@@ -603,6 +584,11 @@ ob_start();
 </script>
 
 <style>
+    .page-deferred-section {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 1100px;
+    }
+
     .contact-info-card {
         background: #fff;
         border-radius: 1rem;

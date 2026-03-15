@@ -153,4 +153,31 @@ class Gallery extends Model
         $stmt->execute();
         return $this->localizeRecords($stmt->fetchAll(), ['title', 'description', 'category_name']);
     }
+
+    public function getLatestImagesOnly(int $limit = 12): array
+    {
+        $categoryNameSelect = $this->localizedColumnExpression(
+            'gallery_categories',
+            'gc',
+            'name',
+            'category_name'
+        );
+        $stmt = $this->connection->prepare(
+            "SELECT gi.*, {$categoryNameSelect} FROM {$this->table} gi
+             JOIN gallery_categories gc ON gi.category_id = gc.id
+             WHERE gi.image IS NOT NULL
+               AND gi.image != ''
+               AND LOWER(gi.image) NOT LIKE '%.mp4'
+               AND LOWER(gi.image) NOT LIKE '%.webm'
+               AND LOWER(gi.image) NOT LIKE '%.ogv'
+               AND LOWER(gi.image) NOT LIKE '%.mov'
+               AND LOWER(gi.image) NOT LIKE '%/video/%'
+             ORDER BY gi.created_at DESC
+             LIMIT :limit"
+        );
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $this->localizeRecords($stmt->fetchAll(), ['title', 'description', 'category_name']);
+    }
 }

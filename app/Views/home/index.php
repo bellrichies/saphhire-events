@@ -35,17 +35,30 @@ $getGalleryMediaType = static function ($media) {
 
     return 'image';
 };
+
+$heroPoster = route('/assets/images/about-home.avif');
+$heroVideo = route('/assets/images/hero.mp4');
 ?>
 
 <section class="home-hero relative min-h-[72vh] md:min-h-[82vh] flex items-center pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden" style="background: linear-gradient(140deg, #0F3D3E 0%, #1C1C1C 72%);">
+    <img
+        src="<?= htmlspecialchars($heroPoster); ?>"
+        alt=""
+        class="absolute inset-0 w-full h-full object-cover"
+        fetchpriority="high"
+        decoding="async"
+        aria-hidden="true"
+    >
     <video
-        class="absolute inset-0 w-full h-full object-cover "
-        autoplay
+        class="home-hero-video absolute inset-0 w-full h-full object-cover "
         muted
         loop
         playsinline
+        preload="none"
+        poster="<?= htmlspecialchars($heroPoster); ?>"
+        data-src="<?= htmlspecialchars($heroVideo); ?>"
+        aria-hidden="true"
     >
-        <source src="<?= route('/assets/images/hero.mp4') ?>" type="video/mp4">
     </video>
     <div class="absolute inset-0 bg-black/30"></div>
     <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl opacity-30" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
@@ -102,13 +115,12 @@ $getGalleryMediaType = static function ($media) {
         </div>
     </div>
 </section>
-
-<section class="py-16 md:py-12 overflow-hidden" >
+<section class="home-deferred-section py-16 md:py-12 overflow-hidden" >
     <div class="w-full" style="background-color: #F6CCF0;">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
             <div class="relative" data-aos="fade-right">
                 <div class="about-feature-image overflow-hidden luxury-shadow bg-[#f3eee8]">
-                    <img src="<?= route('/assets/images/about-home.avif') ?>" alt="Sapphire Events decor setup" class="w-full h-full object-cover object-center">
+                    <img src="<?= route('/assets/images/about-home.avif') ?>" alt="Sapphire Events decor setup" class="w-full h-full object-cover object-center" loading="lazy" decoding="async">
                 </div>
                 <div class="hidden lg:block absolute -bottom-6 -right-6 bg-white rounded-xl p-5 luxury-shadow">
                     <p class="text-xs uppercase tracking-[0.16em] mb-1" style="color: #0F3D3E; font-family: 'Montserrat', sans-serif;"><?php echo htmlspecialchars(trans('content.home.about_section.trusted_label', 'Trusted by Clients')); ?></p>
@@ -139,7 +151,7 @@ $getGalleryMediaType = static function ($media) {
 
                         <div class="about-column-card about-ceo-card">
                             <div class="about-ceo-media overflow-hidden">
-                                <img src="<?= route('/assets/images/founder-ceo.avif') ?>" alt="CEO of Sapphire Events & Decorations" class="w-full h-full object-contain object-left">
+                                <img src="<?= route('/assets/images/founder-ceo.avif') ?>" alt="CEO of Sapphire Events & Decorations" class="w-full h-full object-contain object-left" loading="lazy" decoding="async">
                             </div>
                         </div>
                     </div>
@@ -156,8 +168,7 @@ $getGalleryMediaType = static function ($media) {
         </div>
     </div>
 </section>
-
-<section id="core-services" class="py-16 md:py-20 px-4 overflow-hidden" style="background-color: #F8F5F2;">
+<section id="core-services" class="home-deferred-section py-16 md:py-20 px-4 overflow-hidden" style="background-color: #F8F5F2;">
     <div class="w-full">
             <div class="md:max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
                 <div>
@@ -185,7 +196,7 @@ $getGalleryMediaType = static function ($media) {
                                     <div class="service-scroll-card-inner">
                                         <div class="service-scroll-image-wrap">
                                             <?php if (!empty($service['image'])): ?>
-                                                <img src="<?php echo htmlspecialchars(uploadedImageUrl($service['image'])); ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" class="service-scroll-image">
+                                                <img src="<?php echo htmlspecialchars(uploadedImageUrl($service['image'])); ?>" alt="<?php echo htmlspecialchars($service['title']); ?>" class="service-scroll-image" loading="lazy" decoding="async">
                                             <?php else: ?>
                                                 <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #0F3D3E 0%, #2d5a5b 100%);">
                                                     <i class="fas fa-image text-white text-5xl opacity-30"></i>
@@ -216,8 +227,7 @@ $getGalleryMediaType = static function ($media) {
         </div>
     </div>
 </section>
-
-<section class="py-16 md:py-20">
+<section class="home-deferred-section py-16 md:py-20">
     <div class="w-full px-4 sm:px-6 lg:px-8">
         <div class="md:max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
             <div>
@@ -252,14 +262,12 @@ $getGalleryMediaType = static function ($media) {
                     <video
                         src="<?php echo htmlspecialchars($mediaPath); ?>"
                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        autoplay
                         muted
-                        loop
                         playsinline
-                        preload="metadata"
+                        preload="none"
                     ></video>
                 <?php elseif (!empty($item['image'])): ?>
-                    <img src="<?php echo htmlspecialchars($mediaPath); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <img src="<?php echo htmlspecialchars($mediaPath); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async">
                 <?php else: ?>
                     <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #0F3D3E 0%, #C8A951 100%);">
                         <i class="fas fa-image text-white text-5xl opacity-30"></i>
@@ -299,8 +307,7 @@ $getGalleryMediaType = static function ($media) {
         </div>
     </div>
 </section>
-
-<section id="home-packages" class="py-16 md:py-20 px-4" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
+<section id="home-packages" class="home-deferred-section py-16 md:py-20 px-4" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
     <div class="w-full ">
         <div class="md:max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-10" data-aos="fade-up">
             <div>
@@ -324,7 +331,7 @@ $getGalleryMediaType = static function ($media) {
                 <?php $packageCategoryImage = $getPackageImageUrl($category['image'] ?? null); ?>
                 <a href="<?php echo route('/packages/' . $category['slug']); ?>" class="inline-flex items-center gap-3 px-3 py-2 rounded-full text-xs font-semibold transition-all duration-300 hover:shadow-md" style="background-color: rgba(15, 61, 62, 0.08); color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em; text-transform: uppercase;">
                     <?php if ($packageCategoryImage): ?>
-                        <img src="<?php echo htmlspecialchars($packageCategoryImage); ?>" alt="<?php echo htmlspecialchars($category['name']); ?>" class="w-9 h-9 rounded-full object-cover border border-white/70">
+                        <img src="<?php echo htmlspecialchars($packageCategoryImage); ?>" alt="<?php echo htmlspecialchars($category['name']); ?>" class="w-9 h-9 rounded-full object-cover border border-white/70" loading="lazy" decoding="async">
                     <?php else: ?>
                         <span class="w-9 h-9 rounded-full flex items-center justify-center text-[11px] text-white" style="background: linear-gradient(135deg, #0F3D3E 0%, #2d5a5b 100%);">
                             <i class="fas fa-image"></i>
@@ -343,7 +350,7 @@ $getGalleryMediaType = static function ($media) {
                             <div class="relative aspect-[3/4] overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #2d5a5b 100%);">
                                 <?php $packageImage = $getPackageImageUrl($package['image'] ?? null); ?>
                                 <?php if (!empty($packageImage)): ?>
-                                    <img src="<?php echo htmlspecialchars($packageImage); ?>" alt="<?php echo htmlspecialchars($package['title']); ?>" class="w-full h-full object-cover">
+                                    <img src="<?php echo htmlspecialchars($packageImage); ?>" alt="<?php echo htmlspecialchars($package['title']); ?>" class="w-full h-full object-cover" loading="lazy" decoding="async">
                                 <?php else: ?>
                                     <div class="w-full h-full flex items-center justify-center">
                                         <i class="fas fa-gem text-white text-5xl opacity-30"></i>
@@ -375,8 +382,7 @@ $getGalleryMediaType = static function ($media) {
         <?php endif; ?>
     </div>
 </section>
-
-<section class="py-8 md:py-10 px-4 md:px-12" style="background-color: #F8F5F2;">
+<section class="home-deferred-section py-8 md:py-10 px-4 md:px-12" style="background-color: #F8F5F2;">
     <div class="site-container">
         <div class="text-center mb-6 md:mb-8" data-aos="fade-up">
             <h2 class="home-section-title text-2xl md:text-3xl mb-2 text-[#0F3D3E]" style="font-family: 'Dancing Script', cursive; font-weight: 600;"><?php echo htmlspecialchars(trans('content.home.testimonials.title', 'Client Stories')); ?></h2>
@@ -434,8 +440,7 @@ $getGalleryMediaType = static function ($media) {
         <?php endif; ?>
     </div>
 </section>
-
-<section class="py-16 md:py-12 px-4 text-center" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
+<section class="home-deferred-section py-16 md:py-12 px-4 text-center" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
     <div class="md:max-w-4xl mx-auto" data-aos="fade-up">
         <h2 class="home-section-title text-3xl md:text-4xl font-light mb-5" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.02em;">
             <?php echo htmlspecialchars(trans('content.home.cta.title', 'Ready to Plan Your Next Event?')); ?>
@@ -453,49 +458,112 @@ $getGalleryMediaType = static function ($media) {
         </div>
     </div>
 </section>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const heroVideo = document.querySelector('.home-hero-video');
 
-        if (document.querySelector('.homeServicesSwiper')) {
-            new Swiper('.homeServicesSwiper', {
-                slidesPerView: 1.12,
-                spaceBetween: 16,
-                speed: 900,
-                loop: true,
-                allowTouchMove: true,
-                keyboard: {
-                    enabled: true,
-                    onlyInViewport: true
-                },
-                autoplay: reduceMotion ? false : {
-                    delay: 2800,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true
-                },
-                breakpoints: {
-                    640: {
-                        slidesPerView: 1.45,
-                        spaceBetween: 18
-                    },
-                    768: {
-                        slidesPerView: 2.15,
-                        spaceBetween: 20
-                    },
-                    1024: {
-                        slidesPerView: 3.1,
-                        spaceBetween: 22
-                    },
-                    1280: {
-                        slidesPerView: 4.05,
-                        spaceBetween: 24
-                    }
+        if (heroVideo && !reduceMotion) {
+            const activateHeroVideo = () => {
+                if (heroVideo.dataset.loaded === 'true') {
+                    return;
                 }
-            });
+
+                const source = heroVideo.dataset.src;
+                if (!source) {
+                    return;
+                }
+
+                heroVideo.dataset.loaded = 'true';
+                heroVideo.innerHTML = '<source src="' + source + '" type="video/mp4">';
+                heroVideo.load();
+                heroVideo.play().catch(() => {});
+            };
+
+            if ('IntersectionObserver' in window) {
+                const heroObserver = new IntersectionObserver((entries) => {
+                    if (!entries[0] || !entries[0].isIntersecting) {
+                        return;
+                    }
+
+                    activateHeroVideo();
+                    heroObserver.disconnect();
+                }, { rootMargin: '200px 0px' });
+
+                heroObserver.observe(heroVideo);
+            } else {
+                activateHeroVideo();
+            }
         }
 
-        new Swiper('.homePackagesSwiper', {
+        const bootSwiper = (selector, config) => {
+            const element = document.querySelector(selector);
+            if (!element) {
+                return;
+            }
+
+            const init = () => {
+                if (element.dataset.swiperReady === 'true' || typeof window.Swiper !== 'function') {
+                    return;
+                }
+
+                element.dataset.swiperReady = 'true';
+                new Swiper(selector, config);
+            };
+
+            if ('IntersectionObserver' in window) {
+                const swiperObserver = new IntersectionObserver((entries) => {
+                    if (!entries[0] || !entries[0].isIntersecting) {
+                        return;
+                    }
+
+                    init();
+                    swiperObserver.disconnect();
+                }, { rootMargin: '180px 0px' });
+
+                swiperObserver.observe(element);
+                return;
+            }
+
+            init();
+        };
+
+        bootSwiper('.homeServicesSwiper', {
+            slidesPerView: 1.12,
+            spaceBetween: 16,
+            speed: 900,
+            loop: true,
+            allowTouchMove: true,
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true
+            },
+            autoplay: reduceMotion ? false : {
+                delay: 2800,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1.45,
+                    spaceBetween: 18
+                },
+                768: {
+                    slidesPerView: 2.15,
+                    spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 3.1,
+                    spaceBetween: 22
+                },
+                1280: {
+                    slidesPerView: 4.05,
+                    spaceBetween: 24
+                }
+            }
+        });
+
+        bootSwiper('.homePackagesSwiper', {
             slidesPerView: 1.08,
             spaceBetween: 16,
             speed: 850,
@@ -522,8 +590,12 @@ $getGalleryMediaType = static function ($media) {
         });
     });
 </script>
-
 <style>
+    .home-deferred-section {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 960px;
+    }
+
     .hero-panel {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
         border: 1px solid rgba(255, 255, 255, 0.14);

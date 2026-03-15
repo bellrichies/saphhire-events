@@ -5,22 +5,21 @@
  */
 
 return [
-    // Header & Navigation
     'header' => [
         'language' => 'Kieli',
         'select_language' => 'Valitse kieli',
         'switch_language' => 'Vaihda kieli',
-        'home' => 'Koti',
+        'home' => 'Etusivu',
         'services' => 'Palvelut',
         'packages' => 'Paketit',
         'gallery' => 'Galleria',
-        'about' => 'Tietoa',
+        'about' => 'Meistä',
+        'team' => 'Tiimi',
         'faqs' => 'Usein kysytyt kysymykset',
         'contact' => 'Ota yhteyttä',
-        'admin' => 'Admin',
+        'admin' => 'Ylläpito',
     ],
 
-    // Footer
     'footer' => [
         'all_rights_reserved' => 'Kaikki oikeudet pidätetään',
         'follow_us' => 'Seuraa meitä',
@@ -30,7 +29,6 @@ return [
         'email' => 'Sähköposti',
     ],
 
-    // Common
     'common' => [
         'language' => 'Kieli',
         'select_language' => 'Valitse kieli',
@@ -51,11 +49,10 @@ return [
         'previous' => 'Edellinen',
     ],
 
-    // Messages
     'messages' => [
         'welcome' => 'Tervetuloa Sapphire Events & Decorationsiin',
         'success' => 'Toiminto onnistui',
-        'error' => 'Virhe tapahtui',
+        'error' => 'Tapahtui virhe',
         'loading' => 'Ladataan...',
     ],
 ];

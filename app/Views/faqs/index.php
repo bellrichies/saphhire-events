@@ -62,7 +62,7 @@ $faqSchema = [
     </div>
 </section>
 
-<section class="py-12 md:py-14 px-4" style="background-color: #F8F5F2;">
+<section class="page-deferred-section py-12 md:py-14 px-4" style="background-color: #F8F5F2;">
     <div class="site-container">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-8 items-start">
             <aside class="lg:col-span-4" data-aos="fade-right">
@@ -126,11 +126,11 @@ $faqSchema = [
                                         $searchBlob = strtolower(strip_tags($category . ' ' . $question . ' ' . $answer));
                                         ?>
                                         <article class="faq-item" data-search="<?php echo htmlspecialchars($searchBlob); ?>" data-category="<?php echo htmlspecialchars($category); ?>" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>">
-                                            <button class="faq-question" type="button" aria-expanded="true" aria-controls="faq-answer-<?php echo $faqId; ?>">
+                                            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-answer-<?php echo $faqId; ?>">
                                                 <span><?php echo htmlspecialchars($question); ?></span>
                                                 <i class="fas fa-chevron-down" aria-hidden="true"></i>
                                             </button>
-                                            <div id="faq-answer-<?php echo $faqId; ?>" class="faq-answer" role="region">
+                                            <div id="faq-answer-<?php echo $faqId; ?>" class="faq-answer hidden" role="region">
                                                 <div><?php echo $answer; ?></div>
                                             </div>
                                         </article>
@@ -157,7 +157,7 @@ $faqSchema = [
     </div>
 </section>
 
-<section class="py-10 md:py-8 px-4 text-center" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
+<section class="page-deferred-section py-10 md:py-8 px-4 text-center" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
     <div class="max-w-3xl mx-auto" data-aos="fade-up">
         <h2 class="text-2xl md:text-3xl font-semibold mb-3" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.01em;">
             <?php echo htmlspecialchars(trans('content.faqs_page.cta.title', 'Need More Information?')); ?>
@@ -294,6 +294,11 @@ $faqSchema = [
 </script>
 
 <style>
+    .page-deferred-section {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 980px;
+    }
+
     .faqs-kpi-card {
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.14);

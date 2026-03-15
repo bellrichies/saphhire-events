@@ -44,20 +44,30 @@ class PackageCategory extends Model
         }
     }
 
-    public function getWithPackageCount()
+    public function getWithPackageCount(?int $limit = null)
     {
         $this->ensureSchema();
 
         try {
-            $rows = $this->connection->query(
+            $sql =
                 "SELECT pc.*, COUNT(p.id) AS package_count,
                         MIN(CASE WHEN p.price_amount IS NULL THEN NULL ELSE p.price_amount END) AS min_price,
                         MAX(CASE WHEN p.price_amount IS NULL THEN NULL ELSE p.price_amount END) AS max_price
                  FROM {$this->table} pc
                  LEFT JOIN packages p ON pc.id = p.category_id
                  GROUP BY pc.id
-                 ORDER BY pc.display_order ASC, pc.name ASC"
-            )->fetchAll();
+                 ORDER BY pc.display_order ASC, pc.name ASC";
+
+            if ($limit !== null) {
+                $sql .= " LIMIT :limit";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+                $stmt->execute();
+                $rows = $stmt->fetchAll();
+            } else {
+                $rows = $this->connection->query($sql)->fetchAll();
+            }
+
             return $this->localizeRecords($rows, ['name', 'description']);
         } catch (\Throwable $e) {
             return [];

@@ -68,12 +68,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=League+Spartan:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Love+Light&family=Manrope:wght@300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800&family=Parisienne&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Betania+Patmos+GDL&family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Dancing+Script:wght@400;500;600;700&family=League+Spartan:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Love+Light&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Syncopate:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Dancing+Script:wght@400;500;600;700&family=League+Spartan:wght@400;500;600;700&family=Lora:wght@400;500;600&family=Love+Light&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="preload" as="style" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"></noscript>
     <link rel="stylesheet" href="<?= asset('css/language-selector.css'); ?>">
     
     <style>
@@ -592,16 +594,9 @@ $bodyClass = $normalizedPath === '' ? 'page-home' : 'page-inner';
 
     <?php include VIEW_PATH . '/partials/footer.php'; ?>
 
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script defer src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
     <script>
-        AOS.init({
-            duration: 800,
-            offset: 100,
-            once: true,
-        });
-
         // AJAX Lightbox Implementation
         (function() {
             const modal = document.getElementById('lightbox-modal');

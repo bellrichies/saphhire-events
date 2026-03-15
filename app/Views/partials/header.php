@@ -161,18 +161,3 @@ $desktopRightNav = [
         }
     });
 </script>
-<!-- The container for the widget -->
-<div id="google_translate_element"></div>
-
-<!-- The initialization script -->
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en', 
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-  }, 'google_translate_element');
-}
-</script>
-
-<!-- The external Google script -->
-<script type="text/javascript" src="//://translate.google.com"></script>

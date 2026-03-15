@@ -5,7 +5,6 @@
  */
 
 return [
-    // Header & Navigation
     'header' => [
         'language' => 'Keel',
         'select_language' => 'Valige keel',
@@ -18,20 +17,18 @@ return [
         'team' => 'Meeskond',
         'faqs' => 'KKK',
         'contact' => 'Kontakt',
-        'admin' => 'Admin',
+        'admin' => 'Haldus',
     ],
 
-    // Footer
     'footer' => [
-        'all_rights_reserved' => 'Kõik õigused reserveeritud',
-        'follow_us' => 'Jälgige meid',
-        'contact_info' => 'Kontaktteave',
+        'all_rights_reserved' => 'Kõik õigused kaitstud',
+        'follow_us' => 'Jälgi meid',
+        'contact_info' => 'Kontaktandmed',
         'address' => 'Aadress',
         'phone' => 'Telefon',
         'email' => 'E-post',
     ],
 
-    // Common
     'common' => [
         'language' => 'Keel',
         'select_language' => 'Valige keel',
@@ -52,11 +49,10 @@ return [
         'previous' => 'Eelmine',
     ],
 
-    // Messages
     'messages' => [
         'welcome' => 'Tere tulemast Sapphire Events & Decorationsi',
-        'success' => 'Operatsioon õnnestus',
-        'error' => 'Tekkinud viga',
-        'loading' => 'Laadimise...',
+        'success' => 'Toiming õnnestus',
+        'error' => 'Tekkis viga',
+        'loading' => 'Laadimine...',
     ],
 ];

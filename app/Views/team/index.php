@@ -20,14 +20,14 @@ ob_start();
     </div>
 </section>
 
-<section class="py-20 px-4" style="background-color: #F8F5F2;">
+<section class="page-deferred-section py-20 px-4" style="background-color: #F8F5F2;">
     <div class="w-full">
         <!-- Team Member 1: Racheal -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-4" data-aos="fade-up">
             <!-- Image Column (Left) -->
             <div class="flex items-center justify-center order-2 lg:order-1">
                 <div class="bg-white  overflow-hidden shadow-lg hover:shadow-xl transition-shadow w-full" style="box-shadow: 0 4px 24px rgba(15, 61, 62, 0.08);">
-                    <img src="<?= route('/assets/uploads/media/image/2026/03/ff4cf799393e6b1ba2bd4c2935e2f280.webp') ?>" alt="Racheal - CEO & Creative Director" class="w-full h-auto object-cover aspect-[3/4]" loading="lazy">
+                    <img src="<?= route('/assets/uploads/media/image/2026/03/ff4cf799393e6b1ba2bd4c2935e2f280.webp') ?>" alt="Racheal - CEO & Creative Director" class="w-full h-auto object-cover aspect-[3/4]" loading="lazy" decoding="async">
                 </div>
             </div>
             
@@ -94,14 +94,14 @@ ob_start();
             <!-- Image Column (Right) -->
             <div class="flex items-center justify-center">
                 <div class="bg-white  overflow-hidden shadow-lg hover:shadow-xl transition-shadow w-full" style="box-shadow: 0 4px 24px rgba(15, 61, 62, 0.08);">
-                    <img src="<?= route('/assets/uploads/media/image/2026/03/3ca78fbe9945a78d2eb8bad16230af52.avif') ?>" alt="Israel - Co-Creative Director" class="w-full h-auto object-cover aspect-[3/4]" loading="lazy">
+                    <img src="<?= route('/assets/uploads/media/image/2026/03/3ca78fbe9945a78d2eb8bad16230af52.avif') ?>" alt="Israel - Co-Creative Director" class="w-full h-auto object-cover aspect-[3/4]" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-10 md:py-8 px-4 text-center" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
+<section class="page-deferred-section py-10 md:py-8 px-4 text-center" style="background: linear-gradient(135deg, #F8F5F2 0%, #ffffff 100%);">
     <div class="max-w-4xl mx-auto" data-aos="fade-up">
         <h2 class="text-xl md:text-2xl font-semibold mb-3" style="font-family: 'Cormorant Garamond', serif; color: #0F3D3E; letter-spacing: -0.01em;">
             <?php echo htmlspecialchars(trans('content.team.cta.title', 'Ready to Collaborate with Our Team?')); ?>
@@ -114,6 +114,13 @@ ob_start();
         </a>
     </div>
 </section>
+
+<style>
+    .page-deferred-section {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 880px;
+    }
+</style>
 
 <?php
 $content = ob_get_clean();

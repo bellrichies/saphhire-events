@@ -1,6 +1,8 @@
 <?php
 $title = trans('content.about.page_title', 'About Us');
 ob_start();
+$aboutMissionVideo = asset('uploads/media/video/2026/03/46b910cd7e6c35205bcc990eed4d9662.mp4');
+$aboutMissionPoster = asset('images/about-team.avif');
 ?>
 
 <section class="relative py-14 md:py-16 px-4 overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
@@ -20,7 +22,7 @@ ob_start();
     </div>
 </section>
 
-<section class="pt-20 pb-10 px-4" style="background-color: #F8F5F2;">
+<section class="page-deferred-section pt-20 pb-10 px-4" style="background-color: #F8F5F2;">
     <div class="w-full">
         <div class="text-center mb-14" data-aos="fade-up">
             <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em;">
@@ -37,14 +39,14 @@ ob_start();
             <div class="about-story-row" data-aos="fade-up">
                 <figure class="about-story-media">
                     <video
-                        class="about-story-image about-story-image--mission"
-                        autoplay
+                        class="about-story-image about-story-image--mission about-mission-video"
                         muted
                         loop
                         playsinline
-                        preload="auto"
+                        preload="none"
+                        poster="<?php echo htmlspecialchars($aboutMissionPoster); ?>"
+                        data-src="<?php echo htmlspecialchars($aboutMissionVideo); ?>"
                         aria-label="<?php echo htmlspecialchars(trans('content.about.mission_vision.mission_image_alt', 'Our mission and vision')); ?>">
-                        <source src="/sapphireevents/assets/uploads/media/video/2026/03/46b910cd7e6c35205bcc990eed4d9662.mp4" type="video/mp4">
                     </video>
                 </figure>
                 <article class="about-feature-card about-story-card pt-10 md:pt-12">
@@ -59,7 +61,7 @@ ob_start();
             </div>
             <div class="about-story-row about-story-row--reverse" data-aos="fade-up" data-aos-delay="100">
                 <figure class="about-story-media">
-                    <img src="<?php echo asset('images/about-team.avif'); ?>" alt="<?php echo htmlspecialchars(trans('content.about.team.team_image_alt', 'Our team')); ?>" class="about-story-image about-story-image--top about-story-image--vision">
+                    <img src="<?php echo asset('images/about-team.avif'); ?>" alt="<?php echo htmlspecialchars(trans('content.about.team.team_image_alt', 'Our team')); ?>" class="about-story-image about-story-image--top about-story-image--vision" loading="lazy" decoding="async">
                 </figure>
                 <article class="about-feature-card about-story-card pt-10 md:pt-12">
                     <h3 class="text-center text-3xl font-bold mb-3" style="color: #0F3D3E;">
@@ -75,7 +77,7 @@ ob_start();
     </div>
 </section>
 
-<section class="py-20 px-4" style="background-color: #fff;">
+<section class="page-deferred-section py-20 px-4" style="background-color: #fff;">
     <div class="w-full">
         <div class="text-center mb-14" data-aos="fade-up">
             <span class="inline-block px-4 py-2 rounded-full mb-4 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(15, 61, 62, 0.1); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.18em;">
@@ -112,6 +114,7 @@ ob_start();
                                 alt="<?php echo htmlspecialchars($item['title'] ?? 'Gallery item'); ?>" 
                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                                 loading="lazy"
+                                decoding="async"
                             >
                         <?php else: ?>
                             <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-300 to-gray-400">
@@ -141,40 +144,49 @@ ob_start();
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const missionVideo = document.querySelector('.about-mission-video');
 
-        new Swiper('.aboutTestimonialSwiper', {
-            slidesPerView: 1,
-            spaceBetween: 16,
-            speed: 700,
-            loop: true,
-            keyboard: {
-                enabled: true,
-                onlyInViewport: true
-            },
-            navigation: {
-                nextEl: '.about-testimonial-next',
-                prevEl: '.about-testimonial-prev'
-            },
-            autoplay: reduceMotion ? false : {
-                delay: 4500,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true
-            },
-            breakpoints: {
-                768: {
-                    slidesPerView: 2,
-                    spaceBetween: 20
-                },
-                1200: {
-                    slidesPerView: 3,
-                    spaceBetween: 24
+        if (missionVideo && !reduceMotion) {
+            const activateMissionVideo = () => {
+                if (missionVideo.dataset.loaded === 'true') {
+                    return;
                 }
+
+                const source = missionVideo.dataset.src;
+                if (!source) {
+                    return;
+                }
+
+                missionVideo.dataset.loaded = 'true';
+                missionVideo.innerHTML = '<source src="' + source + '" type="video/mp4">';
+                missionVideo.load();
+                missionVideo.play().catch(() => {});
+            };
+
+            if ('IntersectionObserver' in window) {
+                const videoObserver = new IntersectionObserver((entries) => {
+                    if (!entries[0] || !entries[0].isIntersecting) {
+                        return;
+                    }
+
+                    activateMissionVideo();
+                    videoObserver.disconnect();
+                }, { rootMargin: '200px 0px' });
+
+                videoObserver.observe(missionVideo);
+            } else {
+                activateMissionVideo();
             }
-        });
+        }
     });
 </script>
 
 <style>
+    .page-deferred-section {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 900px;
+    }
+
     .about-kpi-card {
         background: #fff;
         border-radius: 1rem;
@@ -311,15 +323,6 @@ ob_start();
         flex-direction: column;
         height: 100%;
         min-height: 260px;
-    }
-
-    .aboutTestimonialSwiper .swiper-wrapper {
-        align-items: stretch;
-    }
-
-    .aboutTestimonialSwiper .swiper-slide {
-        height: auto;
-        display: flex;
     }
 
     .testimonial-avatar {
