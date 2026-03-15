@@ -763,6 +763,7 @@ $heroVideo = route('/assets/images/hero.mp4');
     .line-clamp-3 {
         display: -webkit-box;
         -webkit-line-clamp: 3;
+        line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
@@ -788,7 +789,8 @@ $heroVideo = route('/assets/images/hero.mp4');
 
     .line-clamp-4 {
         display: -webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
@@ -894,6 +896,7 @@ $heroVideo = route('/assets/images/hero.mp4');
 
         .line-clamp-4 {
             -webkit-line-clamp: 3;
+            line-clamp: 3;
         }
 
         #lightbox-prev,

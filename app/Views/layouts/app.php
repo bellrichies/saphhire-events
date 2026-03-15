@@ -501,7 +501,7 @@
         }
 
         #lightbox-modal.hidden {
-            animator: fadeOutLightbox 0.3s ease-out;
+            animation: fadeOutLightbox 0.3s ease-out;
         }
 
         @keyframes fadeInLightbox {
