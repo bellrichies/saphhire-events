@@ -192,8 +192,8 @@ Models in `app/Models/` handle all database operations using prepared statements
 ### Support
 
 For issues or questions:
-- Email: email@example.com
-- Phone: +234 - 1234567890
+- Email: gplanet.tech@gmail.com
+- Phone: +234 - (707) 666 7212
 ---
 
-Built with ❤️ by Sapphire Events
+Built with ❤️ by Adeoye Bello
