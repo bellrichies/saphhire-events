@@ -21,18 +21,13 @@ ob_start();
 </section>
 
 <section class="page-deferred-section py-20 px-4" style="background-color: #F8F5F2;">
-    <div class="w-full">
-        <!-- Team Member 1: Racheal -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-4" data-aos="fade-up">
-            <!-- Image Column (Left) -->
-            <div class="flex items-center justify-center order-2 lg:order-1">
-                <div class="bg-white  overflow-hidden shadow-lg hover:shadow-xl transition-shadow w-full" style="box-shadow: 0 4px 24px rgba(15, 61, 62, 0.08);">
-                    <img src="<?= route('/assets/uploads/media/image/2026/03/ff4cf799393e6b1ba2bd4c2935e2f280.webp') ?>" alt="Racheal - CEO & Creative Director" class="w-full h-auto object-cover aspect-[3/4]" loading="lazy" decoding="async">
-                </div>
+    <div class="w-full max-w-7xl mx-auto space-y-8">
+        <article class="team-member-card grid grid-cols-1 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-0 overflow-hidden" data-aos="fade-up">
+            <div class="team-member-media">
+                <img src="<?= route('/assets/uploads/media/image/2026/03/ff4cf799393e6b1ba2bd4c2935e2f280.webp') ?>" alt="Racheal - CEO & Creative Director" class="team-member-image" loading="lazy" decoding="async">
             </div>
-            
-            <!-- Info Column (Right) -->
-            <div class="md:px-[150px] md:py-[20px] flex flex-col order-1 lg:order-2">
+
+            <div class="team-member-copy">
                 <h3 class="text-3xl font-bold mb-3" style="color: #0F3D3E; font-family: 'Dancing Script', cursive;">
                     <?php echo htmlspecialchars(trans('content.team.member1.name', 'Racheal')); ?>
                 </h3>
@@ -57,12 +52,10 @@ ob_start();
                     </a>
                 </div>
             </div>
-        </div>
+        </article>
 
-        <!-- Team Member 2: Israel -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" data-aos="fade-up" data-aos-delay="100">
-            <!-- Info Column (Left) -->
-            <div class="md:px-[150px] md:py-[20px] flex flex-col justify-center">
+        <article class="team-member-card grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] gap-0 overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+            <div class="team-member-copy">
                 <h3 class="text-3xl font-bold mb-3" style="color: #0F3D3E; font-family: 'Dancing Script', cursive;">
                     <?php echo htmlspecialchars(trans('content.team.member2.name', 'Israel')); ?>
                 </h3>
@@ -90,14 +83,11 @@ ob_start();
                     </a>
                 </div>
             </div>
-            
-            <!-- Image Column (Right) -->
-            <div class="flex items-center justify-center">
-                <div class="bg-white  overflow-hidden shadow-lg hover:shadow-xl transition-shadow w-full" style="box-shadow: 0 4px 24px rgba(15, 61, 62, 0.08);">
-                    <img src="<?= route('/assets/uploads/media/image/2026/03/3ca78fbe9945a78d2eb8bad16230af52.avif') ?>" alt="Israel - Co-Creative Director" class="w-full h-auto object-cover aspect-[3/4]" loading="lazy" decoding="async">
-                </div>
+
+            <div class="team-member-media team-member-media-alt">
+                <img src="<?= route('/assets/uploads/media/image/2026/03/3ca78fbe9945a78d2eb8bad16230af52.avif') ?>" alt="Israel - Co-Creative Director" class="team-member-image" loading="lazy" decoding="async">
             </div>
-        </div>
+        </article>
     </div>
 </section>
 
@@ -119,6 +109,50 @@ ob_start();
     .page-deferred-section {
         content-visibility: auto;
         contain-intrinsic-size: 1px 880px;
+    }
+
+    .team-member-card {
+        background: #fff;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 36px rgba(15, 61, 62, 0.1);
+    }
+
+    .team-member-media {
+        min-height: 100%;
+        background: linear-gradient(180deg, rgba(248, 245, 242, 0.65) 0%, rgba(255, 255, 255, 1) 100%);
+    }
+
+    .team-member-image {
+        width: 100%;
+        height: 100%;
+        min-height: 420px;
+        object-fit: cover;
+        object-position: center top;
+    }
+
+    .team-member-copy {
+        padding: 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    @media (max-width: 1023px) {
+        .team-member-media-alt {
+            order: -1;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .team-member-copy {
+            padding: 3rem;
+        }
+
+        .team-member-image {
+            min-height: 100%;
+            height: 100%;
+            max-height: 780px;
+        }
     }
 </style>
 

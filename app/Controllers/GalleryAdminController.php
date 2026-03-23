@@ -55,6 +55,22 @@ class GalleryAdminController extends Controller
         ]);
     }
 
+    public function reorderPage()
+    {
+        if (!$this->isAdmin()) {
+            $this->redirect(route('/admin/login'));
+        }
+
+        $gallery = new Gallery();
+        $reorderItems = $gallery->getAllWithCategory();
+
+        $this->view('admin.gallery.reorder', [
+            'reorderItems' => $reorderItems,
+            'totalItems' => count($reorderItems),
+            'csrf_token' => CSRF::getToken(),
+        ]);
+    }
+
     public function create()
     {
         if (!$this->isAdmin()) {
@@ -113,7 +129,7 @@ class GalleryAdminController extends Controller
         $rules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
-            'description' => 'required',
+            'description' => '',
         ];
 
         $data = [
@@ -168,6 +184,7 @@ class GalleryAdminController extends Controller
                 'description' => $data['description'],
                 'image' => $mediaName ?? 'placeholder.jpg',
                 'is_featured' => $isFeatured,
+                'display_order' => $gallery->nextDisplayOrder(),
             ]);
 
             if ($result) {
@@ -214,7 +231,7 @@ class GalleryAdminController extends Controller
         $rules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
-            'description' => 'required',
+            'description' => '',
         ];
 
         $data = [
@@ -363,6 +380,38 @@ class GalleryAdminController extends Controller
         ]);
     }
 
+    public function reorder()
+    {
+        if (!$this->isAdmin()) {
+            $this->json(['error' => 'Unauthorized'], 401);
+            return;
+        }
+
+        if (!isset($_POST['_csrf_token']) || !CSRF::validate($_POST['_csrf_token'])) {
+            CSRF::regenerate();
+            $this->json([
+                'error' => 'CSRF token invalid',
+                'csrf_token' => CSRF::getToken(),
+            ], 403);
+            return;
+        }
+
+        $orderedIds = $_POST['ordered_ids'] ?? [];
+        if (!is_array($orderedIds) || $orderedIds === []) {
+            $this->json(['error' => 'No gallery order was provided'], 422);
+            return;
+        }
+
+        $gallery = new Gallery();
+        if (!$gallery->reorder($orderedIds)) {
+            $this->json(['error' => 'Failed to save gallery order. Please refresh and try again.'], 422);
+            return;
+        }
+
+        $this->clearHomeCacheFiles();
+        $this->json(['success' => true, 'message' => 'Gallery order updated successfully']);
+    }
+
     private function isAdmin(): bool
     {
         return isset($_SESSION['admin_id']);
@@ -465,6 +514,10 @@ class GalleryAdminController extends Controller
             return false;
         }
 
+        if ($this->isYoutubeUrl($url)) {
+            return true;
+        }
+
         return $this->isSupportedMediaExtension((string)parse_url($url, PHP_URL_PATH));
     }
 
@@ -534,6 +587,26 @@ class GalleryAdminController extends Controller
         }
 
         return $mediaUrl;
+    }
+
+    private function isYoutubeUrl(string $url): bool
+    {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            return false;
+        }
+
+        $host = strtolower((string)(parse_url($url, PHP_URL_HOST) ?? ''));
+        if ($host === '') {
+            return false;
+        }
+
+        return in_array($host, [
+            'youtube.com',
+            'www.youtube.com',
+            'm.youtube.com',
+            'youtu.be',
+            'www.youtu.be',
+        ], true);
     }
 
     private function detectMime(string $tmpName): ?string

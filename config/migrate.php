@@ -31,11 +31,13 @@ class Database
             `description` TEXT,
             `image` VARCHAR(255) NOT NULL,
             `is_featured` BOOLEAN DEFAULT FALSE,
+            `display_order` INT DEFAULT 0,
             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             `deleted_at` TIMESTAMP NULL,
             FOREIGN KEY (`category_id`) REFERENCES `gallery_categories` (`id`) ON DELETE CASCADE,
             INDEX `idx_category` (`category_id`),
-            INDEX `idx_featured` (`is_featured`)
+            INDEX `idx_featured` (`is_featured`),
+            INDEX `idx_display_order` (`display_order`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
         $servicesTable = "CREATE TABLE IF NOT EXISTS `services` (
@@ -128,6 +130,11 @@ class Database
             $db->exec($testimonialsTable);
             $db->exec($inquiriesTable);
             $db->exec($mediaTable);
+            $galleryDisplayOrderColumn = $db->query("SHOW COLUMNS FROM `gallery_items` LIKE 'display_order'")->fetch();
+            if (!$galleryDisplayOrderColumn) {
+                $db->exec("ALTER TABLE `gallery_items` ADD COLUMN `display_order` INT DEFAULT 0 AFTER `is_featured`");
+                $db->exec("ALTER TABLE `gallery_items` ADD INDEX `idx_display_order` (`display_order`)");
+            }
             $categoryImageColumn = $db->query("SHOW COLUMNS FROM `package_categories` LIKE 'image'")->fetch();
             if (!$categoryImageColumn) {
                 $db->exec("ALTER TABLE `package_categories` ADD COLUMN `image` VARCHAR(255) NULL AFTER `description`");

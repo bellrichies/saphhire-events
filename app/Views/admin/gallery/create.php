@@ -32,7 +32,7 @@ ob_start();
 
                 <div class="mb-6">
                     <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Description</label>
-                    <textarea name="description" rows="4" required class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600"></textarea>
+                    <textarea name="description" rows="4" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600"></textarea>
                     <small class="text-red-500 error-description"></small>
                 </div>
 
@@ -46,12 +46,12 @@ ob_start();
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                     <div class="md:col-span-2">
-                        <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Media URL (Image or Video)</label>
-                        <input type="url" id="create-media-url" name="media_url" placeholder="https://example.com/gallery-item.jpg or .mp4" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600 mb-3">
+                        <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Media URL or YouTube Link</label>
+                        <input type="url" id="create-media-url" name="media_url" placeholder="https://example.com/gallery-item.jpg or https://www.youtube.com/watch?v=KWPOAt0GhmM" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600 mb-3">
 
                         <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Or Upload Media</label>
                         <input type="file" id="create-media-file" name="media" accept="image/*,video/mp4,video/webm,video/ogg,video/quicktime,.mov,.ogv" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg">
-                        <p class="text-xs text-gray-500 mt-2">Supported formats: JPG, PNG, WEBP, AVIF, MP4, WEBM, OGV, MOV. Selecting one input clears the other.</p>
+                        <p class="text-xs text-gray-500 mt-2">Supported formats: JPG, PNG, WEBP, AVIF, MP4, WEBM, OGV, MOV, and YouTube links. Selecting one input clears the other.</p>
                     </div>
                     <div>
                         <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Preview</label>
@@ -79,6 +79,35 @@ const createMediaFile = document.getElementById('create-media-file');
 const createPreviewWrap = document.getElementById('create-image-preview-wrap');
 let createObjectUrl = null;
 
+const getYoutubeEmbedUrl = (value) => {
+    if (!value) return '';
+
+    let url;
+    try {
+        url = new URL(value);
+    } catch (error) {
+        return '';
+    }
+
+    const host = url.hostname.replace(/^www\./, '').toLowerCase();
+    let videoId = '';
+
+    if (host === 'youtu.be') {
+        videoId = url.pathname.replace(/^\/+/, '').split('/')[0] || '';
+    } else if (host === 'youtube.com' || host === 'm.youtube.com') {
+        if (url.pathname === '/watch') {
+            videoId = url.searchParams.get('v') || '';
+        } else if (url.pathname.startsWith('/shorts/')) {
+            videoId = url.pathname.split('/')[2] || '';
+        } else if (url.pathname.startsWith('/embed/')) {
+            videoId = url.pathname.split('/')[2] || '';
+        }
+    }
+
+    videoId = videoId.replace(/[^a-zA-Z0-9_-]/g, '');
+    return videoId ? 'https://www.youtube.com/embed/' + videoId : '';
+};
+
 const clearCreateObjectUrl = () => {
     if (createObjectUrl) {
         URL.revokeObjectURL(createObjectUrl);
@@ -99,8 +128,11 @@ const renderCreatePreview = (src, type = '') => {
     }
 
     createPreviewWrap.className = 'h-36 border-2 border-gray-200 rounded-lg overflow-hidden';
-    const mediaType = type || (isVideoSource(src) ? 'video' : 'image');
-    if (mediaType === 'video') {
+    const mediaType = type || (getYoutubeEmbedUrl(src) ? 'youtube' : (isVideoSource(src) ? 'video' : 'image'));
+    if (mediaType === 'youtube') {
+        const embedUrl = getYoutubeEmbedUrl(src);
+        createPreviewWrap.innerHTML = '<iframe src="' + embedUrl + '" class="w-full h-full" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="YouTube preview"></iframe>';
+    } else if (mediaType === 'video') {
         createPreviewWrap.innerHTML = '<video src="' + src + '" class="w-full h-full object-cover" muted playsinline controls></video>';
     } else {
         createPreviewWrap.innerHTML = '<img src="' + src + '" alt="Gallery preview" class="w-full h-full object-cover">';
@@ -131,7 +163,7 @@ createMediaUrl.addEventListener('input', () => {
 
     createMediaFile.value = '';
     clearCreateObjectUrl();
-    renderCreatePreview(url);
+    renderCreatePreview(url, getYoutubeEmbedUrl(url) ? 'youtube' : '');
 });
 
 galleryForm.addEventListener('submit', async (e) => {

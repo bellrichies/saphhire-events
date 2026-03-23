@@ -202,7 +202,7 @@ if (!function_exists('secure_url')) {
 if (!function_exists('uploadedImageUrl')) {
     /**
      * Resolve an image reference saved in DB to a browser-safe URL.
-     * Supports absolute URLs, rooted paths, assets/images/* and legacy uploads/gallery filenames.
+     * Supports absolute URLs, rooted paths, media-library assets, public assets/images, and legacy uploads/gallery filenames.
      *
      * @param string|null $image
      * @return string
@@ -231,6 +231,25 @@ if (!function_exists('uploadedImageUrl')) {
 
         if (str_starts_with($image, 'assets/') || str_starts_with($image, 'uploads/')) {
             return route('/' . $image);
+        }
+
+        $candidatePaths = [
+            'assets/uploads/media/image/' . $image,
+            'assets/images/' . $image,
+            'uploads/gallery/' . $image,
+        ];
+
+        foreach ($candidatePaths as $candidatePath) {
+            $absolutePath = PUBLIC_PATH . '/' . $candidatePath;
+            if (is_file($absolutePath)) {
+                return route('/' . $candidatePath);
+            }
+        }
+
+        $mediaLibraryMatches = glob(PUBLIC_PATH . '/assets/uploads/media/image/*/*/' . $image);
+        if (is_array($mediaLibraryMatches) && $mediaLibraryMatches !== []) {
+            $relativePath = str_replace('\\', '/', substr($mediaLibraryMatches[0], strlen(PUBLIC_PATH) + 1));
+            return route('/' . ltrim($relativePath, '/'));
         }
 
         return route('/uploads/gallery/' . $image);

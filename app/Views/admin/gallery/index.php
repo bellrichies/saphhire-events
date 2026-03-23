@@ -7,6 +7,7 @@ $pagesCount = max(1, (int)($totalPages ?? 1));
 $rangeStart = $allItemsCount > 0 ? (($currentPage - 1) * $currentPerPage) + 1 : 0;
 $rangeEnd = min($allItemsCount, $currentPage * $currentPerPage);
 $paginationBase = route('/admin/gallery');
+$reorderPageUrl = route('/admin/gallery/reorder');
 $videoCount = 0;
 $featuredCount = 0;
 $imageCount = 0;
@@ -23,7 +24,51 @@ $resolveMediaUrl = static function (?string $media): string {
     return uploadedImageUrl($media);
 };
 
-$resolveMediaType = static function (?string $media): string {
+$extractYoutubeVideoId = static function (?string $value): string {
+    if (!$value || !preg_match('/^https?:\/\//i', $value)) {
+        return '';
+    }
+
+    $parts = parse_url($value);
+    $host = strtolower((string)($parts['host'] ?? ''));
+    $path = (string)($parts['path'] ?? '');
+    parse_str((string)($parts['query'] ?? ''), $query);
+    $videoId = '';
+
+    if (in_array($host, ['youtu.be', 'www.youtu.be'], true)) {
+        $videoId = trim($path, '/');
+    } elseif (in_array($host, ['youtube.com', 'www.youtube.com', 'm.youtube.com'], true)) {
+        if ($path === '/watch') {
+            $videoId = (string)($query['v'] ?? ($query['vi'] ?? ''));
+        } elseif (str_starts_with($path, '/shorts/') || str_starts_with($path, '/embed/') || str_starts_with($path, '/live/') || str_starts_with($path, '/v/')) {
+            $segments = explode('/', trim($path, '/'));
+            $videoId = $segments[1] ?? '';
+        }
+    }
+
+    $videoId = preg_replace('/[^a-zA-Z0-9_-]/', '', $videoId ?? '');
+    if ($videoId === '' || strlen($videoId) < 6 || strlen($videoId) > 15) {
+        return '';
+    }
+
+    return $videoId;
+};
+
+$getYoutubeEmbedUrl = static function (?string $value) use ($extractYoutubeVideoId): string {
+    $videoId = $extractYoutubeVideoId($value);
+    return $videoId !== '' ? 'https://www.youtube.com/embed/' . $videoId : '';
+};
+
+$getYoutubeThumbnailUrl = static function (?string $value) use ($extractYoutubeVideoId): string {
+    $videoId = $extractYoutubeVideoId($value);
+    return $videoId !== '' ? 'https://i.ytimg.com/vi/' . $videoId . '/hqdefault.jpg' : '';
+};
+
+$resolveMediaType = static function (?string $media) use ($getYoutubeEmbedUrl): string {
+    if ($media && $getYoutubeEmbedUrl($media) !== '') {
+        return 'youtube';
+    }
+
     $path = strtolower((string)parse_url((string)$media, PHP_URL_PATH));
     $ext = pathinfo($path, PATHINFO_EXTENSION);
     if (in_array($ext, ['mp4', 'webm', 'ogg', 'ogv', 'mov'], true)) {
@@ -35,7 +80,7 @@ $resolveMediaType = static function (?string $media): string {
 
 foreach (($items ?? []) as $galleryItemSummary) {
     $summaryType = $resolveMediaType($galleryItemSummary['image'] ?? null);
-    if ($summaryType === 'video') {
+    if ($summaryType === 'video' || $summaryType === 'youtube') {
         $videoCount++;
     } else {
         $imageCount++;
@@ -74,6 +119,10 @@ $buildPageUrl = static function (int $targetPage, int $targetPerPage) use ($pagi
                     <input type="hidden" name="page" value="1">
                     <button type="submit" class="rounded-xl border border-white/10 bg-white/15 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-white/20">Apply</button>
                 </form>
+                <a href="<?php echo $reorderPageUrl; ?>" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/15">
+                    <i class="fas fa-grip-vertical text-xs"></i>
+                    Reorder media
+                </a>
                 <a href="<?php echo route('/admin/gallery/create'); ?>" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#C8A951] px-4 py-3 text-sm font-semibold text-[#0F3D3E] transition hover:brightness-105">
                     <i class="fas fa-plus text-xs"></i>
                     Add media
@@ -121,6 +170,7 @@ $buildPageUrl = static function (int $targetPage, int $targetPerPage) use ($pagi
                     <thead class="bg-slate-50/90 text-left">
                         <tr class="text-[11px] uppercase tracking-[0.16em] text-slate-500">
                             <th class="px-5 py-3 font-semibold lg:px-6">Media</th>
+                            <th class="px-5 py-3 font-semibold">Order</th>
                             <th class="px-5 py-3 font-semibold">Details</th>
                             <th class="px-5 py-3 font-semibold">Category</th>
                             <th class="px-5 py-3 font-semibold">Status</th>
@@ -133,6 +183,7 @@ $buildPageUrl = static function (int $targetPage, int $targetPerPage) use ($pagi
                             <?php
                                 $mediaUrl = $resolveMediaUrl($item['image'] ?? null);
                                 $mediaType = $resolveMediaType($item['image'] ?? null);
+                                $youtubeThumbUrl = $mediaType === 'youtube' ? $getYoutubeThumbnailUrl($item['image'] ?? null) : '';
                                 $isFeatured = (int)($item['is_featured'] ?? 0) === 1;
                                 $itemTitle = trim((string)($item['title'] ?? '')) ?: 'Untitled media';
                                 $itemDescription = trim(strip_tags((string)($item['description'] ?? '')));
@@ -142,7 +193,12 @@ $buildPageUrl = static function (int $targetPage, int $targetPerPage) use ($pagi
                                 <td class="px-5 py-3.5 lg:px-6">
                                     <div class="flex items-start gap-3">
                                         <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm">
-                                            <?php if (!empty($mediaUrl) && $mediaType === 'video'): ?>
+                                            <?php if ($mediaType === 'youtube' && $youtubeThumbUrl !== ''): ?>
+                                                <img src="<?php echo htmlspecialchars($youtubeThumbUrl); ?>" alt="<?php echo htmlspecialchars($itemTitle); ?>" class="h-full w-full object-cover" loading="lazy" referrerpolicy="origin">
+                                                <span class="absolute bottom-1.5 right-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-[10px] text-white">
+                                                    <i class="fab fa-youtube"></i>
+                                                </span>
+                                            <?php elseif (!empty($mediaUrl) && $mediaType === 'video'): ?>
                                                 <video src="<?php echo htmlspecialchars($mediaUrl); ?>" class="h-full w-full object-cover" muted playsinline preload="metadata"></video>
                                                 <span class="absolute bottom-1.5 right-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-[10px] text-white">
                                                     <i class="fas fa-play"></i>
@@ -155,9 +211,14 @@ $buildPageUrl = static function (int $targetPage, int $targetPerPage) use ($pagi
                                         </div>
                                         <div class="min-w-0">
                                             <p class="text-sm font-semibold text-slate-900">#<?php echo (int)$item['id']; ?></p>
-                                            <p class="mt-1 text-xs uppercase tracking-[0.16em] text-slate-400"><?php echo $mediaType === 'video' ? 'Video asset' : 'Image asset'; ?></p>
+                                            <p class="mt-1 text-xs uppercase tracking-[0.16em] text-slate-400"><?php echo $mediaType === 'youtube' ? 'YouTube video' : ($mediaType === 'video' ? 'Video asset' : 'Image asset'); ?></p>
                                         </div>
                                     </div>
+                                </td>
+                                <td class="px-5 py-3.5">
+                                    <span class="inline-flex items-center rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
+                                        <?php echo (int)($item['display_order'] ?? 0); ?>
+                                    </span>
                                 </td>
                                 <td class="px-5 py-3.5">
                                     <div class="min-w-0">
@@ -176,9 +237,9 @@ $buildPageUrl = static function (int $targetPage, int $targetPerPage) use ($pagi
                                             <span class="h-2 w-2 rounded-full <?php echo $isFeatured ? 'bg-emerald-500' : 'bg-slate-400'; ?>"></span>
                                             <?php echo $isFeatured ? 'Featured' : 'Standard'; ?>
                                         </span>
-                                        <span class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold <?php echo $mediaType === 'video' ? 'bg-amber-50 text-amber-700' : 'bg-sky-50 text-sky-700'; ?>">
-                                            <i class="fas <?php echo $mediaType === 'video' ? 'fa-film' : 'fa-image'; ?> text-[10px]"></i>
-                                            <?php echo ucfirst($mediaType); ?>
+                                        <span class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold <?php echo $mediaType === 'youtube' ? 'bg-rose-50 text-rose-700' : ($mediaType === 'video' ? 'bg-amber-50 text-amber-700' : 'bg-sky-50 text-sky-700'); ?>">
+                                            <i class="<?php echo $mediaType === 'youtube' ? 'fab fa-youtube' : ($mediaType === 'video' ? 'fas fa-film' : 'fas fa-image'); ?> text-[10px]"></i>
+                                            <?php echo $mediaType === 'youtube' ? 'YouTube' : ucfirst($mediaType); ?>
                                         </span>
                                     </div>
                                 </td>
@@ -236,6 +297,7 @@ $buildPageUrl = static function (int $targetPage, int $targetPerPage) use ($pagi
                     </a>
                 </div>
             </div>
+
         <?php else: ?>
             <div class="px-6 py-16 text-center">
                 <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">

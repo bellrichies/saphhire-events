@@ -2,8 +2,39 @@
 ob_start();
 
 $currentImage = $item['image'] ?? null;
-$currentImageUrl = uploadedImageUrl($currentImage);
-$isCurrentMediaVideo = preg_match('/\.(mp4|webm|ogg|ogv|mov)(\?.*)?$/i', (string)$currentImageUrl) === 1;
+$getYoutubeEmbedUrl = static function (?string $value): string {
+    if (!$value || !preg_match('/^https?:\/\//i', $value)) {
+        return '';
+    }
+
+    $parts = parse_url($value);
+    $host = strtolower((string)($parts['host'] ?? ''));
+    $path = (string)($parts['path'] ?? '');
+
+    parse_str((string)($parts['query'] ?? ''), $query);
+    $videoId = '';
+
+    if (in_array($host, ['youtu.be', 'www.youtu.be'], true)) {
+        $videoId = trim($path, '/');
+    } elseif (in_array($host, ['youtube.com', 'www.youtube.com', 'm.youtube.com'], true)) {
+        if ($path === '/watch') {
+            $videoId = (string)($query['v'] ?? '');
+        } elseif (str_starts_with($path, '/shorts/')) {
+            $segments = explode('/', trim($path, '/'));
+            $videoId = $segments[1] ?? '';
+        } elseif (str_starts_with($path, '/embed/')) {
+            $segments = explode('/', trim($path, '/'));
+            $videoId = $segments[1] ?? '';
+        }
+    }
+
+    $videoId = preg_replace('/[^a-zA-Z0-9_-]/', '', $videoId ?? '');
+    return $videoId ? 'https://www.youtube.com/embed/' . $videoId : '';
+};
+
+$isCurrentYoutubeVideo = $getYoutubeEmbedUrl($currentImage) !== '';
+$currentImageUrl = $isCurrentYoutubeVideo ? $currentImage : uploadedImageUrl($currentImage);
+$isCurrentMediaVideo = !$isCurrentYoutubeVideo && preg_match('/\.(mp4|webm|ogg|ogv|mov)(\?.*)?$/i', (string)$currentImageUrl) === 1;
 ?>
 
 <div class="space-y-4">
@@ -38,7 +69,7 @@ $isCurrentMediaVideo = preg_match('/\.(mp4|webm|ogg|ogv|mov)(\?.*)?$/i', (string
 
                 <div class="mb-6">
                     <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Description</label>
-                    <textarea name="description" rows="5" required class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600"><?php echo htmlspecialchars($item['description']); ?></textarea>
+                    <textarea name="description" rows="5" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600"><?php echo htmlspecialchars($item['description']); ?></textarea>
                     <small class="text-red-500 error-description block mt-1"></small>
                 </div>
 
@@ -52,18 +83,20 @@ $isCurrentMediaVideo = preg_match('/\.(mp4|webm|ogg|ogv|mov)(\?.*)?$/i', (string
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                     <div class="md:col-span-2">
-                        <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Media URL (Image or Video)</label>
-                        <input type="url" id="edit-media-url" name="media_url" placeholder="https://example.com/gallery-item.jpg or .mp4" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600 mb-3">
+                        <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Media URL or YouTube Link</label>
+                        <input type="url" id="edit-media-url" name="media_url" placeholder="https://example.com/gallery-item.jpg or https://www.youtube.com/watch?v=KWPOAt0GhmM" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-yellow-600 mb-3">
 
                         <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Or Upload New Media</label>
                         <input type="file" id="edit-media-file" name="media" accept="image/*,video/mp4,video/webm,video/ogg,video/quicktime,.mov,.ogv" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg">
-                        <p class="text-xs text-gray-500 mt-2">Supported formats: JPG, PNG, WEBP, AVIF, MP4, WEBM, OGV, MOV. Leave both empty to keep current media.</p>
+                        <p class="text-xs text-gray-500 mt-2">Supported formats: JPG, PNG, WEBP, AVIF, MP4, WEBM, OGV, MOV, and YouTube links. Leave both empty to keep current media.</p>
                     </div>
                     <div>
                         <label class="block mb-2 font-semibold" style="color: #0F3D3E;">Current Media</label>
                         <div id="edit-image-preview-wrap" class="<?php echo $currentImageUrl ? 'border-2 border-gray-200 rounded-lg overflow-hidden' : 'h-36 border-2 border-dashed border-gray-300 rounded-lg overflow-hidden flex items-center justify-center text-sm text-gray-500'; ?>">
                             <?php if ($currentImageUrl): ?>
-                                <?php if ($isCurrentMediaVideo): ?>
+                                <?php if ($isCurrentYoutubeVideo): ?>
+                                    <iframe src="<?php echo htmlspecialchars($getYoutubeEmbedUrl($currentImage)); ?>" class="w-full h-36" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="Current YouTube video"></iframe>
+                                <?php elseif ($isCurrentMediaVideo): ?>
                                     <video src="<?php echo htmlspecialchars($currentImageUrl); ?>" class="w-full h-36 object-cover" muted playsinline controls></video>
                                 <?php else: ?>
                                     <img src="<?php echo htmlspecialchars($currentImageUrl); ?>" alt="Current gallery image" class="w-full h-36 object-cover">
@@ -102,7 +135,37 @@ const editPreviewWrap = document.getElementById('edit-image-preview-wrap');
 const editRemoveMedia = document.getElementById('edit-remove-media');
 const submitButton = document.getElementById('update-gallery-btn');
 const existingImageSrc = '<?php echo htmlspecialchars($currentImageUrl, ENT_QUOTES); ?>';
+const existingMediaType = <?php echo json_encode($isCurrentYoutubeVideo ? 'youtube' : ($isCurrentMediaVideo ? 'video' : (!empty($currentImageUrl) ? 'image' : ''))); ?>;
 let objectUrl = null;
+
+const getYoutubeEmbedUrl = (value) => {
+    if (!value) return '';
+
+    let url;
+    try {
+        url = new URL(value);
+    } catch (error) {
+        return '';
+    }
+
+    const host = url.hostname.replace(/^www\./, '').toLowerCase();
+    let videoId = '';
+
+    if (host === 'youtu.be') {
+        videoId = url.pathname.replace(/^\/+/, '').split('/')[0] || '';
+    } else if (host === 'youtube.com' || host === 'm.youtube.com') {
+        if (url.pathname === '/watch') {
+            videoId = url.searchParams.get('v') || '';
+        } else if (url.pathname.startsWith('/shorts/')) {
+            videoId = url.pathname.split('/')[2] || '';
+        } else if (url.pathname.startsWith('/embed/')) {
+            videoId = url.pathname.split('/')[2] || '';
+        }
+    }
+
+    videoId = videoId.replace(/[^a-zA-Z0-9_-]/g, '');
+    return videoId ? 'https://www.youtube.com/embed/' + videoId : '';
+};
 
 const clearObjectUrl = () => {
     if (objectUrl) {
@@ -138,8 +201,11 @@ const renderPreview = (src, type = '') => {
         return;
     }
     editPreviewWrap.className = 'border-2 border-gray-200 rounded-lg overflow-hidden';
-    const mediaType = type || (isVideoSource(src) ? 'video' : 'image');
-    if (mediaType === 'video') {
+    const mediaType = type || (getYoutubeEmbedUrl(src) ? 'youtube' : (isVideoSource(src) ? 'video' : 'image'));
+    if (mediaType === 'youtube') {
+        const embedUrl = getYoutubeEmbedUrl(src);
+        editPreviewWrap.innerHTML = '<iframe src="' + embedUrl + '" class="w-full h-36" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="Gallery preview"></iframe>';
+    } else if (mediaType === 'video') {
         editPreviewWrap.innerHTML = '<video src="' + src + '" class="w-full h-36 object-cover" muted playsinline controls></video>';
     } else {
         editPreviewWrap.innerHTML = '<img src="' + src + '" alt="Gallery preview" class="w-full h-36 object-cover">';
@@ -151,7 +217,7 @@ editMediaFile.addEventListener('change', () => {
     clearObjectUrl();
 
     if (!file) {
-        renderPreview(existingImageSrc);
+        renderPreview(existingImageSrc, existingMediaType);
         return;
     }
 
@@ -167,7 +233,7 @@ editMediaUrl.addEventListener('input', () => {
     const url = editMediaUrl.value.trim();
     if (!url) {
         clearObjectUrl();
-        renderPreview(existingImageSrc);
+        renderPreview(existingImageSrc, existingMediaType);
         return;
     }
 
@@ -176,14 +242,14 @@ editMediaUrl.addEventListener('input', () => {
     }
     editMediaFile.value = '';
     clearObjectUrl();
-    renderPreview(url);
+    renderPreview(url, getYoutubeEmbedUrl(url) ? 'youtube' : '');
 });
 
 if (editRemoveMedia) {
     editRemoveMedia.addEventListener('change', () => {
         if (!editRemoveMedia.checked) {
             clearObjectUrl();
-            renderPreview(existingImageSrc);
+            renderPreview(existingImageSrc, existingMediaType);
             return;
         }
 

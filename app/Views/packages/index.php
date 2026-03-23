@@ -20,14 +20,6 @@ $formatPrice = static function ($pkg) {
 };
 
 $getImageUrl = static function (?string $image): string {
-    if (!$image) {
-        return '';
-    }
-
-    if (preg_match('/^https?:\/\//', $image) || str_starts_with($image, '/')) {
-        return $image;
-    }
-
     return uploadedImageUrl($image);
 };
 ?>

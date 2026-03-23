@@ -33,7 +33,7 @@ $desktopLeftNav = [
 ];
 $desktopRightNav = [
     ['href' => route('/about'), 'label' => trans('pages.header.about', 'About')],
-    ['href' => route('/team'), 'label' => trans('pages.header.team', 'Team')],
+    ['href' => route('/team'), 'label' => trans('pages.header.team', 'Meet Our Team')],
     ['href' => route('/faqs'), 'label' => trans('pages.header.faqs', 'FAQs')],
     ['href' => route('/contact'), 'label' => trans('pages.header.contact', 'Contact')],
 ];
@@ -115,7 +115,7 @@ $desktopRightNav = [
             <a href="<?php echo route('/packages'); ?>" class="block site-nav-link py-3 min-h-[44px]" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.packages', 'Packages')); ?></a>
             <a href="<?php echo route('/gallery'); ?>" class="block site-nav-link py-3 min-h-[44px]" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.gallery', 'Gallery')); ?></a>
             <a href="<?php echo route('/about'); ?>" class="block site-nav-link py-3 min-h-[44px]" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.about', 'About')); ?></a>
-            <a href="<?php echo route('/team'); ?>" class="block site-nav-link py-3 min-h-[44px]" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.team', 'Team')); ?></a>
+            <a href="<?php echo route('/team'); ?>" class="block site-nav-link py-3 min-h-[44px]" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.team', 'Meet Our Team')); ?></a>
             <a href="<?php echo route('/faqs'); ?>" class="block site-nav-link py-3 min-h-[44px]" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.faqs', 'FAQs')); ?></a>
             <a href="<?php echo route('/contact'); ?>" class="block site-nav-link py-3 min-h-[44px]" style="font-family: 'Montserrat', sans-serif; font-weight: 500;"><?php echo htmlspecialchars(trans('pages.header.contact', 'Contact')); ?></a>
 

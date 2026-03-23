@@ -15,18 +15,50 @@ $formatPackagePrice = static function ($pkg) {
 };
 
 $getPackageImageUrl = static function ($image) {
-    if (empty($image)) {
-        return '';
-    }
-
-    if (preg_match('/^https?:\/\//', $image) || strpos($image, '/') === 0) {
-        return $image;
-    }
-
     return uploadedImageUrl($image);
 };
 
-$getGalleryMediaType = static function ($media) {
+$getYoutubeEmbedUrl = static function (?string $value): string {
+    if (!$value || !preg_match('/^https?:\/\//i', $value)) {
+        return '';
+    }
+
+    $parts = parse_url($value);
+    $host = strtolower((string)($parts['host'] ?? ''));
+    $path = (string)($parts['path'] ?? '');
+    parse_str((string)($parts['query'] ?? ''), $query);
+    $videoId = '';
+
+    if (in_array($host, ['youtu.be', 'www.youtu.be'], true)) {
+        $videoId = trim($path, '/');
+    } elseif (in_array($host, ['youtube.com', 'www.youtube.com', 'm.youtube.com'], true)) {
+        if ($path === '/watch') {
+            $videoId = (string)($query['v'] ?? '');
+        } elseif (str_starts_with($path, '/shorts/') || str_starts_with($path, '/embed/')) {
+            $segments = explode('/', trim($path, '/'));
+            $videoId = $segments[1] ?? '';
+        }
+    }
+
+    $videoId = preg_replace('/[^a-zA-Z0-9_-]/', '', $videoId ?? '');
+    return $videoId ? 'https://www.youtube.com/embed/' . $videoId : '';
+};
+
+$getYoutubeThumbnailUrl = static function (?string $value) use ($getYoutubeEmbedUrl): string {
+    $embed = $getYoutubeEmbedUrl($value);
+    if ($embed === '') {
+        return '';
+    }
+
+    $videoId = basename((string)parse_url($embed, PHP_URL_PATH));
+    return $videoId !== '' ? 'https://img.youtube.com/vi/' . $videoId . '/hqdefault.jpg' : '';
+};
+
+$getGalleryMediaType = static function ($media) use ($getYoutubeEmbedUrl) {
+    if ($media && $getYoutubeEmbedUrl($media) !== '') {
+        return 'youtube';
+    }
+
     $path = strtolower((string)parse_url((string)$media, PHP_URL_PATH));
     $ext = pathinfo($path, PATHINFO_EXTENSION);
     if (in_array($ext, ['mp4', 'webm', 'ogg', 'ogv', 'mov'], true)) {
@@ -95,7 +127,7 @@ $heroVideo = route('/assets/images/hero.mp4');
                 </div>
             </div>
 
-            <div class="lg:col-span-5">
+            <div class="hidden lg:block lg:col-span-5">
                 <aside class="hero-panel rounded-2xl p-5 sm:p-6" aria-labelledby="home-hero-panel-title">
                     <p id="home-hero-panel-title" class="text-xs uppercase tracking-[0.18em] mb-3" style="color: #C8A951; font-family: 'Montserrat', sans-serif; font-weight: 700;"><?php echo htmlspecialchars(trans('content.home.hero_panel.title', 'Why Clients Choose Us')); ?></p>
                     <div class="grid grid-cols-2 gap-3 sm:gap-4">
@@ -140,7 +172,7 @@ $heroVideo = route('/assets/images/hero.mp4');
                         <?php echo htmlspecialchars(trans('content.home.about_section.title', 'Let Us Plan & <br> Decorate Your Next Event')); ?>
                     </h2>
 
-                    <div class="about-content-grid grid grid-cols-1 md:grid-cols-2 gap-1 lg:gap-2 items-stretch">
+                    <div class="about-content-grid grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 items-stretch">
                         <div class="about-column-card about-copy-card">
                             <div class="about-copy max-w-xl">
                                 <p class="home-section-copy text-gray-700 mb-4" style="font-family: 'Montserrat', sans-serif;">
@@ -157,7 +189,7 @@ $heroVideo = route('/assets/images/hero.mp4');
 
                         <div class="about-column-card about-ceo-card">
                             <div class="about-ceo-media overflow-hidden">
-                                <img src="<?= route('/assets/images/founder-ceo.avif') ?>" alt="CEO of Sapphire Events & Decorations" class="w-full h-full object-contain object-left" loading="lazy" decoding="async">
+                                <img src="<?= route('/assets/images/founder-ceo.avif') ?>" alt="CEO of Sapphire Events & Decorations" class="w-full h-full object-cover object-center lg:object-left" loading="lazy" decoding="async">
                             </div>
                         </div>
                     </div>
@@ -260,7 +292,9 @@ $heroVideo = route('/assets/images/hero.mp4');
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 mb-10" id="gallery-grid" aria-describedby="gallery-grid-instructions">
         <?php foreach ($featuredGallery as $index => $item): ?>
             <?php
-                $mediaPath = uploadedImageUrl($item['image'] ?? '');
+                $mediaPath = $getGalleryMediaType($item['image'] ?? '') === 'youtube'
+                    ? $getYoutubeEmbedUrl($item['image'] ?? '')
+                    : uploadedImageUrl($item['image'] ?? '');
                 $mediaType = $getGalleryMediaType($item['image'] ?? '');
             ?>
             <article class="gallery-item group relative overflow-hidden luxury-shadow aspect-[3/4] cursor-pointer"
@@ -275,7 +309,14 @@ $heroVideo = route('/assets/images/hero.mp4');
                      aria-controls="lightbox-modal"
                      aria-describedby="gallery-grid-instructions"
                      aria-label="<?php echo htmlspecialchars(trans('content.home.portfolio.open_item', 'Open gallery item') . ': ' . $item['title']); ?>">
-                <?php if (!empty($item['image']) && $mediaType === 'video'): ?>
+                <?php if (!empty($item['image']) && $mediaType === 'youtube'): ?>
+                    <img src="<?php echo htmlspecialchars($getYoutubeThumbnailUrl($item['image'] ?? '')); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async">
+                    <div class="gallery-video-overlay pointer-events-none absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/28 via-black/6 to-transparent transition-opacity duration-300">
+                        <span class="gallery-play-button flex items-center justify-center rounded-full bg-red-600/90 border-red-500">
+                            <i class="fab fa-youtube text-white" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                <?php elseif (!empty($item['image']) && $mediaType === 'video'): ?>
                     <video
                         src="<?php echo htmlspecialchars($mediaPath); ?>"
                         class="gallery-card-video absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -311,6 +352,7 @@ $heroVideo = route('/assets/images/hero.mp4');
         <div class="relative w-full max-w-5xl mx-auto">
             <img id="lightbox-image" alt="" class="hidden w-full h-auto rounded-lg max-h-[80vh] object-contain">
             <video id="lightbox-video" class="hidden w-full h-auto rounded-lg max-h-[80vh] object-contain" controls playsinline></video>
+            <iframe id="lightbox-youtube" src="" class="hidden w-full h-[80vh] rounded-lg max-h-[80vh] bg-black" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="YouTube video"></iframe>
             <button id="lightbox-prev" type="button" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 w-12 h-12 min-w-[48px] min-h-[48px] rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white/10" style="color: #C8A951; font-size: 1.5rem;" aria-label="<?php echo htmlspecialchars(trans('content.home.portfolio.previous_item', 'Previous gallery item')); ?>">
                 <i class="fas fa-chevron-left" aria-hidden="true"></i>
             </button>
@@ -618,6 +660,7 @@ $heroVideo = route('/assets/images/hero.mp4');
         const lightboxModal = document.getElementById('lightbox-modal');
         const lightboxImage = document.getElementById('lightbox-image');
         const lightboxVideo = document.getElementById('lightbox-video');
+        const lightboxYoutube = document.getElementById('lightbox-youtube');
         const lightboxTitle = document.getElementById('lightbox-title');
         const lightboxCategory = document.getElementById('lightbox-category');
         const lightboxCounter = document.getElementById('lightbox-counter');
@@ -672,13 +715,17 @@ $heroVideo = route('/assets/images/hero.mp4');
 
         const stopLightboxVideo = () => {
             if (!lightboxVideo) {
-                return;
+            } else {
+                lightboxVideo.pause();
+                lightboxVideo.removeAttribute('src');
+                lightboxVideo.load();
+                lightboxVideo.classList.add('hidden');
             }
 
-            lightboxVideo.pause();
-            lightboxVideo.removeAttribute('src');
-            lightboxVideo.load();
-            lightboxVideo.classList.add('hidden');
+            if (lightboxYoutube) {
+                lightboxYoutube.removeAttribute('src');
+                lightboxYoutube.classList.add('hidden');
+            }
         };
 
         const renderLightboxItem = (index) => {
@@ -697,9 +744,21 @@ $heroVideo = route('/assets/images/hero.mp4');
             lightboxCategory.textContent = category;
             lightboxCounter.textContent = galleryItems.length ? (index + 1) + ' / ' + galleryItems.length : '';
 
-            if (mediaType === 'video') {
+            if (mediaType === 'youtube') {
                 lightboxImage.classList.add('hidden');
                 lightboxImage.removeAttribute('src');
+                stopLightboxVideo();
+                if (lightboxYoutube) {
+                    lightboxYoutube.classList.remove('hidden');
+                    lightboxYoutube.src = media;
+                }
+            } else if (mediaType === 'video') {
+                lightboxImage.classList.add('hidden');
+                lightboxImage.removeAttribute('src');
+                if (lightboxYoutube) {
+                    lightboxYoutube.classList.add('hidden');
+                    lightboxYoutube.removeAttribute('src');
+                }
                 lightboxVideo.classList.remove('hidden');
                 lightboxVideo.src = media;
                 lightboxVideo.load();
@@ -856,11 +915,6 @@ $heroVideo = route('/assets/images/hero.mp4');
         min-height: 420px;
     }
 
-    .about-ceo-card img {
-        width: 100%;
-        aspect-ratio: 4 / 5;
-    }
-
     .about-content-panel {
         border-radius: 1.75rem;
         padding: 1.5rem;
@@ -917,6 +971,7 @@ $heroVideo = route('/assets/images/hero.mp4');
 
     .about-ceo-card {
         align-items: stretch;
+        justify-content: stretch;
     }
 
     .about-ceo-media {
@@ -924,12 +979,15 @@ $heroVideo = route('/assets/images/hero.mp4');
         min-height: 100%;
         border-radius: 0;
         background: transparent;
+        overflow: hidden;
     }
 
     .about-ceo-media img {
         width: 100%;
         height: 100%;
         min-height: 100%;
+        min-height: 520px;
+        object-position: center top;
     }
 
     .about-cta-group {
@@ -1110,6 +1168,16 @@ $heroVideo = route('/assets/images/hero.mp4');
             min-height: 320px;
         }
 
+        .about-ceo-card {
+            width: 100vw;
+            margin-inline: calc(50% - 50vw);
+        }
+
+        .about-ceo-media img {
+            min-height: 420px;
+            object-position: center top;
+        }
+
         .about-content-panel {
             padding: 1.25rem;
         }
@@ -1185,6 +1253,11 @@ $heroVideo = route('/assets/images/hero.mp4');
     }
 
     @media (min-width: 1024px) {
+        .about-content-grid {
+            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+            gap: 2rem;
+        }
+
         .about-feature-image img {
             min-height: 620px;
         }
@@ -1203,6 +1276,10 @@ $heroVideo = route('/assets/images/hero.mp4');
 
         .about-copy .home-section-copy {
             line-height: 2.05;
+        }
+
+        .about-ceo-media img {
+            min-height: 680px;
         }
     }
 

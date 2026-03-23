@@ -22,7 +22,47 @@ $getGalleryMediaUrl = static function (?string $media): string {
     return uploadedImageUrl($media);
 };
 
-$getGalleryMediaType = static function (?string $media): string {
+$getYoutubeEmbedUrl = static function (?string $value): string {
+    if (!$value || !preg_match('/^https?:\/\//i', $value)) {
+        return '';
+    }
+
+    $parts = parse_url($value);
+    $host = strtolower((string)($parts['host'] ?? ''));
+    $path = (string)($parts['path'] ?? '');
+    parse_str((string)($parts['query'] ?? ''), $query);
+    $videoId = '';
+
+    if (in_array($host, ['youtu.be', 'www.youtu.be'], true)) {
+        $videoId = trim($path, '/');
+    } elseif (in_array($host, ['youtube.com', 'www.youtube.com', 'm.youtube.com'], true)) {
+        if ($path === '/watch') {
+            $videoId = (string)($query['v'] ?? '');
+        } elseif (str_starts_with($path, '/shorts/') || str_starts_with($path, '/embed/')) {
+            $segments = explode('/', trim($path, '/'));
+            $videoId = $segments[1] ?? '';
+        }
+    }
+
+    $videoId = preg_replace('/[^a-zA-Z0-9_-]/', '', $videoId ?? '');
+    return $videoId ? 'https://www.youtube.com/embed/' . $videoId : '';
+};
+
+$getYoutubeThumbnailUrl = static function (?string $value) use ($getYoutubeEmbedUrl): string {
+    $embed = $getYoutubeEmbedUrl($value);
+    if ($embed === '') {
+        return '';
+    }
+
+    $videoId = basename((string)parse_url($embed, PHP_URL_PATH));
+    return $videoId !== '' ? 'https://img.youtube.com/vi/' . $videoId . '/hqdefault.jpg' : '';
+};
+
+$getGalleryMediaType = static function (?string $media) use ($getYoutubeEmbedUrl): string {
+    if ($media && $getYoutubeEmbedUrl($media) !== '') {
+        return 'youtube';
+    }
+
     $path = strtolower((string)parse_url((string)$media, PHP_URL_PATH));
     $ext = pathinfo($path, PATHINFO_EXTENSION);
     if (in_array($ext, ['mp4', 'webm', 'ogg', 'ogv', 'mov'], true)) {
@@ -32,9 +72,11 @@ $getGalleryMediaType = static function (?string $media): string {
     return 'image';
 };
 
-$lightboxItems = array_map(static function (array $item) use ($getGalleryMediaUrl, $getGalleryMediaType): array {
-    $item['media_url'] = $getGalleryMediaUrl($item['image'] ?? null);
+$lightboxItems = array_map(static function (array $item) use ($getGalleryMediaUrl, $getGalleryMediaType, $getYoutubeEmbedUrl): array {
     $item['media_type'] = $getGalleryMediaType($item['image'] ?? null);
+    $item['media_url'] = $item['media_type'] === 'youtube'
+        ? $getYoutubeEmbedUrl($item['image'] ?? null)
+        : $getGalleryMediaUrl($item['image'] ?? null);
     return $item;
 }, $items ?? []);
 ?>
@@ -115,7 +157,18 @@ $lightboxItems = array_map(static function (array $item) use ($getGalleryMediaUr
                             
                             <?php $mediaUrl = $getGalleryMediaUrl($item['image'] ?? null); ?>
                             <?php $mediaType = $getGalleryMediaType($item['image'] ?? null); ?>
-                            <?php if (!empty($mediaUrl) && $mediaType === 'video'): ?>
+                            <?php if (!empty($mediaUrl) && $mediaType === 'youtube'): ?>
+                                <img
+                                    src="<?php echo htmlspecialchars($getYoutubeThumbnailUrl($item['image'] ?? null)); ?>"
+                                    alt="<?php echo htmlspecialchars($item['title'] ?: $galleryItemFallbackTitle); ?>"
+                                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    loading="lazy">
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all duration-300 z-20">
+                                    <div class="w-16 h-16 rounded-full bg-red-600/90 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+                                        <i class="fab fa-youtube text-white text-3xl"></i>
+                                    </div>
+                                </div>
+                            <?php elseif (!empty($mediaUrl) && $mediaType === 'video'): ?>
                                 <video
                                     src="<?php echo htmlspecialchars($mediaUrl); ?>"
                                     class="gallery-video absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -345,6 +398,7 @@ $lightboxItems = array_map(static function (array $item) use ($getGalleryMediaUr
         <div class="relative max-w-5xl w-full mx-auto">
             <img id="lightbox-image" src="" alt="" class="w-full h-auto max-h-[75vh] object-contain rounded-lg shadow-2xl">
             <video id="lightbox-video" src="" class="hidden w-full h-auto max-h-[75vh] object-contain rounded-lg shadow-2xl" controls playsinline></video>
+            <iframe id="lightbox-youtube" src="" class="hidden w-full h-[75vh] rounded-lg shadow-2xl bg-black" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="YouTube video"></iframe>
             
             <!-- Info Panel -->
             <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 rounded-b-lg">
@@ -526,13 +580,31 @@ function openLightbox(index) {
     const modal = document.getElementById('lightbox-modal');
     const image = document.getElementById('lightbox-image');
     const video = document.getElementById('lightbox-video');
+    const youtube = document.getElementById('lightbox-youtube');
     const title = document.getElementById('lightbox-title');
     const category = document.getElementById('lightbox-category');
     const counter = document.getElementById('lightbox-counter');
 
-    if (item.media_type === 'video') {
+    if (item.media_type === 'youtube') {
         image.classList.add('hidden');
         image.removeAttribute('src');
+        if (video) {
+            video.pause();
+            video.classList.add('hidden');
+            video.removeAttribute('src');
+            video.load();
+        }
+        if (youtube) {
+            youtube.classList.remove('hidden');
+            youtube.src = item.media_url || '';
+        }
+    } else if (item.media_type === 'video') {
+        image.classList.add('hidden');
+        image.removeAttribute('src');
+        if (youtube) {
+            youtube.classList.add('hidden');
+            youtube.removeAttribute('src');
+        }
         if (video) {
             video.classList.remove('hidden');
             video.src = item.media_url || '';
@@ -546,6 +618,10 @@ function openLightbox(index) {
             video.classList.add('hidden');
             video.removeAttribute('src');
             video.load();
+        }
+        if (youtube) {
+            youtube.classList.add('hidden');
+            youtube.removeAttribute('src');
         }
         image.classList.remove('hidden');
         image.src = item.media_url || '';
@@ -565,10 +641,15 @@ function openLightbox(index) {
 function closeLightbox() {
     const modal = document.getElementById('lightbox-modal');
     const video = document.getElementById('lightbox-video');
+    const youtube = document.getElementById('lightbox-youtube');
     if (video) {
         video.pause();
         video.removeAttribute('src');
         video.load();
+    }
+    if (youtube) {
+        youtube.removeAttribute('src');
+        youtube.classList.add('hidden');
     }
     modal.classList.remove('show');
     setTimeout(() => {
@@ -598,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     galleryCards.forEach(card => {
         const video = card.querySelector('.gallery-video');
-        
+
         if (video) {
             // Auto-play on hover
             card.addEventListener('mouseenter', () => {

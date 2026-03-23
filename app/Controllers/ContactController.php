@@ -49,6 +49,7 @@ class ContactController extends Controller
             'guest_count' => 'required|max:50',
             'event_location' => 'required|max:255',
             'lead_source' => 'max:100',
+            'youtube_video_url' => 'max:255',
             'message' => 'required|min:10|max:5000',
         ];
 
@@ -64,6 +65,7 @@ class ContactController extends Controller
             'guest_count' => $_POST['guest_count'] ?? '',
             'event_location' => $_POST['event_location'] ?? '',
             'lead_source' => $_POST['lead_source'] ?? '',
+            'youtube_video_url' => $_POST['youtube_video_url'] ?? '',
             'message' => $_POST['message'] ?? '',
             'package_id' => $_POST['package_id'] ?? '',
         ];
@@ -94,6 +96,13 @@ class ContactController extends Controller
                 $this->json(['errors' => ['event_time' => 'Event time must be a valid time']]);
                 return;
             }
+        }
+
+        $youtubeVideoUrl = trim((string)$data['youtube_video_url']);
+        if ($youtubeVideoUrl !== '' && !$this->isValidYoutubeUrl($youtubeVideoUrl)) {
+            http_response_code(422);
+            $this->json(['errors' => ['youtube_video_url' => 'Please enter a valid YouTube video link.']]);
+            return;
         }
 
         $uploadMeta = '';
@@ -150,6 +159,7 @@ class ContactController extends Controller
             'Selected Package ID: ' . ($data['package_id'] !== '' ? $data['package_id'] : 'None selected'),
             'Inspiration Image: ' . ($uploadMeta !== '' ? $uploadMeta : 'Not provided'),
             'Inspiration Image Path: ' . ($uploadPath !== '' ? $uploadPath : 'Not provided'),
+            'YouTube Video Link: ' . ($youtubeVideoUrl !== '' ? $youtubeVideoUrl : 'Not provided'),
             'How Did You Hear About Us: ' . $data['lead_source'],
             '',
             'Additional Details:',
@@ -220,5 +230,27 @@ class ContactController extends Controller
         $displayName = $originalName !== '' ? $originalName : $filename;
 
         return [$displayName, $relativePath];
+    }
+
+    private function isValidYoutubeUrl(string $url): bool
+    {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            return false;
+        }
+
+        $host = strtolower((string)parse_url($url, PHP_URL_HOST));
+        if ($host === '') {
+            return false;
+        }
+
+        $allowedHosts = [
+            'youtube.com',
+            'www.youtube.com',
+            'm.youtube.com',
+            'youtu.be',
+            'www.youtu.be',
+        ];
+
+        return in_array($host, $allowedHosts, true);
     }
 }

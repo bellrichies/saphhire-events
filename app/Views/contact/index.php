@@ -20,43 +20,6 @@ ob_start();
     </div>
 </section>
 
-<section class="page-deferred-section py-12 md:py-14 px-4" style="background-color: #F8F5F2;">
-    <div class="site-container grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
-        <article class="contact-info-card" data-aos="fade-up">
-            <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
-            <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.email_title', 'Email')); ?></h3>
-            <a href="mailto:Sapphireeventsglitz@gmail.com" class="contact-info-link">Sapphireeventsglitz@gmail.com</a>
-            <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.email_note', 'Response target: within 24 hours')); ?></p>
-        </article>
-
-        <article class="contact-info-card" data-aos="fade-up" data-aos-delay="80">
-            <div class="contact-info-icon"><i class="fas fa-phone-alt"></i></div>
-            <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.phone_title', 'Phone')); ?></h3>
-            <a href="tel:+3725160427" class="contact-info-link">+372-5160427</a>
-            <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.phone_note', 'Mon-Fri, 9:00-18:00 (EET)')); ?></p>
-        </article>
-
-        <article class="contact-info-card" data-aos="fade-up" data-aos-delay="160">
-            <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
-            <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.office_title', 'Office')); ?></h3>
-            <p class="contact-info-text"><?php echo nl2br(htmlspecialchars(trans('content.contact.cards.office_text', "Laki 14a, Room 503\n10621 Tallinn, Estonia"))); ?></p>
-            <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.office_note', 'Visits by appointment')); ?></p>
-        </article>
-
-        <article class="contact-info-card" data-aos="fade-up" data-aos-delay="240">
-            <div class="contact-info-icon"><i class="fas fa-hashtag"></i></div>
-            <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.social_title', 'Social')); ?></h3>
-            <div class="flex items-center justify-center gap-2.5 mb-2">
-                <a href="https://instagram.com/sapphire_events_decorations" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://tiktok.com/@sapphire_events__" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="https://wa.me/3725160427" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.social_note', 'Daily updates and portfolio highlights')); ?></p>
-        </article>
-    </div>
-</section>
-
 <section class="page-deferred-section py-16 md:py-20 px-4">
     <div class="site-container grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-8 items-start">
         <div class="lg:col-span-7" data-aos="fade-right">
@@ -189,7 +152,18 @@ ob_start();
                                 <p id="contact-upload-filename" class="contact-dropzone-file hidden"></p>
                             </div>
                         </div>
+                        <div id="contact-upload-preview" class="contact-media-preview hidden" aria-live="polite">
+                            <img id="contact-upload-preview-image" src="" alt="Selected inspiration preview" class="contact-media-preview-image hidden">
+                            <div id="contact-upload-preview-video" class="contact-media-preview-video hidden"></div>
+                        </div>
                         <small class="contact-error error-inspiration_image"></small>
+                    </div>
+
+                    <div>
+                        <label class="contact-label" for="contact-youtube-video"><?php echo htmlspecialchars(trans('content.contact.form.youtube_video', 'YouTube Inspiration Video Link')); ?></label>
+                        <input id="contact-youtube-video" type="url" name="youtube_video_url" class="contact-input" placeholder="<?php echo htmlspecialchars(trans('content.contact.form.youtube_video_placeholder', 'https://www.youtube.com/watch?v=...')); ?>">
+                        <p class="contact-helper-text"><?php echo htmlspecialchars(trans('content.contact.form.youtube_video_note', 'Optional: share a YouTube video reference if a single image is not enough.')); ?></p>
+                        <small class="contact-error error-youtube_video_url"></small>
                     </div>
 
                     <div>
@@ -304,6 +278,43 @@ ob_start();
     </div>
 </section>
 
+<section class="page-deferred-section py-12 md:py-14 px-4" style="background-color: #F8F5F2;">
+    <div class="site-container grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
+        <article class="contact-info-card" data-aos="fade-up">
+            <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+            <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.email_title', 'Email')); ?></h3>
+            <a href="mailto:Sapphireeventsglitz@gmail.com" class="contact-info-link">Sapphireeventsglitz@gmail.com</a>
+            <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.email_note', 'Response target: within 24 hours')); ?></p>
+        </article>
+
+        <article class="contact-info-card" data-aos="fade-up" data-aos-delay="80">
+            <div class="contact-info-icon"><i class="fas fa-phone-alt"></i></div>
+            <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.phone_title', 'Phone')); ?></h3>
+            <a href="tel:+3725160427" class="contact-info-link">+372-5160427</a>
+            <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.phone_note', 'Mon-Fri, 9:00-18:00 (EET)')); ?></p>
+        </article>
+
+        <article class="contact-info-card" data-aos="fade-up" data-aos-delay="160">
+            <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.office_title', 'Office')); ?></h3>
+            <p class="contact-info-text"><?php echo nl2br(htmlspecialchars(trans('content.contact.cards.office_text', "Laki 14a, Room 503\n10621 Tallinn, Estonia"))); ?></p>
+            <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.office_note', 'Visits by appointment')); ?></p>
+        </article>
+
+        <article class="contact-info-card" data-aos="fade-up" data-aos-delay="240">
+            <div class="contact-info-icon"><i class="fas fa-hashtag"></i></div>
+            <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.social_title', 'Social')); ?></h3>
+            <div class="flex items-center justify-center gap-2.5 mb-2">
+                <a href="https://instagram.com/sapphire_events_decorations" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://tiktok.com/@sapphire_events__" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://wa.me/3725160427" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.social_note', 'Daily updates and portfolio highlights')); ?></p>
+        </article>
+    </div>
+</section>
+
 <section class="page-deferred-section py-16 px-4" style="background-color: #F8F5F2;">
     <div class="site-container grid grid-cols-1 xl:grid-cols-12 gap-7">
         <div class="xl:col-span-7" data-aos="fade-up">
@@ -369,9 +380,16 @@ ob_start();
 
                 <div class="mt-6 pt-6 border-t border-gray-100">
                     <p class="text-sm text-gray-600 mb-3"><?php echo htmlspecialchars(trans('content.contact.faq.need_more', 'Need more details?')); ?></p>
-                    <a href="mailto:Sapphireeventsglitz@gmail.com" class="inline-flex items-center text-sm font-semibold" style="color: #0F3D3E; letter-spacing: 0.05em; text-transform: uppercase;">
-                        <?php echo htmlspecialchars(trans('content.contact.faq.email_team', 'Email Our Team')); ?> <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
+                    <div class="contact-faq-links">
+                        <a href="<?php echo route('/faqs'); ?>" class="contact-faq-link">
+                            <?php echo htmlspecialchars(trans('content.contact.faq.more_questions_link', 'Visit the full FAQ page')); ?>
+                            <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                        </a>
+                        <a href="mailto:Sapphireeventsglitz@gmail.com" class="contact-faq-link">
+                            <?php echo htmlspecialchars(trans('content.contact.faq.email_team', 'Email Our Team')); ?>
+                            <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
                 </div>
             </article>
         </div>
@@ -409,6 +427,10 @@ ob_start();
         const dropzone = document.getElementById('contact-dropzone');
         const inspirationInput = document.getElementById('contact-inspiration-image');
         const uploadFilename = document.getElementById('contact-upload-filename');
+        const uploadPreview = document.getElementById('contact-upload-preview');
+        const uploadPreviewImage = document.getElementById('contact-upload-preview-image');
+        const uploadPreviewVideo = document.getElementById('contact-upload-preview-video');
+        const youtubeInput = document.getElementById('contact-youtube-video');
         const packageIdField = document.getElementById('contact-package-id');
 
         // Handle package parameter from URL
@@ -423,6 +445,73 @@ ob_start();
             eventDateInput.setAttribute('min', today);
         }
 
+        const getYoutubeEmbedUrl = function (value) {
+            if (!value) {
+                return '';
+            }
+
+            let url;
+            try {
+                url = new URL(value);
+            } catch (error) {
+                return '';
+            }
+
+            const host = url.hostname.replace(/^www\./, '').toLowerCase();
+            let videoId = '';
+
+            if (host === 'youtu.be') {
+                videoId = url.pathname.replace(/^\/+/, '').split('/')[0] || '';
+            } else if (host === 'youtube.com' || host === 'm.youtube.com') {
+                if (url.pathname === '/watch') {
+                    videoId = url.searchParams.get('v') || '';
+                } else if (url.pathname.startsWith('/shorts/')) {
+                    videoId = url.pathname.split('/')[2] || '';
+                } else if (url.pathname.startsWith('/embed/')) {
+                    videoId = url.pathname.split('/')[2] || '';
+                }
+            }
+
+            videoId = videoId.replace(/[^a-zA-Z0-9_-]/g, '');
+            return videoId ? 'https://www.youtube.com/embed/' + videoId : '';
+        };
+
+        const resetMediaPreview = function () {
+            if (uploadPreview) {
+                uploadPreview.classList.add('hidden');
+            }
+            if (uploadPreviewImage) {
+                uploadPreviewImage.classList.add('hidden');
+                uploadPreviewImage.removeAttribute('src');
+            }
+            if (uploadPreviewVideo) {
+                uploadPreviewVideo.classList.add('hidden');
+                uploadPreviewVideo.innerHTML = '';
+            }
+        };
+
+        const renderYoutubePreview = function () {
+            if (!youtubeInput) {
+                return;
+            }
+
+            const embedUrl = getYoutubeEmbedUrl(youtubeInput.value.trim());
+            if (!embedUrl || !uploadPreviewVideo || !uploadPreview) {
+                if (uploadPreviewVideo) {
+                    uploadPreviewVideo.classList.add('hidden');
+                    uploadPreviewVideo.innerHTML = '';
+                }
+                if (uploadPreview && uploadPreviewImage && !uploadPreviewImage.getAttribute('src')) {
+                    uploadPreview.classList.add('hidden');
+                }
+                return;
+            }
+
+            uploadPreview.classList.remove('hidden');
+            uploadPreviewVideo.classList.remove('hidden');
+            uploadPreviewVideo.innerHTML = '<iframe src="' + embedUrl + '" title="YouTube inspiration preview" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+        };
+
         const setUploadFile = function (file) {
             if (!inspirationInput || !uploadFilename) {
                 return;
@@ -435,6 +524,8 @@ ob_start();
                 if (dropzone) {
                     dropzone.classList.remove('is-selected');
                 }
+                resetMediaPreview();
+                renderYoutubePreview();
                 return;
             }
 
@@ -445,6 +536,16 @@ ob_start();
             uploadFilename.classList.remove('hidden');
             if (dropzone) {
                 dropzone.classList.add('is-selected');
+            }
+
+            if (uploadPreview && uploadPreviewImage) {
+                uploadPreview.classList.remove('hidden');
+                uploadPreviewImage.classList.remove('hidden');
+                uploadPreviewImage.src = URL.createObjectURL(file);
+            }
+            if (uploadPreviewVideo) {
+                uploadPreviewVideo.classList.add('hidden');
+                uploadPreviewVideo.innerHTML = '';
             }
         };
 
@@ -488,6 +589,10 @@ ob_start();
             });
         }
 
+        youtubeInput?.addEventListener('input', function () {
+            renderYoutubePreview();
+        });
+
         if (form) {
             form.addEventListener('submit', async function (e) {
                 e.preventDefault();
@@ -530,6 +635,7 @@ ob_start();
                         messageDiv.innerHTML = '<i class="fas fa-check-circle"></i><span>' + data.message + '</span>';
                         form.reset();
                         setUploadFile(null);
+                        resetMediaPreview();
                         messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else {
                         throw data;
@@ -784,6 +890,41 @@ ob_start();
         margin-top: 0.25rem;
     }
 
+    .contact-media-preview {
+        margin-top: 0.9rem;
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid rgba(15, 61, 62, 0.12);
+        background: linear-gradient(180deg, #ffffff 0%, #f8f5f2 100%);
+    }
+
+    .contact-media-preview-image {
+        width: 100%;
+        max-height: 360px;
+        object-fit: contain;
+        background: #fff;
+    }
+
+    .contact-media-preview-video {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #000;
+    }
+
+    .contact-media-preview-video iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    .contact-helper-text {
+        margin-top: 0.45rem;
+        color: #6B7280;
+        font-size: 0.78rem;
+        line-height: 1.5;
+    }
+
     .contact-error {
         display: block;
         min-height: 1rem;
@@ -899,6 +1040,29 @@ ob_start();
     .contact-quick-btn:hover {
         transform: translateY(-1px);
         box-shadow: 0 10px 22px rgba(15, 61, 62, 0.14);
+    }
+
+    .contact-faq-links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.85rem;
+    }
+
+    .contact-faq-link {
+        display: inline-flex;
+        align-items: center;
+        color: #0F3D3E;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .contact-faq-link:hover {
+        color: #C8A951;
+        transform: translateX(2px);
     }
 
     .faq-item {
