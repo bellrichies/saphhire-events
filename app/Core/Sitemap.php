@@ -12,11 +12,18 @@ class Sitemap
         $this->baseUrl = rtrim($baseUrl, '/');
     }
 
-    public function addUrl(string $path, string $priority = '0.8', string $changefreq = 'weekly'): void
+    public function addUrl(
+        string $path,
+        string $priority = '0.8',
+        string $changefreq = 'weekly',
+        ?string $lastmod = null
+    ): void
     {
+        $normalizedPath = '/' . ltrim($path, '/');
+
         $this->urls[] = [
-            'loc' => $this->baseUrl . $path,
-            'lastmod' => date('Y-m-d'),
+            'loc' => $this->baseUrl . ($normalizedPath === '/' ? '' : $normalizedPath),
+            'lastmod' => $lastmod ?: date('Y-m-d'),
             'changefreq' => $changefreq,
             'priority' => $priority,
         ];

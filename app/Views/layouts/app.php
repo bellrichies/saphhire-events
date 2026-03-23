@@ -601,6 +601,7 @@ $bodyClass = $normalizedPath === '' ? 'page-home' : 'page-inner';
         (function() {
             const modal = document.getElementById('lightbox-modal');
             if (!modal) return; // Skip if not on a page with lightbox
+            if (modal.dataset.lightboxManaged === 'page') return;
             
             const lightboxImage = document.getElementById('lightbox-image');
             const lightboxVideo = document.getElementById('lightbox-video');

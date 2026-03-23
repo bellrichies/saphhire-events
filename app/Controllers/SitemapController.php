@@ -9,28 +9,62 @@ class SitemapController extends Controller
 {
     public function generate()
     {
-        $baseUrl = $_ENV['APP_URL'] ?? 'http://localhost/SapphireEvents';
+        $configuredUrl = trim((string)($_ENV['APP_URL'] ?? ''));
+        $baseUrl = 'https://sapphire.bundly.ng';
+        if ($configuredUrl !== '' && stripos($configuredUrl, 'localhost') === false) {
+            $baseUrl = rtrim($configuredUrl, '/');
+        }
         $sitemap = new Sitemap($baseUrl);
-
-        // Static pages
-        $sitemap->addUrl('/', '1.0', 'daily');
-        $sitemap->addUrl('/gallery', '0.9', 'weekly');
-        $sitemap->addUrl('/services', '0.9', 'weekly');
-        $sitemap->addUrl('/packages', '0.9', 'weekly');
-        $sitemap->addUrl('/contact', '0.8', 'monthly');
-
-        // Dynamic pages from database
         $db = $this->db->getConnection();
-        
-        $items = $db->query("SELECT id, created_at FROM gallery_items WHERE deleted_at IS NULL")->fetchAll();
-        foreach ($items as $item) {
-            $sitemap->addUrl('/gallery?item=' . $item['id'], '0.7', 'weekly');
+
+        $staticPages = [
+            ['path' => '/', 'priority' => '1.0', 'changefreq' => 'daily'],
+            ['path' => '/about', 'priority' => '0.8', 'changefreq' => 'monthly'],
+            ['path' => '/team', 'priority' => '0.7', 'changefreq' => 'monthly'],
+            ['path' => '/faqs', 'priority' => '0.7', 'changefreq' => 'monthly'],
+            ['path' => '/contact', 'priority' => '0.8', 'changefreq' => 'monthly'],
+            ['path' => '/gallery', 'priority' => '0.9', 'changefreq' => 'weekly'],
+            ['path' => '/services', 'priority' => '0.9', 'changefreq' => 'weekly'],
+            ['path' => '/packages', 'priority' => '0.9', 'changefreq' => 'weekly'],
+        ];
+
+        foreach ($staticPages as $page) {
+            $sitemap->addUrl($page['path'], $page['priority'], $page['changefreq']);
         }
 
         try {
-            $packageCategories = $db->query("SELECT slug FROM package_categories")->fetchAll();
+            $services = $db->query(
+                "SELECT id, created_at
+                 FROM services
+                 WHERE deleted_at IS NULL"
+            )->fetchAll();
+
+            foreach ($services as $service) {
+                $sitemap->addUrl(
+                    '/services/' . (int)$service['id'],
+                    '0.7',
+                    'monthly',
+                    !empty($service['created_at']) ? date('Y-m-d', strtotime((string)$service['created_at'])) : null
+                );
+            }
+        } catch (\Throwable $e) {
+            // Services table may not be available in some environments.
+        }
+
+        try {
+            $packageCategories = $db->query(
+                "SELECT slug, created_at
+                 FROM package_categories
+                 WHERE slug IS NOT NULL AND slug != ''"
+            )->fetchAll();
+
             foreach ($packageCategories as $category) {
-                $sitemap->addUrl('/packages/' . $category['slug'], '0.8', 'weekly');
+                $sitemap->addUrl(
+                    '/packages/' . $category['slug'],
+                    '0.8',
+                    'weekly',
+                    !empty($category['created_at']) ? date('Y-m-d', strtotime((string)$category['created_at'])) : null
+                );
             }
         } catch (\Throwable $e) {
             // Package tables may not be migrated yet.

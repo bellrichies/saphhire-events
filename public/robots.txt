@@ -2,9 +2,11 @@ User-agent: *
 Allow: /
 
 Disallow: /admin/
-Disallow: /uploads/
+Disallow: /api/
 Disallow: /storage/
 Disallow: /config/
 Disallow: /app/
+Disallow: /vendor/
+Disallow: /lang
 
-Sitemap: /SapphireEvents/sitemap.xml
+Sitemap: https://sapphire.bundly.ng/sitemap.xml

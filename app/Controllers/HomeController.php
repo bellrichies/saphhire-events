@@ -11,6 +11,8 @@ use App\Models\Testimonial;
 
 class HomeController extends Controller
 {
+    private const HOME_CACHE_VERSION = 'v2';
+
     public function index()
     {
         $language = function_exists('getCurrentLanguage') ? (string) getCurrentLanguage() : 'en';
@@ -27,7 +29,7 @@ class HomeController extends Controller
         $packageCategory = new PackageCategory();
         $testimonial = new Testimonial();
 
-        $featuredGallery = $gallery->getFeatured(8);
+        $featuredGallery = $gallery->getFeatured(16);
         $services = $service->getLatestWithImage(6);
         $featuredPackages = $package->getFeatured(6);
         $packageCategories = $packageCategory->getWithPackageCount(6);
@@ -98,6 +100,6 @@ class HomeController extends Controller
     {
         $safeLanguage = preg_replace('/[^a-z0-9_-]/i', '', strtolower($language)) ?: 'en';
 
-        return STORAGE_PATH . '/cache/home-' . $safeLanguage . '.json';
+        return STORAGE_PATH . '/cache/home-' . self::HOME_CACHE_VERSION . '-' . $safeLanguage . '.json';
     }
 }

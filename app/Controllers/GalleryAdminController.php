@@ -171,6 +171,7 @@ class GalleryAdminController extends Controller
             ]);
 
             if ($result) {
+                $this->clearHomeCacheFiles();
                 $this->json(['success' => true, 'message' => 'Gallery item created successfully']);
                 return;
             }
@@ -280,6 +281,7 @@ class GalleryAdminController extends Controller
 
             if ($updated) {
                 $this->cleanupLocalMediaIfReplaced($existing['image'] ?? null, $mediaName);
+                $this->clearHomeCacheFiles();
                 $this->json(['success' => true, 'message' => 'Gallery item updated successfully']);
                 return;
             }
@@ -306,15 +308,80 @@ class GalleryAdminController extends Controller
 
         $gallery = new Gallery();
         if ($gallery->delete($id)) {
+            $this->clearHomeCacheFiles();
             $this->json(['success' => true, 'message' => 'Gallery item deleted successfully']);
         } else {
             $this->json(['error' => 'Failed to delete gallery item'], 500);
         }
     }
 
+    public function toggleFeatured()
+    {
+        if (!$this->isAdmin()) {
+            $this->json(['error' => 'Unauthorized'], 401);
+            return;
+        }
+
+        if (!isset($_POST['_csrf_token']) || !CSRF::validate($_POST['_csrf_token'])) {
+            CSRF::regenerate();
+            $this->json([
+                'error' => 'CSRF token invalid',
+                'csrf_token' => CSRF::getToken(),
+            ], 403);
+            return;
+        }
+
+        $id = (int)($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            $this->json(['error' => 'Invalid ID'], 422);
+            return;
+        }
+
+        $gallery = new Gallery();
+        $item = $gallery->find($id);
+
+        if (!$item) {
+            $this->json(['error' => 'Gallery item not found'], 404);
+            return;
+        }
+
+        $isFeatured = isset($_POST['is_featured']) && (int)$_POST['is_featured'] === 1 ? 1 : 0;
+        $updated = $gallery->update($id, [
+            'is_featured' => $isFeatured,
+        ]);
+
+        if (!$updated) {
+            $this->json(['error' => 'Failed to update featured status'], 500);
+            return;
+        }
+
+        $this->clearHomeCacheFiles();
+        $this->json([
+            'success' => true,
+            'is_featured' => $isFeatured,
+            'message' => $isFeatured ? 'Gallery item marked as featured' : 'Gallery item removed from featured list',
+        ]);
+    }
+
     private function isAdmin(): bool
     {
         return isset($_SESSION['admin_id']);
+    }
+
+    private function clearHomeCacheFiles(): void
+    {
+        $cachePattern = STORAGE_PATH . '/cache/home-*.json';
+        $cacheFiles = glob($cachePattern);
+
+        if (!is_array($cacheFiles)) {
+            return;
+        }
+
+        foreach ($cacheFiles as $cacheFile) {
+            if (is_string($cacheFile) && is_file($cacheFile)) {
+                @unlink($cacheFile);
+            }
+        }
     }
 
     private function saveMedia(array $file): ?string

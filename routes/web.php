@@ -39,6 +39,7 @@ $router->get('/admin/gallery/create', 'GalleryAdminController@create');
 $router->get('/admin/gallery/edit', 'GalleryAdminController@edit');
 $router->post('/admin/gallery', 'GalleryAdminController@store');
 $router->post('/admin/gallery/update', 'GalleryAdminController@update');
+$router->post('/admin/gallery/featured', 'GalleryAdminController@toggleFeatured');
 $router->post('/admin/gallery/delete', 'GalleryAdminController@delete');
 
 // Admin Category Routes

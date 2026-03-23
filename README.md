@@ -192,10 +192,8 @@ Models in `app/Models/` handle all database operations using prepared statements
 ### Support
 
 For issues or questions:
-- Email: Sapphireeventsglitz@gmail.com
-- Phone: +372-5160427
-- Location: Laki 14a, room 503, 10621 Tallinn, Estonia
-
+- Email: email@example.com
+- Phone: +234 - 1234567890
 ---
 
 Built with ❤️ by Sapphire Events
