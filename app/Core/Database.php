@@ -13,13 +13,28 @@ class Database
     private function __construct()
     {
         try {
-            $host = $_ENV['DB_HOST'] ?? 'localhost';
-            $port = $_ENV['DB_PORT'] ?? '3306';
+            $host = trim((string)($_ENV['DB_HOST'] ?? 'localhost'));
+            $port = trim((string)($_ENV['DB_PORT'] ?? '3306'));
             $database = $_ENV['DB_NAME'] ?? 'sapphire_events';
             $user = $_ENV['DB_USER'] ?? 'root';
             $password = $_ENV['DB_PASSWORD'] ?? '';
 
-            $dsn = "mysql:host={$host}:{$port};dbname={$database};charset=utf8mb4";
+            if (preg_match('/^(.+):(\d+)$/', $host, $matches) === 1) {
+                $host = trim($matches[1]);
+                if ($port === '') {
+                    $port = $matches[2];
+                }
+            }
+
+            if ($host === '') {
+                $host = 'localhost';
+            }
+
+            if ($port === '' || preg_match('/^\d+$/', $port) !== 1) {
+                $port = '3306';
+            }
+
+            $dsn = "mysql:host={$host};port={$port};dbname={$database};charset=utf8mb4";
             
             $this->connection = new PDO(
                 $dsn,

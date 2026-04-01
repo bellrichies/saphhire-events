@@ -46,7 +46,7 @@ class HomeController extends Controller
                 'description' => 'Sapphire Events & Decorations creates weddings, birthdays, proposals and corporate events with premium planning and decor services in Tallinn, Estonia.',
                 'canonical' => route('/'),
                 'url' => route('/'),
-                'image' => 'assets/images/ceo-image.png',
+                'image' => siteSetting('site_og_image', 'assets/images/ceo-image.png'),
                 'image_alt' => 'Luxury event planning and decoration by Sapphire Events',
             ],
         ];

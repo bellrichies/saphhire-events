@@ -7,7 +7,21 @@
         $seoOverrides['title'] = $title;
     }
     $seoMeta = buildSeoMeta($seoOverrides);
-    $faviconUrl = toAbsoluteUrl('assets/images/favicon.png');
+    $siteName = (string)siteSetting('site_name', appConfig('site.name', 'Sapphire Events & Decorations'));
+    $faviconUrl = toAbsoluteUrl((string)siteSetting('site_favicon', 'assets/images/favicon.png'));
+    $schemaLogo = toAbsoluteUrl((string)siteSetting('site_logo', 'assets/images/logo.png'));
+    $siteAddress = (string)siteSetting('site_address', appConfig('site.address', ''));
+    $themePrimary = (string)siteSetting('theme_primary_color', appConfig('colors.primary', '#0F3D3E'));
+    $themeAccent = (string)siteSetting('theme_accent_color', appConfig('colors.accent', '#C8A951'));
+    $themeLight = (string)siteSetting('theme_light_color', appConfig('colors.light', '#F8F5F2'));
+    $themeDark = (string)siteSetting('theme_dark_color', appConfig('colors.dark', '#1C1C1C'));
+    $themeBodyFont = themeFontStack((string)siteSetting('theme_body_font', 'lora'), "'Lora', serif");
+    $themeHeadingFont = themeFontStack((string)siteSetting('theme_heading_font', 'syncopate'), "'Syncopate', sans-serif");
+    $themeDisplayFont = themeFontStack((string)siteSetting('theme_display_font', 'dancing-script'), "'Dancing Script', cursive");
+    $themeUiFont = themeFontStack((string)siteSetting('theme_ui_font', 'montserrat'), "'Montserrat', sans-serif");
+    $themeBodySize = themeCssSize((string)siteSetting('theme_body_size', '1rem'), '1rem');
+    $themeH1Size = themeCssSize((string)siteSetting('theme_h1_size', '3.5rem'), '3.5rem');
+    $themeH2Size = themeCssSize((string)siteSetting('theme_h2_size', '2.5rem'), '2.5rem');
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,22 +59,20 @@
         <?php echo json_encode([
             '@context' => 'https://schema.org',
             '@type' => 'Organization',
-            'name' => appConfig('site.name', 'Sapphire Events & Decorations'),
+            'name' => $siteName,
             'url' => baseUrl('/'),
-            'logo' => toAbsoluteUrl('assets/images/favicon.png'),
-            'description' => appConfig('site.description', ''),
-            'email' => appConfig('site.email', ''),
-            'telephone' => appConfig('site.phone', ''),
+            'logo' => $schemaLogo,
+            'description' => siteSetting('site_description', appConfig('site.description', '')),
+            'email' => siteSetting('site_email', appConfig('site.email', '')),
+            'telephone' => siteSetting('site_phone', appConfig('site.phone', '')),
             'address' => [
                 '@type' => 'PostalAddress',
-                'streetAddress' => appConfig('site.address', ''),
-                'addressLocality' => 'Tallinn',
-                'addressCountry' => 'EE',
+                'streetAddress' => $siteAddress,
             ],
             'sameAs' => array_values(array_filter([
-                appConfig('social.instagram', ''),
-                appConfig('social.facebook', ''),
-                appConfig('social.tiktok', ''),
+                siteSetting('social_instagram', appConfig('social.instagram', '')),
+                siteSetting('social_facebook', appConfig('social.facebook', '')),
+                siteSetting('social_tiktok', appConfig('social.tiktok', '')),
             ])),
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>
     </script>
@@ -80,17 +92,28 @@
     
     <style>
         :root {
-            --emerald: #7D3171;
-            --gold: #F6CCF0;
+            --emerald: <?php echo htmlspecialchars($themePrimary); ?>;
+            --gold: <?php echo htmlspecialchars($themeAccent); ?>;
             --off-white: #FFFFFF;
             --blush: #FFFFFF;
             --blush-soft: #FFFFFF;
             --blush-mist: #FFFFFF;
-            --accent-strong: #7D3171;
+            --accent-strong: <?php echo htmlspecialchars($themePrimary); ?>;
             --base-light: #FFFFFF;
-            --base-dark: #000000;
+            --base-dark: <?php echo htmlspecialchars($themeDark); ?>;
             --rose-shadow: rgba(126, 78, 118, 0.14);
-            --charcoal: #000000;
+            --charcoal: <?php echo htmlspecialchars($themeDark); ?>;
+            --theme-primary: <?php echo htmlspecialchars($themePrimary); ?>;
+            --theme-accent: <?php echo htmlspecialchars($themeAccent); ?>;
+            --theme-light: <?php echo htmlspecialchars($themeLight); ?>;
+            --theme-dark: <?php echo htmlspecialchars($themeDark); ?>;
+            --font-body: <?php echo $themeBodyFont; ?>;
+            --font-heading: <?php echo $themeHeadingFont; ?>;
+            --font-display: <?php echo $themeDisplayFont; ?>;
+            --font-ui: <?php echo $themeUiFont; ?>;
+            --body-size: <?php echo htmlspecialchars($themeBodySize); ?>;
+            --h1-size: <?php echo htmlspecialchars($themeH1Size); ?>;
+            --h2-size: <?php echo htmlspecialchars($themeH2Size); ?>;
         }
 
         html {
@@ -105,13 +128,14 @@
         }
 
         body {
-            font-family: 'Lora', serif;
+            font-family: var(--font-body);
             color: var(--charcoal);
             background: #FFFFFF;
             font-weight: 400;
             line-height: 1.6;
             letter-spacing: 0.2px;
             overflow-x: hidden;
+            font-size: var(--body-size);
         }
 
         .site-container {
@@ -165,58 +189,58 @@
         }
 
         h1 {
-            font-family: 'Syncopate', 'Montserrat', sans-serif !important;
-            font-size: 3.5rem;
+            font-family: var(--font-heading) !important;
+            font-size: var(--h1-size);
             font-weight: 600;
             letter-spacing: -0.5px;
             line-height: 1.14;
         }
 
         h2 {
-            font-family: 'Syncopate', 'Montserrat', sans-serif !important;
-            font-size: 2.5rem;
+            font-family: var(--font-heading) !important;
+            font-size: var(--h2-size);
             font-weight: 600;
             letter-spacing: -0.45px;
             line-height: 1.18;
         }
 
         h3 {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 600;
             letter-spacing: 0.01em;
         }
 
         h4 {
-            font-family: 'League Spartan', 'Montserrat', sans-serif;
+            font-family: var(--font-ui);
             font-size: 1.25rem;
             font-weight: 600;
             letter-spacing: 0.02em;
         }
 
         h5, h6 {
-            font-family: 'Lora', serif;
+            font-family: var(--font-body);
             font-weight: 600;
             letter-spacing: 0.05em;
         }
 
         p {
-            font-family: 'League Spartan', 'Montserrat', sans-serif;
+            font-family: var(--font-ui);
             font-weight: 400;
             letter-spacing: 0.25px;
         }
 
         a {
-            font-family: 'Lora', serif;
+            font-family: var(--font-body);
             font-weight: 500;
         }
 
         span, small {
-            font-family: 'Lora', serif;
+            font-family: var(--font-body);
         }
 
         section span.inline-block {
-            font-family: 'Love Light', 'Times New Roman', cursive !important;
+            font-family: var(--font-display) !important;
             text-transform: none !important;
             background: transparent !important;
             background-color: transparent !important;
@@ -237,7 +261,7 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             border: 2px solid var(--accent-strong);
-            font-family: 'Manrope', sans-serif;
+            font-family: var(--font-ui);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -256,7 +280,7 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             border: 2px solid var(--blush);
-            font-family: 'Manrope', sans-serif;
+            font-family: var(--font-ui);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -290,7 +314,7 @@
 
         /* Typography Enhancements */
         .subtitle {
-            font-family: 'Lora', serif;
+            font-family: var(--font-body);
             font-size: 0.875rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
@@ -298,26 +322,26 @@
         }
 
         .accent-text {
-            font-family: 'Parisienne', cursive;
+            font-family: var(--font-display);
             font-style: normal;
             font-weight: 400;
         }
 
         .section-title {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: var(--font-display);
             font-size: 2.8rem;
             font-weight: 600;
             letter-spacing: -0.3px;
         }
 
         small {
-            font-family: 'Lora', serif;
+            font-family: var(--font-body);
             font-weight: 400;
             letter-spacing: 0.25px;
         }
 
         .text-label {
-            font-family: 'Lora', serif;
+            font-family: var(--font-body);
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
@@ -325,7 +349,7 @@
         }
 
         .elegant-heading {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: var(--font-display);
             font-weight: 300;
             letter-spacing: 0.05em;
         }
@@ -562,8 +586,8 @@ $bodyClass = $normalizedPath === '' ? 'page-home' : 'page-inner';
 <body class="<?php echo htmlspecialchars($bodyClass); ?>">
     <?php ob_start(); ?>
     <?php
-    $topBarPhone = appConfig('site.phone', '+372-5160427');
-    $topBarEmail = appConfig('site.email', 'Sapphireeventsglitz@gmail.com');
+    $topBarPhone = (string)siteSetting('site_phone', appConfig('site.phone', ''));
+    $topBarEmail = (string)siteSetting('site_email', appConfig('site.email', ''));
     ?>
     <!-- <div class="site-topbar">
         <div class="site-topbar-inner site-gutter flex items-center justify-between gap-3">

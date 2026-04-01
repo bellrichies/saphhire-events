@@ -4,12 +4,12 @@ ob_start();
 ?>
 
 <!-- Service Detail Hero -->
-<section class="relative py-20 px-4 overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
+<section class="relative py-20 px-4 overflow-hidden" style="<?php echo innerHeroBackgroundStyle(); ?>">
     <!-- Animated Background Pattern -->
     <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
     
     <!-- Floating Elements -->
-    <div class="absolute top-10 right-10 w-40 h-40 rounded-full opacity-10 animate-float" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
+    <div class="absolute top-10 right-10 w-40 h-40 rounded-full opacity-10 animate-float" style="background: radial-gradient(circle, var(--theme-accent) 0%, transparent 70%);"></div>
     <div class="absolute bottom-10 left-10 w-32 h-32 rounded-full opacity-15 animate-float-delayed" style="background: radial-gradient(circle, #ffffff 0%, transparent 70%);"></div>
     
     <div class="site-container relative z-10">
@@ -26,19 +26,19 @@ ob_start();
         
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div data-aos="fade-right">
-                <span class="inline-block px-4 py-2 rounded-full mb-6 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
+                <span class="inline-block px-4 py-2 rounded-full mb-6 text-xs font-semibold tracking-widest uppercase" style="background-color: color-mix(in srgb, var(--theme-accent) 20%, transparent); color: var(--theme-accent); font-family: var(--font-ui); letter-spacing: 0.2em;">
                     Professional Service
                 </span>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-light mb-6 text-white leading-tight" style="font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-light mb-6 text-white leading-tight" style="font-family: var(--font-display); letter-spacing: -0.02em;">
                     <?php echo htmlspecialchars($service['title']); ?>
                 </h1>
                 <p class="text-lg text-gray-300 mb-8 leading-relaxed max-w-xl" style="white-space: pre-wrap;"><?php echo nl2br(htmlspecialchars(trim((string)$service['description']))); ?></p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="<?php echo route('/contact'); ?>" class="group px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:shadow-2xl" style="background-color: #C8A951; color: #0F3D3E; font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
+                    <a href="<?php echo route('/contact'); ?>" class="group px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:shadow-2xl" style="background-color: var(--theme-accent); color: var(--theme-primary); font-family: var(--font-ui); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
                         Get Quote
                         <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
                     </a>
-                    <a href="<?php echo route('/services'); ?>" class="px-8 py-4 rounded-lg font-semibold border-2 border-white/30 text-white transition-all duration-300 hover:bg-white/10" style="font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
+                    <a href="<?php echo route('/services'); ?>" class="px-8 py-4 rounded-lg font-semibold border-2 border-white/30 text-white transition-all duration-300 hover:bg-white/10" style="font-family: var(--font-ui); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
                         All Services
                     </a>
                 </div>

@@ -30,18 +30,18 @@ $faqSchema = [
 ];
 ?>
 
-<section class="relative py-14 md:py-16 px-4 overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
+<section class="relative py-14 md:py-16 px-4 overflow-hidden" style="<?php echo innerHeroBackgroundStyle(); ?>">
     <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
-    <div class="absolute top-8 right-16 w-24 h-24 rounded-full opacity-15 faqs-float" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
+    <div class="absolute top-8 right-16 w-24 h-24 rounded-full opacity-15 faqs-float" style="background: radial-gradient(circle, var(--theme-accent) 0%, transparent 70%);"></div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10" data-aos="fade-up">
-        <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
+        <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: color-mix(in srgb, var(--theme-accent) 20%, transparent); color: var(--theme-accent); font-family: var(--font-ui); letter-spacing: 0.2em;">
             <?php echo htmlspecialchars(trans('content.faqs_page.hero.badge', 'Support Center')); ?>
         </span>
         <h1 class="text-4xl md:text-5xl font-light mb-4 leading-tight text-white" style="letter-spacing: -0.02em;">
             <?php echo htmlspecialchars(trans('content.faqs_page.hero.title', 'Frequently Asked Questions')); ?>
         </h1>
-        <p class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed" style="font-family: 'Montserrat', sans-serif;">
+        <p class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed" style="font-family: var(--font-ui);">
             <?php echo htmlspecialchars(trans('content.faqs_page.hero.description', 'Find answers to common questions and learn about the step-by-step process for booking, decorating, and planning your special day with Sapphire Events.')); ?>
         </p>
 

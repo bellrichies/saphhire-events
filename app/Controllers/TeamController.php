@@ -14,7 +14,7 @@ class TeamController extends Controller
                 'description' => 'Meet Racheal and Israel, the creative minds behind Sapphire Events & Decorations. Discover the expertise and passion driving our event excellence.',
                 'canonical' => route('/team'),
                 'url' => route('/team'),
-                'image' => 'assets/images/favicon.png',
+                'image' => siteSetting('site_og_image', 'assets/images/ceo-image.png'),
                 'image_alt' => 'Sapphire Events Team - Creative Directors',
             ],
         ]);

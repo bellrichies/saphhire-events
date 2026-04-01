@@ -24,19 +24,19 @@ $getImageUrl = static function (?string $image): string {
 };
 ?>
 
-<section class="relative py-16 md:py-20 px-4 overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
+<section class="relative py-16 md:py-20 px-4 overflow-hidden" style="<?php echo innerHeroBackgroundStyle(); ?>">
     <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10" data-aos="fade-up">
-        <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
+        <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: color-mix(in srgb, var(--theme-accent) 20%, transparent); color: var(--theme-accent); font-family: var(--font-ui); letter-spacing: 0.2em;">
             <?php echo htmlspecialchars(trans('content.packages_page.hero.badge', 'Pricing & Packages')); ?>
         </span>
 
-        <h1 class="text-4xl md:text-5xl font-light mb-5 leading-tight" style="font-family: 'Dancing Script', cursive; letter-spacing: -0.02em; color: white;">
-            <?php echo htmlspecialchars(trans('content.packages_page.hero.title_main', 'Tailored Event')); ?> <span class="italic" style="color: #C8A951;"><?php echo htmlspecialchars(trans('content.packages_page.hero.title_highlight', 'Packages')); ?></span>
+        <h1 class="text-4xl md:text-5xl font-light mb-5 leading-tight" style="font-family: var(--font-display); letter-spacing: -0.02em; color: white;">
+            <?php echo htmlspecialchars(trans('content.packages_page.hero.title_main', 'Tailored Event')); ?> <span class="italic" style="color: var(--theme-accent);"><?php echo htmlspecialchars(trans('content.packages_page.hero.title_highlight', 'Packages')); ?></span>
         </h1>
 
-        <p class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed" style="font-family: 'Montserrat', sans-serif;">
+        <p class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed" style="font-family: var(--font-ui);">
             <?php echo htmlspecialchars(trans('content.packages_page.hero.description', 'Built from our public package references, including tablescape setups, proposal experiences, and consultation support. Choose a category to compare options and request booking.')); ?>
         </p>
     </div>

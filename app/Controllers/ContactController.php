@@ -19,7 +19,7 @@ class ContactController extends Controller
                 'description' => 'Contact Sapphire Events & Decorations to plan your wedding, birthday, proposal, corporate event, or custom celebration in Tallinn.',
                 'canonical' => route('/contact'),
                 'url' => route('/contact'),
-                'image' => 'assets/images/ceo-image.png',
+                'image' => siteSetting('site_og_image', 'assets/images/ceo-image.png'),
                 'image_alt' => 'Contact Sapphire Events and Decorations',
             ],
         ]);

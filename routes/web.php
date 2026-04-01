@@ -32,6 +32,9 @@ $router->get('/admin/logout', 'AdminController@logout');
 // Admin Dashboard
 $router->get('/admin/dashboard', 'AdminController@dashboard');
 $router->post('/admin/translations/cache/clear', 'AdminController@clearTranslationCache');
+$router->post('/admin/site-cache/clear', 'AdminController@clearSiteCache');
+$router->get('/admin/settings', 'SiteSettingsAdminController@index');
+$router->post('/admin/settings', 'SiteSettingsAdminController@update');
 
 // Admin Gallery Routes
 $router->get('/admin/gallery', 'GalleryAdminController@index');

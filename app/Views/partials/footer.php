@@ -1,3 +1,16 @@
+<?php
+$siteName = (string)siteSetting('site_name', appConfig('site.name', 'Sapphire Events & Decorations'));
+$siteTagline = (string)siteSetting('site_tagline', appConfig('site.tagline', 'Adding glitz & glam to your events'));
+$siteDescription = (string)siteSetting('site_description', appConfig('site.description', ''));
+$sitePhone = (string)siteSetting('site_phone', appConfig('site.phone', ''));
+$siteEmail = (string)siteSetting('site_email', appConfig('site.email', ''));
+$siteAddress = (string)siteSetting('site_address', appConfig('site.address', ''));
+$siteRegistrationCode = (string)siteSetting('site_registration_code', appConfig('site.registration_code', ''));
+$instagramUrl = (string)siteSetting('social_instagram', appConfig('social.instagram', ''));
+$facebookUrl = (string)siteSetting('social_facebook', appConfig('social.facebook', ''));
+$tiktokUrl = (string)siteSetting('social_tiktok', appConfig('social.tiktok', ''));
+$whatsappUrl = siteWhatsappUrl();
+?>
 <footer class="bg-charcoal text-white mt-20" style="background: linear-gradient(165deg, #1f1722 0%, #261a2b 48%, #2f1f33 100%);">
     <!-- Main Footer Content -->
     <div class="md:max-w-[1320px] mx-auto site-gutter py-16">
@@ -6,11 +19,11 @@
             <div class="lg:col-span-1">
                 <div class="mb-6">
                     <div class="flex flex-col leading-none mb-4">
-                        <h3 class="text-2xl tracking-widest font-semibold" style="color: #C8A951; font-family: 'Cormorant Garamond', serif; letter-spacing: 0.38em;">SAPPHIRE</h3>
-                        <p class="text-[0.65rem] tracking-widest font-semibold mt-1 text-gray-200" style=" font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">EVENTS & DECORATIONS</p>
+                        <h3 class="text-2xl tracking-widest font-semibold" style="color: #C8A951; font-family: 'Cormorant Garamond', serif; letter-spacing: 0.38em;"><?php echo htmlspecialchars(strtoupper($siteName)); ?></h3>
+                        <p class="text-[0.65rem] tracking-widest font-semibold mt-1 text-gray-200" style=" font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;"><?php echo htmlspecialchars($siteTagline); ?></p>
                     </div>
                     <p class="text-gray-200 text-sm leading-relaxed">
-                        Adding glitz & glam to your events since day one. Transforming ordinary moments into extraordinary memories.
+                        <?php echo htmlspecialchars($siteDescription !== '' ? $siteDescription : 'Adding glitz & glam to your events since day one. Transforming ordinary moments into extraordinary memories.'); ?>
                     </p>
                 </div>
                 
@@ -18,25 +31,25 @@
                 <div class="mt-6">
                     <p class="text-xs font-semibold uppercase text-gray-300 mb-4">Follow Us</p>
                     <div class="flex space-x-3">
-                        <a href="https://www.instagram.com/sapphire_events_decorations" target="_blank" rel="noopener noreferrer" 
+                        <a href="<?php echo htmlspecialchars($instagramUrl); ?>" target="_blank" rel="noopener noreferrer" 
                            class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110"
                            style="background-color: rgba(246, 204, 240, 0.2); color: #C8A951"
                            aria-label="Instagram">
                             <i class="fab fa-instagram text-sm" aria-hidden="true"></i>
                         </a>
-                        <a href="https://www.facebook.com/rararestperfumes" target="_blank" rel="noopener noreferrer"
+                        <a href="<?php echo htmlspecialchars($facebookUrl); ?>" target="_blank" rel="noopener noreferrer"
                            class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110"
                            style="background-color: rgba(246, 204, 240, 0.2); color: #C8A951;"
                            aria-label="Facebook">
                             <i class="fab fa-facebook text-sm" aria-hidden="true"></i>
                         </a>
-                        <a href="https://www.tiktok.com/@sapphire_events__" target="_blank" rel="noopener noreferrer"
+                        <a href="<?php echo htmlspecialchars($tiktokUrl); ?>" target="_blank" rel="noopener noreferrer"
                            class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110"
                            style="background-color: rgba(246, 204, 240, 0.2); color: #C8A951;"
                            aria-label="TikTok">
                             <i class="fab fa-tiktok text-sm" aria-hidden="true"></i>
                         </a>
-                        <a href="https://www.whatsapp.com/catalog/3725160427/" target="_blank" rel="noopener noreferrer"
+                        <a href="<?php echo htmlspecialchars($whatsappUrl); ?>" target="_blank" rel="noopener noreferrer"
                            class="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110"
                            style="background-color: rgba(246, 204, 240, 0.2); color: #C8A951;"
                            aria-label="WhatsApp">
@@ -131,22 +144,19 @@
                 <ul class="space-y-4">
                     <li>
                         <p class="text-gray-300 text-xs uppercase tracking-wider mb-1">Phone</p>
-                        <a href="tel:+3725160427" class="text-white hover:text-yellow-500 transition-colors text-sm font-semibold">
-                            +372-5160427
+                        <a href="tel:<?php echo htmlspecialchars(sitePhoneHref()); ?>" class="text-white hover:text-yellow-500 transition-colors text-sm font-semibold">
+                            <?php echo htmlspecialchars($sitePhone); ?>
                         </a>
                     </li>
                     <li>
                         <p class="text-gray-300 text-xs uppercase tracking-wider mb-1">Email</p>
-                        <a href="mailto:Sapphireeventsglitz@gmail.com" class="text-white hover:text-yellow-500 transition-colors text-sm font-semibold break-all">
-                            Sapphireeventsglitz@gmail.com
+                        <a href="mailto:<?php echo htmlspecialchars($siteEmail); ?>" class="text-white hover:text-yellow-500 transition-colors text-sm font-semibold break-all">
+                            <?php echo htmlspecialchars($siteEmail); ?>
                         </a>
                     </li>
                     <li>
                         <p class="text-gray-300 text-xs uppercase tracking-wider mb-1">Location</p>
-                        <p class="text-gray-200 text-sm">
-                            Laki 14a, room 503<br>
-                            10621 Tallinn, Estonia
-                        </p>
+                        <p class="text-gray-200 text-sm"><?php echo nl2br(htmlspecialchars($siteAddress)); ?></p>
                     </li>
                 </ul>
             </div>
@@ -201,7 +211,7 @@
                     © 2024 <span style="color: #C8A951;">Sapphire Events</span> & Decorations. All rights reserved.
                 </p>
                 <p class="text-gray-300 text-xs mt-1">
-                    Registration Code: 16666563
+                    Registration Code: <?php echo htmlspecialchars($siteRegistrationCode); ?>
                 </p>
             </div>
 

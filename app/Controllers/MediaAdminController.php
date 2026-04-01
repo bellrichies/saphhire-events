@@ -397,6 +397,7 @@ class MediaAdminController extends Controller
             ['table' => 'packages', 'column' => 'image', 'label' => 'Packages'],
             ['table' => 'team_members', 'column' => 'image', 'label' => 'Team'],
             ['table' => 'testimonials', 'column' => 'image', 'label' => 'Testimonials'],
+            ['table' => 'site_settings', 'column' => 'setting_value', 'label' => 'Site Settings'],
         ];
 
         $usage = [];

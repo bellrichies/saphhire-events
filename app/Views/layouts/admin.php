@@ -92,6 +92,7 @@
         '/admin/testimonials' => 'Testimonials',
         '/admin/inquiries' => 'Inquiries',
         '/admin/newsletters' => 'Newsletter Leads',
+        '/admin/settings' => 'Global Site Settings',
         '/admin/team' => 'Team',
         '/admin/media' => 'Media Library',
     ];

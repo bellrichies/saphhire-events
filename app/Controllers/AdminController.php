@@ -111,6 +111,8 @@ class AdminController extends Controller
             ],
             'translationCacheStatus' => $_GET['translation_cache'] ?? null,
             'translationCacheDeleted' => isset($_GET['deleted']) ? (int) $_GET['deleted'] : null,
+            'siteCacheStatus' => $_GET['site_cache'] ?? null,
+            'siteCacheDeleted' => isset($_GET['site_deleted']) ? (int) $_GET['site_deleted'] : null,
             'csrf_token' => CSRF::getToken(),
         ]);
     }
@@ -137,6 +139,31 @@ class AdminController extends Controller
         }
 
         $this->redirect(route('/admin/dashboard?translation_cache=cleared&deleted=' . $result['deleted']));
+    }
+
+    public function clearSiteCache()
+    {
+        if (!$this->isLoggedIn()) {
+            $this->redirect(route('/admin/login'));
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect(route('/admin/dashboard'));
+        }
+
+        if (!isset($_POST['_csrf_token']) || !CSRF::validate($_POST['_csrf_token'])) {
+            $this->redirect(route('/admin/dashboard?site_cache=csrf_error'));
+        }
+
+        $result = function_exists('clearSiteWideCache')
+            ? clearSiteWideCache()
+            : ['deleted' => 0, 'failed' => 0, 'opcache_reset' => false];
+
+        if (($result['failed'] ?? 0) > 0) {
+            $this->redirect(route('/admin/dashboard?site_cache=error&site_deleted=' . (int) ($result['deleted'] ?? 0)));
+        }
+
+        $this->redirect(route('/admin/dashboard?site_cache=cleared&site_deleted=' . (int) ($result['deleted'] ?? 0)));
     }
 
     private function isLoggedIn(): bool

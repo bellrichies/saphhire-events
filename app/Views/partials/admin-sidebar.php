@@ -106,6 +106,10 @@ $iconClass = static function (string $path) use ($isActive): string {
 
         <div>
             <p class="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">Company</p>
+            <a href="<?php echo route('/admin/settings'); ?>" class="<?php echo $itemClass('/admin/settings'); ?>">
+                <i class="fas fa-sliders-h <?php echo $iconClass('/admin/settings'); ?>"></i>
+                <span>Site Settings</span>
+            </a>
             <a href="<?php echo route('/admin/team'); ?>" class="<?php echo $itemClass('/admin/team'); ?>">
                 <i class="fas fa-users <?php echo $iconClass('/admin/team'); ?>"></i>
                 <span>Team</span>

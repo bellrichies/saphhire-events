@@ -28,24 +28,24 @@ $getPackageImageUrl = static function ($image) {
 ?>
 
 <!-- Compact Hero Section -->
-<section class="relative py-16 md:py-20 px-4 overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
+<section class="relative py-16 md:py-20 px-4 overflow-hidden" style="<?php echo innerHeroBackgroundStyle(); ?>">
     <!-- Animated Background Pattern -->
     <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
     
     <!-- Floating Elements -->
-    <div class="absolute top-10 right-20 w-24 h-24 rounded-full opacity-15 animate-float" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
-    <div class="absolute bottom-10 left-20 w-32 h-32 rounded-full opacity-10 animate-float-delayed" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
+    <div class="absolute top-10 right-20 w-24 h-24 rounded-full opacity-15 animate-float" style="background: radial-gradient(circle, var(--theme-accent) 0%, transparent 70%);"></div>
+    <div class="absolute bottom-10 left-20 w-32 h-32 rounded-full opacity-10 animate-float-delayed" style="background: radial-gradient(circle, var(--theme-accent) 0%, transparent 70%);"></div>
     
     <div class="max-w-5xl mx-auto text-center relative z-10" data-aos="fade-up">
-        <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
+        <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: color-mix(in srgb, var(--theme-accent) 20%, transparent); color: var(--theme-accent); font-family: var(--font-ui); letter-spacing: 0.2em;">
             <?php echo htmlspecialchars(trans('content.services.hero.badge', 'Professional Event Planning')); ?>
         </span>
         
-        <h1 class="text-4xl md:text-5xl font-light mb-5 leading-tight" style="font-family: 'Dancing Script', cursive; letter-spacing: -0.02em; color: white;">
-            <?php echo htmlspecialchars(trans('content.services.hero.title_main', 'Comprehensive Event')); ?> <span class="italic" style="color: #C8A951;"><?php echo htmlspecialchars(trans('content.services.hero.title_highlight', 'Solutions')); ?></span>
+        <h1 class="text-4xl md:text-5xl font-light mb-5 leading-tight" style="font-family: var(--font-display); letter-spacing: -0.02em; color: white;">
+            <?php echo htmlspecialchars(trans('content.services.hero.title_main', 'Comprehensive Event')); ?> <span class="italic" style="color: var(--theme-accent);"><?php echo htmlspecialchars(trans('content.services.hero.title_highlight', 'Solutions')); ?></span>
         </h1>
         
-        <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed" style="font-family: 'Montserrat', sans-serif;">
+        <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed" style="font-family: var(--font-ui);">
             <?php echo htmlspecialchars(trans('content.services.hero.description', 'From intimate gatherings to grand celebrations, we transform your vision into spectacular, unforgettable experiences.')); ?>
         </p>
         
@@ -638,4 +638,3 @@ $getPackageImageUrl = static function ($image) {
 $content = ob_get_clean();
 require VIEW_PATH . '/layouts/app.php';
 ?>
-

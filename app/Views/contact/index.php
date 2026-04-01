@@ -1,20 +1,29 @@
 <?php
 $title = trans('content.contact.page_title', 'Contact Us');
+$siteEmail = (string)siteSetting('site_email', appConfig('site.email', ''));
+$sitePhone = (string)siteSetting('site_phone', appConfig('site.phone', ''));
+$siteAddress = (string)siteSetting('site_address', appConfig('site.address', ''));
+$siteName = (string)siteSetting('site_name', appConfig('site.name', 'Sapphire Events & Decorations'));
+$siteRegistrationCode = (string)siteSetting('site_registration_code', appConfig('site.registration_code', ''));
+$instagramUrl = (string)siteSetting('social_instagram', appConfig('social.instagram', ''));
+$facebookUrl = (string)siteSetting('social_facebook', appConfig('social.facebook', ''));
+$tiktokUrl = (string)siteSetting('social_tiktok', appConfig('social.tiktok', ''));
+$whatsappUrl = siteWhatsappUrl();
 ob_start();
 ?>
 
-<section class="relative py-14 md:py-16 px-4 overflow-hidden" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%);">
+<section class="relative py-14 md:py-16 px-4 overflow-hidden" style="<?php echo innerHeroBackgroundStyle(); ?>">
     <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%222%22 fill=%22%23C8A951%22/></svg>');"></div>
-    <div class="absolute top-8 right-16 w-24 h-24 rounded-full opacity-15 animate-float" style="background: radial-gradient(circle, #C8A951 0%, transparent 70%);"></div>
+    <div class="absolute top-8 right-16 w-24 h-24 rounded-full opacity-15 animate-float" style="background: radial-gradient(circle, var(--theme-accent) 0%, transparent 70%);"></div>
 
     <div class="max-w-5xl mx-auto text-center relative z-10" data-aos="fade-up">
-        <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: rgba(200, 169, 81, 0.2); color: #C8A951; font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;">
+        <span class="inline-block px-4 py-2 rounded-full mb-5 text-xs font-semibold tracking-widest uppercase" style="background-color: color-mix(in srgb, var(--theme-accent) 20%, transparent); color: var(--theme-accent); font-family: var(--font-ui); letter-spacing: 0.2em;">
             <?php echo htmlspecialchars(trans('content.contact.hero.badge', 'Contact Sapphire Events')); ?>
         </span>
-        <h1 class="text-4xl md:text-5xl font-light mb-4 leading-tight text-white" style="font-family: 'Dancing Script', cursive; letter-spacing: -0.02em;">
+        <h1 class="text-4xl md:text-5xl font-light mb-4 leading-tight text-white" style="font-family: var(--font-display); letter-spacing: -0.02em;">
             <?php echo htmlspecialchars(trans('content.contact.hero.title', 'Start Planning With Clarity')); ?>
         </h1>
-        <p class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed" style="font-family: 'Montserrat', sans-serif;">
+        <p class="text-base md:text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed" style="font-family: var(--font-ui);">
             <?php echo htmlspecialchars(trans('content.contact.hero.description', 'Share your event details and goals. Our team will review your inquiry and send a tailored recommendation within one business day.')); ?>
         </p>
     </div>
@@ -255,8 +264,8 @@ ob_start();
 
                 <div class="mt-6 rounded-xl p-4" style="background: linear-gradient(135deg, #0F3D3E 0%, #1C1C1C 100%); color: white;">
                     <p class="text-xs uppercase tracking-[0.14em] mb-2" style="color: #C8A951;"><?php echo htmlspecialchars(trans('content.contact.side.registered', 'Registered Business')); ?></p>
-                    <p class="font-semibold">Sapphire Events & Decorations</p>
-                    <p class="text-sm text-gray-300 mt-1">Registration Code: <span class="text-white font-semibold">16666563</span></p>
+                    <p class="font-semibold"><?php echo htmlspecialchars($siteName); ?></p>
+                    <p class="text-sm text-gray-300 mt-1">Registration Code: <span class="text-white font-semibold"><?php echo htmlspecialchars($siteRegistrationCode); ?></span></p>
                 </div>
             </article>
 
@@ -266,10 +275,10 @@ ob_start();
                 </h3>
                 <p class="text-sm text-gray-600 mb-4"><?php echo htmlspecialchars(trans('content.contact.side.instant_desc', 'If your event is time-sensitive, reach us directly through WhatsApp or phone.')); ?></p>
                 <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
-                    <a href="https://wa.me/3725160427" target="_blank" rel="noopener noreferrer" class="contact-quick-btn" style="background-color: #25D366; color: white; border-color: #25D366;">
+                    <a href="<?php echo htmlspecialchars($whatsappUrl); ?>" target="_blank" rel="noopener noreferrer" class="contact-quick-btn" style="background-color: #25D366; color: white; border-color: #25D366;">
                         <i class="fab fa-whatsapp mr-2"></i> <?php echo htmlspecialchars(trans('content.contact.side.whatsapp', 'WhatsApp Us')); ?>
                     </a>
-                    <a href="tel:+3725160427" class="contact-quick-btn" style="background-color: transparent; color: #0F3D3E; border-color: rgba(15, 61, 62, 0.25);">
+                    <a href="tel:<?php echo htmlspecialchars(sitePhoneHref()); ?>" class="contact-quick-btn" style="background-color: transparent; color: #0F3D3E; border-color: rgba(15, 61, 62, 0.25);">
                         <i class="fas fa-phone-alt mr-2"></i> <?php echo htmlspecialchars(trans('content.contact.side.call_now', 'Call Now')); ?>
                     </a>
                 </div>
@@ -283,21 +292,21 @@ ob_start();
         <article class="contact-info-card" data-aos="fade-up">
             <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
             <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.email_title', 'Email')); ?></h3>
-            <a href="mailto:Sapphireeventsglitz@gmail.com" class="contact-info-link">Sapphireeventsglitz@gmail.com</a>
+            <a href="mailto:<?php echo htmlspecialchars($siteEmail); ?>" class="contact-info-link"><?php echo htmlspecialchars($siteEmail); ?></a>
             <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.email_note', 'Response target: within 24 hours')); ?></p>
         </article>
 
         <article class="contact-info-card" data-aos="fade-up" data-aos-delay="80">
             <div class="contact-info-icon"><i class="fas fa-phone-alt"></i></div>
             <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.phone_title', 'Phone')); ?></h3>
-            <a href="tel:+3725160427" class="contact-info-link">+372-5160427</a>
+            <a href="tel:<?php echo htmlspecialchars(sitePhoneHref()); ?>" class="contact-info-link"><?php echo htmlspecialchars($sitePhone); ?></a>
             <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.phone_note', 'Mon-Fri, 9:00-18:00 (EET)')); ?></p>
         </article>
 
         <article class="contact-info-card" data-aos="fade-up" data-aos-delay="160">
             <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
             <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.office_title', 'Office')); ?></h3>
-            <p class="contact-info-text"><?php echo nl2br(htmlspecialchars(trans('content.contact.cards.office_text', "Laki 14a, Room 503\n10621 Tallinn, Estonia"))); ?></p>
+            <p class="contact-info-text"><?php echo nl2br(htmlspecialchars($siteAddress)); ?></p>
             <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.office_note', 'Visits by appointment')); ?></p>
         </article>
 
@@ -305,10 +314,10 @@ ob_start();
             <div class="contact-info-icon"><i class="fas fa-hashtag"></i></div>
             <h3 class="contact-info-title"><?php echo htmlspecialchars(trans('content.contact.cards.social_title', 'Social')); ?></h3>
             <div class="flex items-center justify-center gap-2.5 mb-2">
-                <a href="https://instagram.com/sapphire_events_decorations" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://tiktok.com/@sapphire_events__" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="https://wa.me/3725160427" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="<?php echo htmlspecialchars($instagramUrl); ?>" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="<?php echo htmlspecialchars($facebookUrl); ?>" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="<?php echo htmlspecialchars($tiktokUrl); ?>" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="<?php echo htmlspecialchars($whatsappUrl); ?>" target="_blank" rel="noopener noreferrer" class="social-chip" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
             <p class="contact-info-note"><?php echo htmlspecialchars(trans('content.contact.cards.social_note', 'Daily updates and portfolio highlights')); ?></p>
         </article>
@@ -324,7 +333,7 @@ ob_start();
                         <?php echo htmlspecialchars(trans('content.contact.office.title', 'Visit Our Tallinn Office')); ?>
                     </h2>
                     <p class="text-gray-600 text-sm md:text-base">
-                        <?php echo htmlspecialchars(trans('content.contact.office.description', 'Laki 14a, Room 503, 10621 Tallinn, Estonia. Visits are by appointment.')); ?>
+                        <?php echo htmlspecialchars($siteAddress !== '' ? $siteAddress : trans('content.contact.office.description', 'Laki 14a, Room 503, 10621 Tallinn, Estonia. Visits are by appointment.')); ?>
                     </p>
                 </div>
                 <div class="relative h-[380px] md:h-[430px]">
@@ -385,7 +394,7 @@ ob_start();
                             <?php echo htmlspecialchars(trans('content.contact.faq.more_questions_link', 'Visit the full FAQ page')); ?>
                             <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
                         </a>
-                        <a href="mailto:Sapphireeventsglitz@gmail.com" class="contact-faq-link">
+                        <a href="mailto:<?php echo htmlspecialchars($siteEmail); ?>" class="contact-faq-link">
                             <?php echo htmlspecialchars(trans('content.contact.faq.email_team', 'Email Our Team')); ?>
                             <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
                         </a>
@@ -406,10 +415,10 @@ ob_start();
             <?php echo htmlspecialchars(trans('content.contact.cta.description', 'Send your inquiry now and we will help you translate ideas into a clear event plan.')); ?>
         </p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="https://wa.me/3725160427" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg" style="background-color: #25D366; color: white; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem;">
+            <a href="<?php echo htmlspecialchars($whatsappUrl); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg" style="background-color: #25D366; color: white; font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem;">
                 <?php echo htmlspecialchars(trans('content.contact.cta.primary', 'Chat on WhatsApp')); ?>
             </a>
-            <a href="tel:+3725160427" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg font-semibold border border-white/40 text-white transition-all duration-300 hover:bg-white/10" style="font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem;">
+            <a href="tel:<?php echo htmlspecialchars(sitePhoneHref()); ?>" class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg font-semibold border border-white/40 text-white transition-all duration-300 hover:bg-white/10" style="font-family: 'Montserrat', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.82rem;">
                 <?php echo htmlspecialchars(trans('content.contact.cta.secondary', 'Call Our Team')); ?>
             </a>
         </div>
